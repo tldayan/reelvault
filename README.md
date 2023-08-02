@@ -1,4 +1,4 @@
-# Reelvault - Your Ultimate Movie Streaming App
+# Reelvault - Movie Streaming App
 
 ## Introduction
 
