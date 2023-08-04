@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import MovieDetails from './MovieDetails';
-import { ScrollRestoration } from 'react-router-dom';
+import { ScrollRestoration, Link } from 'react-router-dom';
 
 export default function MoviePlayer() {
   const params = useParams();
@@ -9,6 +9,7 @@ export default function MoviePlayer() {
 
   return (
     <>
+      <Link to="/" className='back_button'>&#10094; Back to Home</Link>
       <div className="movie_player_container">
         {!movieId ? <div className="load_animation"></div> : <iframe
           className="movie_player"

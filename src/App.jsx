@@ -30,7 +30,6 @@ function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route>
         <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<AllMovies />}>
             <Route path="/" errorElement={<Error />}  element={<PopularMovies />}/> 
@@ -49,7 +48,6 @@ function App() {
           <Route path=":id" element={<MoviePlayer />} />
           <Route path="*" element={<NotFound />} />
         </Route>
-      </Route>
     )
   );
 

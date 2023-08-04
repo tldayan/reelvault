@@ -1126,6 +1126,31 @@ padding: 15px;
 }
 
 
+
+.back_button {
+  text-decoration: none;
+  border: 1px solid #333;
+  background-color: #101010;
+  padding: 5px;
+  color: white;
+  border-radius: 2px;
+  display: inline-block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  position: relative;
+  font-weight: 500;
+  font-size: clamp(0.3rem, 2vw, 0.75rem);
+  transition: all ease 0.4s;
+}
+
+.back_button:hover {
+  border: 1px solid #333;
+  background-color: #ffffff;
+  color: black;
+}
+
+
 @media (max-width:500px) {
 
   /* HAMBURGER STYLINGS */
@@ -1250,6 +1275,9 @@ padding: 15px;
   /* MOVIE PLAYER COMPONENT */
   
 /*   MOVIE DETAILS CONTAINER */
+
+
+
 .movie_details_container {
   width: 95%;
   padding: 10px;
