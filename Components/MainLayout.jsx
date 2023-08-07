@@ -2,10 +2,10 @@
 import {NavLink,Link, Outlet} from "react-router-dom"
 import starIcon from "../assets/star-solid.svg"
 import searchIcon from "../assets/search_icon.svg"
-import {React,useState,useEffect} from 'react'
+import {React,useState,useEffect, useRef} from 'react'
 
 export default function MainLayout() {
-
+    const searchInput = useRef(null)
     const [search,setSearch] = useState("")
     const [searchResults, setSearchResults] = useState([])
     const [animationPlaying, setAnimationPlaying] = useState(true)
@@ -79,10 +79,10 @@ export default function MainLayout() {
             searchField.style.width = "0%"
             results.style.display = "none"
 
-
         } else {
             searchField.style.width = "100%"
             results.style.display = "flex"
+            searchInput.current.focus()
         }
     }
     
@@ -129,6 +129,7 @@ export default function MainLayout() {
                         placeholder='Search movies...'
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
+                        ref={searchInput}
                     />
                     <div className='search_list'>
                         {searchResults.map(eachResult => {

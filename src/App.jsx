@@ -14,7 +14,6 @@ import RomanceMovies from "../Components/RomanceMovies";
 import AdventureMovies from "../Components/AdventureMovies";
 import ComedyMovies from "../Components/ComedyMovies";
 import HorrorMovies from "../Components/HorrorMovies";
-import NotFound from "../Components/NotFound";
 import Error from "../Components/Error";
 
 function App() {
@@ -46,7 +45,6 @@ function App() {
           <Route path="about" element={<About />}/>
           <Route path="contactus" element={<ContactUs />}/>
           <Route path=":id" element={<MoviePlayer />} />
-          <Route path="*" element={<NotFound />} />
         </Route>
     )
   );

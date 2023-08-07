@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import {Link} from "react-router-dom"
+import {getMovies} from "./Api.jsx"
+import MovieCard from "./MovieCard.jsx"
 
 
 export default function TopRatedMovies() {
@@ -7,56 +8,33 @@ export default function TopRatedMovies() {
 
   const [currentPage, setCurrentPage] = useState(1)
   const [moviesPerPage] = useState(20)
+  const category = "top_rated"
 
   
-
   useEffect(() => {
-     const fetchRatedMovies = async() => {
-      const API_URL_PAGE_1 = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1`;
-      const API_URL_PAGE_2 = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=2`;
-      const API_URL_PAGE_3 = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=3`;
-    
-      try {
-        const responsePage1 = await fetch(API_URL_PAGE_1, {
-          headers: {
-            accept: 'application/json',
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo',
-          },
-        });
 
-        const responsePage2 = await fetch(API_URL_PAGE_2, {
-          headers: {
-            accept: 'application/json',
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo',
-          },
-        });
-    
-        const responsePage3 = await fetch(API_URL_PAGE_3, {
-          headers: {
-            accept: 'application/json',
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo',
-          },
-        });
-    
-        const dataPage1 = await responsePage1.json();
-        const dataPage2 = await responsePage2.json();
-        const dataPage3 = await responsePage3.json();
-    
-        const data = [...dataPage1.results,...dataPage2.results ,...dataPage3.results];
-  
-        setRatedMoviesData(data)
-  
-      } catch (error) {
-        alert(error.message);
+    if(localStorage.getItem("ratedMovies")) {
+      setRatedMoviesData(JSON.parse(localStorage.getItem("ratedMovies")))
+    } else {
+
+      const fetchRatedMovies = async() => {
+
+      const [data1,data2,data3] = await Promise.all([getMovies(1,category),getMovies(2,category),getMovies(3,category)])
+
+      if (data1.message) {
+        console.log(data1.message)
+      } else {
+
+      setRatedMoviesData([...data1,...data2,...data3])}
+      localStorage.setItem("ratedMovies", JSON.stringify([...data1,...data2,...data3]))
       }
-    };
-  
-fetchRatedMovies()
 
+      fetchRatedMovies()
+    }
+    
   },[])
+
+  
 
   const indexEnd = currentPage * moviesPerPage
   const indexStart = indexEnd - moviesPerPage 
@@ -83,17 +61,9 @@ fetchRatedMovies()
     <div className='movietype_container'>
         <h2 className='category_titles'>Top rated Movies</h2>
         <div className='movielist_container'>
-          {!currentMovies.length  ? <div className="load_animation"></div> : currentMovies.map(eachMovie => {
-            return <Link to={`/${eachMovie.id}`} className="movie_container" key={eachMovie.id}>
-            <div className="movie_poster_container">
-              <div className="movie_language">{eachMovie.original_language.toUpperCase()}</div>
-              <div className="movie_date">{eachMovie.release_date.slice(0,4)}</div>
-              <div className={"movie_vote " + (eachMovie.vote_average > 7 ? "green" : eachMovie.vote_average < 5 ? "red" : "orange")}>{eachMovie.vote_average}</div>
-              <img className="movie_poster" src={eachMovie.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/w154${eachMovie.poster_path}`} alt="" />
-            </div>
-            <h3 className='movie_name'>{eachMovie.title.length > 20 ? `${eachMovie.title.slice(0, 20)}...` : eachMovie.title}</h3>
-          </Link>
-          })}
+          {!currentMovies.length  ? <div className="load_animation"></div> : currentMovies.map(eachMovie => 
+             (<MovieCard key={eachMovie.id} eachMovie={eachMovie}/>)
+          )}
         </div>
 
           <ul className='pagination'>

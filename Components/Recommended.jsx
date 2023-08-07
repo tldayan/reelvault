@@ -1,11 +1,11 @@
 
-
 import React, { useEffect, useState } from 'react'
 import {Link} from "react-router-dom"
 import { register } from 'swiper/element/bundle';
 import defaultPoster from "../assets/no_image.jpg"
 register();
 
+const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
 
 export default function Recommended({movieId}) {
 
@@ -21,7 +21,7 @@ export default function Recommended({movieId}) {
                 const response = await fetch(API_URL,{
                 headers :{
                     accept: 'application/json',
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo'
+                    Authorization: `Bearer ${API_KEY}`
                 }
                 })
 

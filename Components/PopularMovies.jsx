@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import defaultPoster from "../assets/no_image.jpg"
+import {getMovies} from "./Api.jsx"
+import MovieCard from "./MovieCard.jsx"
+
 
 export default function PopularMovies() {
   const [popularMoviesData, setPopularMoviesData] = useState([]);
@@ -9,45 +10,30 @@ export default function PopularMovies() {
   
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(20);
- 
+  const category = "popular"
+
   useEffect(() => {
-    const fetchPopularMovies = async () => {
 
-        const allApiPages = [1,2,3,4,5]
-        const apiLink = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page='
-        
-        let data = []
-        for(let x = 1; x <= allApiPages.length; ++x) {
-            
-            try {
-              const response = await fetch(apiLink + x,{
-              headers: {
-                accept: 'application/json',
-                Authorization:
-                  'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo',
-              },
-            })
+    if(localStorage.getItem("popularMovies")) {
+      setPopularMoviesData(JSON.parse(localStorage.getItem("popularMovies")))
+    } else {
 
-            if (!response.ok )throw Error ("Couldn't fetch Popular Movies")
-           
+    const fetchPopularMovies = async() => {
+          
+            const [data1,data2,data3,data4,data5] = await Promise.all([getMovies(1,category),getMovies(2,category),getMovies(3,category),getMovies(4,category),getMovies(5,category)])
+          
+            if (data1.message) {
+              console.log(data1.message)
+            } else {
 
-            const moviedata = await response.json()
-            data.push(...moviedata.results)
-
-            } catch (error) {
-              
-              setError(true)
-              setErrorMsg(error.message)
-            }
-            
+            setPopularMoviesData([...data1,...data2,...data3,...data4,...data5])
+            localStorage.setItem("popularMovies", JSON.stringify([...data1,...data2,...data3,...data4,...data5]))
+          }
         }
+        fetchPopularMovies()
 
-        setPopularMoviesData(data)
-    };
-
-    fetchPopularMovies();
-  }, []);
-
+    }
+  },[])
 
   
   const indexOfLastMovie = currentPage * moviesPerPage;
@@ -77,17 +63,8 @@ export default function PopularMovies() {
           <div className="load_animation"></div>
         ) : (
           currentMovies.map((eachMovie) => (
-            <Link to={`/${eachMovie.id}`} className="movie_container" key={eachMovie.id}>
-              <div className="movie_poster_container">
-                <div className="movie_language">{eachMovie.original_language.toUpperCase()}</div>
-                <div className="movie_date">{eachMovie.release_date.slice(0,4)}</div>
-                <div className={"movie_vote " + (eachMovie.vote_average > 7 ? "green" : eachMovie.vote_average < 5 ? "red" : "orange")}>{eachMovie.vote_average}</div>
-                <img className="movie_poster" src={eachMovie.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/w154${eachMovie.poster_path}`} alt="" />
-              </div>
-              <h3 className='movie_name'>{eachMovie.title.length > 20 ? `${eachMovie.title.slice(0, 20)}...` : eachMovie.title}</h3>
-            </Link>
-          ))
-        )}
+           <MovieCard key={eachMovie.id} eachMovie={eachMovie}/>
+           )))}
       </div>
 
       <ul className="pagination">

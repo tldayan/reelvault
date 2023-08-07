@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
 import Recommended from './Recommended';
 
 export default function MovieDetails({ movieId }) {
