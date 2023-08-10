@@ -2,6 +2,7 @@
 import {NavLink,Link, Outlet} from "react-router-dom"
 import starIcon from "../assets/star-solid.svg"
 import searchIcon from "../assets/search_icon.svg"
+import defaultPoster from "../assets/no_image.jpg";
 import {React,useState,useEffect, useRef} from 'react'
 
 export default function MainLayout() {
@@ -9,28 +10,42 @@ export default function MainLayout() {
     const [search,setSearch] = useState("")
     const [searchResults, setSearchResults] = useState([])
     const [animationPlaying, setAnimationPlaying] = useState(true)
+    const [showId, setShowId] = useState(null)
   
     
     useEffect(() => {
   
-      const searchApi = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=1`
-  
+      const movieSearchApi = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=1`
+      const showSearchApi = `https://api.themoviedb.org/3/search/tv?query=${search}&include_adult=false&language=en-US&page=1`
+
       const fetchSearchData = async() => {
   
         try {
-  
-          const response = await fetch(searchApi , {
+
+          const movieResponse = await fetch(movieSearchApi , {
                   headers : {
                     accept: 'application/json',
                     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo'
                   }
           })
-  
-          const Data = await response.json()
-  
-          const searchData = await Data.results;
+
+          const showResponse = await fetch(showSearchApi , {
+            headers : {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo'
+            }
+    })
           
-            setSearchResults(searchData)
+  
+          const movieData = await movieResponse.json()
+          const showData = await showResponse.json()
+
+          const searchData = [...movieData.results,...showData.results];
+
+          let filteredSearchData = searchData.filter(eachResult => (eachResult.original_name || eachResult.original_title).toLowerCase().includes(search.toLowerCase()))
+
+          
+            setSearchResults(filteredSearchData)
 
         } catch (error) {
           alert(error.message)
@@ -45,6 +60,8 @@ export default function MainLayout() {
       }
      
     },[search])
+
+
 
 
     useEffect(() => {
@@ -65,7 +82,7 @@ export default function MainLayout() {
         } else if(searchResults.length === 0) {
           results.style.height = "0px"
         } else {
-          results.style.height = "100vh"
+          results.style.height = "70vh"
         }
       },[searchResults])
 
@@ -133,13 +150,13 @@ export default function MainLayout() {
                     />
                     <div className='search_list'>
                         {searchResults.map(eachResult => {
-                        return  <Link onClick={closeResultList} to={`${eachResult.id}`} key={eachResult.id} className='result'>
-                                    <img className='search_results_movie_poster' src={`https://image.tmdb.org/t/p/w154${eachResult.poster_path}`} alt="" />
+                        return  <Link onClick={closeResultList} to={`${eachResult.original_name ? `tvshows/${eachResult.id}` : eachResult.id}`} key={eachResult.id} className='result'>
+                                    <img className='search_results_movie_poster' src={eachResult.poster_path !== null ? `https://image.tmdb.org/t/p/w154${eachResult.poster_path}` : defaultPoster} alt="" />
                                     <div className='movie_result_info_container'>
-                                      <p className='search_results_movie_title'>{eachResult.original_title}</p>
-                                      <p className='release_date'>{eachResult.release_date}</p>
+                                      <p className='search_results_movie_title'>{eachResult.original_title || eachResult.original_name}</p>
+                                      <p className='release_date'>{eachResult.release_date || eachResult.first_air_date}</p>
                                       <div className='movie_metrics_container'>
-                                          <p>Movie</p>&#8226;
+                                          <p>{eachResult.original_name ? "Show" : "Movie"}</p>&#8226;
                                           <p>{eachResult.original_language.charAt(0).toUpperCase() + eachResult.original_language.slice(1)}
                                           </p>&#8226;
                                           <img className="star" src={starIcon} alt="" />

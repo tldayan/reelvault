@@ -49,7 +49,6 @@ export default function Recommended({movieId}) {
                     <Link className='recommended_link' to={`../${eachMovie.id}`}><img className='recommended_movie_poster' src={eachMovie.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/w154${eachMovie.poster_path}`} alt="" loading='lazy' /><p className='recommended_movie_title'>{eachMovie.title.length > 15  ? `${eachMovie.title.slice(0, 15)}...` : eachMovie.title}</p>
                     <div className="movie_language">{eachMovie.original_language.toUpperCase()}</div>
                     <div className="movie_date">{eachMovie.release_date.slice(0,4)}</div>
-
                     </Link></swiper-slide>
               )
         })}

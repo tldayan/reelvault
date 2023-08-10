@@ -20,8 +20,9 @@ export default function AllMovies() {
     </div>
 
     <div className='category_buttons_container'>
-      <NavLink className='category_buttons' to="/">Popular Movies</NavLink>
-      <NavLink className='category_buttons' to="rated">Top Rated Movies</NavLink>
+      <NavLink className='category_buttons' to="/">Popular Shows</NavLink>
+      <NavLink className='category_buttons' to="popular">Popular Movies</NavLink>
+      <NavLink className='category_buttons' to="rated">Rated Movies</NavLink>
       <NavLink className='category_buttons' to="upcoming">Upcoming Movies</NavLink>
       <NavLink className='category_buttons' to="filter">Filter</NavLink>
     </div>

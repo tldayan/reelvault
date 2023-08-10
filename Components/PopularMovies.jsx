@@ -61,7 +61,7 @@ export default function PopularMovies() {
       <div className="movielist_container">
         {error ? <p className='error_message'>{errorMsg}</p> : !currentMovies.length ? (
           <div className="load_animation"></div>
-        ) : (
+        ) : ( 
           currentMovies.map((eachMovie) => (
            <MovieCard key={eachMovie.id} eachMovie={eachMovie}/>
            )))}

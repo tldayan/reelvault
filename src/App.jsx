@@ -15,6 +15,8 @@ import AdventureMovies from "../Components/AdventureMovies";
 import ComedyMovies from "../Components/ComedyMovies";
 import HorrorMovies from "../Components/HorrorMovies";
 import Error from "../Components/Error";
+import PopularShows from "../Components/PopularShows";
+import ShowPlayer from "../Components/ShowPlayer";
 
 function App() {
   const [isAnimationPlaying, setIsAnimationPlaying] = useState(true);
@@ -31,7 +33,8 @@ function App() {
     createRoutesFromElements(
         <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<AllMovies />}>
-            <Route path="/" errorElement={<Error />}  element={<PopularMovies />}/> 
+            <Route path="/" errorElement={<Error />}  element={<PopularShows />}/> 
+            <Route path="popular" errorElement={<Error />}  element={<PopularMovies />}/> 
             <Route path="rated" element={<TopRatedMovies />}/>
             <Route path="upcoming" element={<UpcomingMovies />} />
             <Route path="filter" element={<FilteredMovies />}>
@@ -44,6 +47,7 @@ function App() {
           </Route>
           <Route path="about" element={<About />}/>
           <Route path="contactus" element={<ContactUs />}/>
+          <Route path="tvshows/:id" element={<ShowPlayer />} />
           <Route path=":id" element={<MoviePlayer />} />
         </Route>
     )

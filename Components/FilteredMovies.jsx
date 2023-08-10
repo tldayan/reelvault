@@ -5,6 +5,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 export default function FilteredMovies() {
     
   return (
+    <>
     <div className='movietype_container'>
         <h2 className='category_titles'>Filter Movies</h2>
         
@@ -16,10 +17,12 @@ export default function FilteredMovies() {
             <NavLink to="horror" className='filter_buttons'>Horror</NavLink>
         </div>
         
-        <div className='movielist_container'>
+        
+    </div>
+    <div className='movielist_container'>
             <Outlet />
         </div>
-    </div>
+    </>
   )
 }
 
