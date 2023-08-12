@@ -1,5 +1,12 @@
 
 
+import {createGlobalStyle} from "styled-components"
+
+
+export const StyledGlobal = createGlobalStyle`
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Ysabeau+SC&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Laila:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
@@ -1519,3 +1526,5 @@ padding: 15px;
 
 }
 
+
+`
