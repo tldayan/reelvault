@@ -11,7 +11,7 @@ export default function AllMovies() {
   return (
     <>
 
-    <TrailerContainer>
+    <TrailerContainer media={900}>
       <video src={movieTrailer} autoPlay loop muted/>
       <div className='trailer_content'>
         <h4 className='trailer_title'>Fast X</h4>

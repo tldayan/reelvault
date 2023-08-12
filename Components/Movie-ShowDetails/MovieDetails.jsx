@@ -33,6 +33,7 @@ export default function MovieDetails({ movieId }) {
     };
 
     fetchMovieData();
+
   }, [movieId]);
 
   return (
@@ -43,7 +44,7 @@ export default function MovieDetails({ movieId }) {
           src={`https://image.tmdb.org/t/p/w154${movieData.poster_path}`}
           alt=""
         />
-        <div className="movie_info_container">
+        {Object.keys(movieData).length !== 0 ? <div className="movie_info_container">
           <h1 className="movie_title">{movieData.original_title}</h1>
           <p className="movie_overview">{movieData.overview}</p>
           <div className="movie_stats_container">
@@ -75,7 +76,7 @@ export default function MovieDetails({ movieId }) {
               )}
             </div>
           </div>
-        </div>
+        </div> : <div className="load_animation"></div>}
       </MovieDetailsContainer>
 
       <Recommended movieId={movieId} />

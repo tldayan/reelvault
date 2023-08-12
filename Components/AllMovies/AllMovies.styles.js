@@ -1,5 +1,5 @@
 
-import {styled} from "styled-components"
+import {styled,css} from "styled-components"
 
 
 export const TrailerContainer = styled.div`
@@ -41,6 +41,7 @@ video {
   font-family: 'Quicksand', sans-serif;
 }
 
+
 .watch_trailer_btn {
   font-size: clamp(0.4rem, 2vw, 1.5rem);
   text-decoration: none;
@@ -80,6 +81,25 @@ video {
   transform: scale(1.01);
   transition: all 0.8s;
 }
+
+
+${props => props.media && css`
+
+@media (max-width: ${props.media}px) {
+
+
+  .watch_trailer_btn {
+    gap: 4px
+  }
+
+  .play_button {
+      filter: invert(1);
+      width: 20%;
+    }
+
+}
+`}
+
 
 `
 
@@ -121,6 +141,10 @@ export const CategoryButtonsContainer = styled.div`
   background-color: white;
   color: black;
 }
+
+
+
+
 
 
 `

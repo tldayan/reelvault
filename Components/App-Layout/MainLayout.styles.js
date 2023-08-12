@@ -174,6 +174,7 @@ a {
   font-size: 1.3rem;
 }
 
+
 .nav_links {
   text-decoration: none;
   color: rgb(255, 255, 255);
@@ -196,7 +197,8 @@ a {
 
 
 .copyright {
-  font-size: clamp(0.6rem, 2vw, 1rem)
+  font-size: clamp(0.5rem, 1vw, 1rem);
+  font-family: 'Quicksand', sans-serif;
 }
 
 #hamburger {

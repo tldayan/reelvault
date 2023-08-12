@@ -49,5 +49,19 @@ swiper-slide:last-child {
   text-decoration: none;
 }
 
+.category_titles {
+  border: 1px solid #333;
+  text-align: center;
+  padding: 10px 0px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+    background-color: #101010;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  font-family: 'Philosopher', sans-serif;
+  color: rgb(228, 228, 228);
+}
+
+
 
 `

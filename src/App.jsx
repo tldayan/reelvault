@@ -21,8 +21,7 @@ import ComedyMovies from "../Components/GenreMovies/ComedyMovies";
 import HorrorMovies from "../Components/GenreMovies/HorrorMovies";
 import PopularShows from "../Components/PopularShows/PopularShows";
 import ShowPlayer from "../Components/ShowPlayer/ShowPlayer";
-import { StyledGlobal } from "../Components/GlobalStyles/GlobalStyles";
-import ScrollToTop from "./ScrollToTop";
+
 
 function App() {
   const [isAnimationPlaying, setIsAnimationPlaying] = useState(true);
@@ -75,7 +74,6 @@ function App() {
 
   return (
     <>
-    <StyledGlobal />
       {isAnimationPlaying && (
         <svg
           className={`animation ${isAnimationPlaying ? "" : "active"}`}
@@ -88,7 +86,6 @@ function App() {
       )}
       <div className={`fade-in ${isAnimationPlaying ? "" : "active"}`}>
       <RouterProvider router={router}>
-          <ScrollToTop />
         </RouterProvider>
       </div>
     </>
