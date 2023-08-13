@@ -205,16 +205,9 @@ position: relative;
   align-self: stretch;
 }
 
-.season_list_container.hide {
-  opacity: 0;
-  pointer-events: none;
-  display: none;
-}
 
 .season_list_container {
-  
   border: 1px solid #333;
-  
   background-color: #101010;
   position: absolute;
   top: 55px;
@@ -225,16 +218,22 @@ position: relative;
   gap: 5px;
   transform: translateX(-50%);
   box-shadow: 0px 0px 25px 0px rgb(0, 0, 0);
-/*   border: 1px solid white; */
-height: auto;
-max-height: 180px;
-overflow-y: scroll;
+  height: 160px;
+  overflow-y: scroll;
   border-radius: 5px;
   width: 90%;
   list-style-type: none;
-/*   display: none; */
-
+  transition: all ease 0.7s;
 }
+
+.season_list_container.hide {
+  height: 0px;
+  pointer-events: none;
+  visibility: hidden;
+  padding: 0px;
+}
+
+
 
 .season_list_container::-webkit-scrollbar-thumb {
   background-color: rgb(58, 58, 58);

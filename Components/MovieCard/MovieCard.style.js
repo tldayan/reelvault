@@ -8,4 +8,9 @@ export const StyledMovieLink = styled(Link)`
   text-decoration: none;
   overflow: hidden;
 
+
+  .movie_poster {
+  height: 255px;
+}
+
 `

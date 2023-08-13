@@ -79,6 +79,11 @@ export default function ShowDetails({ showId }) {
   }
 
   useEffect(() => {
+    setSelectedEpisode(1)
+  },[selectedSeason])
+
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [selectedEpisode]);
 
@@ -91,7 +96,7 @@ export default function ShowDetails({ showId }) {
           alt=""
         />
         <div className="show_info_container">
-          <h1 className="movie_title">{showData?.original_name}</h1>
+          <h1 className="movie_title">{showData?.name}</h1>
           <p className="movie_overview">{showData?.overview}</p>
           <div className="movie_stats_container">
             <div className="first_stats_container">
