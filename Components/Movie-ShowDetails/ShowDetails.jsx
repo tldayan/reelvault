@@ -87,7 +87,7 @@ export default function ShowDetails({ showId }) {
       <ShowDetailsContainer media={900}>
         <img
           className="movie_details_poster"
-          src={`https://image.tmdb.org/t/p/w154${showData.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${showData.poster_path}`}
           alt=""
         />
         <div className="show_info_container">

@@ -41,7 +41,7 @@ export default function MovieDetails({ movieId }) {
       <MovieDetailsContainer media={900}>
         <img
           className="movie_details_poster"
-          src={`https://image.tmdb.org/t/p/w154${movieData.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`}
           alt=""
         />
         {Object.keys(movieData).length !== 0 ? <div className="movie_info_container">

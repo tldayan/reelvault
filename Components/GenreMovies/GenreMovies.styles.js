@@ -10,7 +10,6 @@ export const GenreMovieTypeContainer = styled.div`
   overflow: hidden;
   width: 95%;
   margin: 10px auto;
-  padding: 40px;
 
 
 .movielist_container {
@@ -43,6 +42,10 @@ ${props => props.media && css`
     .movietype_container {
     padding: 15px;
   }
+
+  .movielist_container {
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+}
 
 }
 `}

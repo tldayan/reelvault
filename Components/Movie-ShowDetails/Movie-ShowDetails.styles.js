@@ -19,7 +19,7 @@ export const MovieDetailsContainer = styled.div`
 
 .movie_details_poster {
 /*   border: 1px solid red; */
-  max-width: 100%;
+  width: 150px;
   height: auto;
   align-self: flex-start;
   border-radius: 5px;
@@ -123,7 +123,7 @@ border: 1px solid #333;
 
 .movie_details_poster {
 /*   border: 1px solid red; */
-  max-width: 100%;
+  width: 150px;
   height: auto;
   align-self: flex-start;
   border-radius: 5px;
@@ -297,9 +297,6 @@ border-radius: 5px;
   border-radius: 10px 0px 0px 10px;
 }
 
-/* .main_episode_list_container::-webkit-scrollbar-track {
-  background-color: rgba(255, 255, 255, 0.701);
-} */
 
 .main_episode_list_container::-webkit-scrollbar {
   width: 6px;
@@ -371,7 +368,7 @@ ${props => props.media && css`
 }
 
 .show_info_container {
-    /*   border: 1px solid rgb(255, 255, 255); */
+
       width: 100%;
 
     }

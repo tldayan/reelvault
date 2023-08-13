@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import tmdbLogo from "../../assets/tmdb_logo.svg"
 import embedLogo from "../../assets/2embed.png"
 import {AboutContainer} from "./About.styles"
@@ -22,6 +22,10 @@ export default function About() {
       }
     }
 
+
+    useEffect(() => {
+      window.scrollTo(0,0)
+    },[])
 
   return (
     <>

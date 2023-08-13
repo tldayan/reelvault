@@ -8,7 +8,7 @@ export const StyledFilteredMoviesContainer = styled.div`
   border: 1px solid #3333337a;
   background-color: #101010;
   border-radius: 5px;
-  padding: 20px;
+  padding: 10px;
   overflow: hidden;
   width: 95%;
   margin: 10px auto;

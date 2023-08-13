@@ -1,13 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getShows } from "../APIs/Api.jsx";
 import ShowCard from "../ShowCard/ShowCard.jsx";
 import { PopularShowsTypeContainer } from "./PopularShows.styles.js";
 
 export default function PopularShows() {
   const [popularShowsData, setPopularShowsData] = useState([]);
+  const popularShowsTypeContainer = useRef()
 
   const [currentPage, setCurrentPage] = useState(1);
   const [showsPerPage] = useState(20);
+
+  useEffect(() => {
+    if (popularShowsTypeContainer.current) {
+      popularShowsTypeContainer.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentPage]);
 
   useEffect(() => {
     if (localStorage.getItem("popularShows")) {
@@ -60,7 +67,7 @@ export default function PopularShows() {
   };
 
   return (
-    <PopularShowsTypeContainer media={900}>
+    <PopularShowsTypeContainer media={900} ref={popularShowsTypeContainer}>
       <h2 className="category_titles">Popular TV Shows</h2>
 
       <div className="movielist_container">

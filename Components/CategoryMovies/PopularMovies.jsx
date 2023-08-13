@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { getMovies } from "../APIs/Api.jsx";
 import MovieCard from "../MovieCard/MovieCard.jsx";
 import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
 
 export default function PopularMovies() {
   const [popularMoviesData, setPopularMoviesData] = useState([]);
+  const categoryMovieTypeContainerRef = useRef()
 
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(20);
   const category = "popular";
+
+  useEffect(() => {
+    if (categoryMovieTypeContainerRef.current) {
+      categoryMovieTypeContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentPage]);
+  
 
   useEffect(() => {
     if (localStorage.getItem("popularMovies")) {
@@ -71,7 +79,7 @@ export default function PopularMovies() {
   };
 
   return (
-    <CategoryMovieTypeContainer media={900}>
+    <CategoryMovieTypeContainer media={900} ref={categoryMovieTypeContainerRef}>
       <h2 className="category_titles">Popular Movies</h2>
       <div className="movielist_container">
         {!currentMovies.length ? (
@@ -83,7 +91,7 @@ export default function PopularMovies() {
         )}
       </div>
 
-      <ul className="pagination">
+      {popularMoviesData.length && <ul className="pagination">
         {pageNumbers.map((eachPageNumber) => (
           <li key={eachPageNumber}>
             <button
@@ -96,7 +104,7 @@ export default function PopularMovies() {
             </button>
           </li>
         ))}
-      </ul>
+      </ul>}
       </CategoryMovieTypeContainer>
   );
 }

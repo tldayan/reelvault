@@ -108,8 +108,6 @@ export default function MainLayout() {
     const hamburger = document.getElementById('hamburger');
     
     function openHamburger() {
-
-        const navLinks = document.querySelector(".nav_links")
       
         hamburger.classList.toggle('open');
       

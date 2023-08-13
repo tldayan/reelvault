@@ -9,7 +9,6 @@ export const StyledMainApp = styled.div`
   min-height: 100vh;
 
 
-
   .logo {
   padding: 0px 5px;
   border: 2px solid rgb(255, 255, 255);
@@ -24,12 +23,9 @@ nav {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  /* border: 1px solid rgb(0, 255, 166); */
 }
 
 .search_field {
-/*   border: 2px solid white; */
-/*   border-radius: 5px; */
   height: 30px;
   width: 0%;
   text-indent: 10px;
@@ -67,10 +63,8 @@ a {
 
 /* SEARCH RESULTS STYLINGS */
 .search_list {
-/*   border: 1px solid rgb(0, 0, 0); */
   width: 100%;
   position: absolute;
-/*   height: 50vh !important; */
   top: 120%;
   left: 0;
   background-color: rgb(255, 255, 255);
@@ -154,7 +148,6 @@ a {
 
 }
 .movie_result_info_container {
-/*   border: 1px solid white; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -294,9 +287,5 @@ ${props => props.media && css`
     
 }
 `}
-
-
-
-
 
 `

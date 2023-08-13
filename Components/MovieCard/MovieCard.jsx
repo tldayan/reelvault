@@ -29,7 +29,7 @@ export default function MovieCard({ eachMovie }) {
         {imageLoaded ? (
           <img
             className="movie_poster"
-            src={eachMovie.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/w154${eachMovie.poster_path}`}
+            src={eachMovie.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/original${eachMovie.poster_path}`}
             alt="imagePoster"
             onLoad={handlePosterLoaded}
           />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getMovies } from "../APIs/Api.jsx";
 import MovieCard from "../MovieCard/MovieCard.jsx";
 import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
@@ -8,6 +8,14 @@ export default function UpcomingMovies() {
   const [moviesPerPage] = useState(20);
   const [UpcomingMoviesData, setUpcomingMoviesData] = useState([]);
   const category = "upcoming";
+  const categoryMovieTypeContainerRef = useRef()
+
+  useEffect(() => {
+    if (categoryMovieTypeContainerRef.current) {
+      categoryMovieTypeContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentPage]);
+
 
   useEffect(() => {
     if (localStorage.getItem("upcomingMovies")) {
@@ -60,7 +68,7 @@ export default function UpcomingMovies() {
   };
 
   return (
-    <CategoryMovieTypeContainer media={900}>
+    <CategoryMovieTypeContainer media={900} ref={categoryMovieTypeContainerRef}>
       <h2 className="category_titles">Upcoming Movies</h2>
       <div className="movielist_container">
         {!currentMovies.length ? (
@@ -72,7 +80,7 @@ export default function UpcomingMovies() {
         )}
       </div>
 
-      <ul className="pagination">
+      {UpcomingMoviesData.length && <ul className="pagination">
         {pages.map((eachPage) => {
           return (
             <li key={eachPage}>
@@ -87,7 +95,7 @@ export default function UpcomingMovies() {
             </li>
           );
         })}
-      </ul>
+      </ul>}
     </CategoryMovieTypeContainer>
   );
 }

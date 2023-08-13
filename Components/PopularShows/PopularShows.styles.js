@@ -80,6 +80,10 @@ ${props => props.media && css`
     padding: 15px;
   }
 
+  .movielist_container {
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+}
+
 }
 `}
 

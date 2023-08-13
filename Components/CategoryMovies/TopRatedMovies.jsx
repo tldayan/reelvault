@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getMovies } from "../APIs/Api.jsx";
 import MovieCard from "../MovieCard/MovieCard.jsx";
 import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
@@ -9,6 +9,16 @@ export default function TopRatedMovies() {
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(20);
   const category = "top_rated";
+  const categoryMovieTypeContainerRef = useRef()
+
+  useEffect(() => {
+    if (categoryMovieTypeContainerRef.current) {
+      categoryMovieTypeContainerRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentPage]);
+  
+
+
 
   useEffect(() => {
     if (localStorage.getItem("ratedMovies")) {
@@ -59,7 +69,7 @@ export default function TopRatedMovies() {
   };
 
   return (
-    <CategoryMovieTypeContainer media={900}>
+    <CategoryMovieTypeContainer media={900} ref={categoryMovieTypeContainerRef}>
       <h2 className="category_titles">Top rated Movies</h2>
       <div className="movielist_container">
         {!currentMovies.length ? (
@@ -71,7 +81,7 @@ export default function TopRatedMovies() {
         )}
       </div>
 
-      <ul className="pagination">
+      {RatedMoviesData.length && <ul className="pagination">
         {pages.map((eachPage) => {
           return (
             <li key={eachPage}>
@@ -86,7 +96,7 @@ export default function TopRatedMovies() {
             </li>
           );
         })}
-      </ul>
+      </ul>}
     </CategoryMovieTypeContainer>
   );
 }

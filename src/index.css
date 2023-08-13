@@ -230,6 +230,7 @@ svg text {
   display: block;
 }
 
+
 .movie_poster:hover {
   transition: 0.3s;
   transform: scale(1.03);
