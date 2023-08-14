@@ -2,7 +2,6 @@ import {styled,css} from "styled-components"
 
 export const GenreMovieTypeContainer = styled.div`
 
-    
   border: 1px solid #3333337a;
   background-color: #101010;
   border-radius: 5px;
@@ -34,6 +33,16 @@ export const GenreMovieTypeContainer = styled.div`
   font-family: 'Philosopher', sans-serif;
   color: rgb(228, 228, 228);
 }
+
+
+.genre_default {
+  color: gray;
+  text-align: center;
+  font-family: 'Philosopher', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.8rem, 5vw, 1rem);
+}
+
 
 ${props => props.media && css`
 

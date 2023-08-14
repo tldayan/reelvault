@@ -1,10 +1,12 @@
 
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useOutlet } from 'react-router-dom';
 import { StyledFilteredMoviesContainer } from './FilteredMovies.styles';
+import GenreDefault from '../GenreMovies/GenreDefault';
 
 
 export default function FilteredMovies() {
-    
+
+
   return (
     <>
     <StyledFilteredMoviesContainer media={900}>
@@ -18,8 +20,9 @@ export default function FilteredMovies() {
             <NavLink to="horror" className='filter_buttons'>Horror</NavLink>
         </div> 
         </StyledFilteredMoviesContainer>
-    <div className='movielist_container'>
-            <Outlet />
+
+        <div className='movielist_container'>
+            {useOutlet() !== null ? <Outlet /> : <GenreDefault />}
         </div>
     </>
   )

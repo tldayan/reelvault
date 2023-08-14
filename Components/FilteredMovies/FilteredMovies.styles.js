@@ -47,7 +47,7 @@ export const StyledFilteredMoviesContainer = styled.div`
   height: 25px;
   display: block;
   background-color: #2c2c2c;
-  color: white;
+  color: #c9c9c9;
   border-radius: 3px;
   outline: none;
   border: none;
