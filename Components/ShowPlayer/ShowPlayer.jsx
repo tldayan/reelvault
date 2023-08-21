@@ -15,7 +15,7 @@ export default function ShowPlayer() {
   useEffect(() => {
     dispatch(
       EpisodeLinkActions.setEpisodeLink(
-        `https://vidsrc.me/embed/tv?tmdb=${showId}&season=1&episode=1`
+        `https://vidsrc.me/embed/tv?tmdb=${showId}&season=1&episode=1/`
       )
     );
   }, [showId]);

@@ -19,7 +19,7 @@ export default function MoviePlayer() {
         ) : (
           <iframe
             className="movie_player"
-            src={`https://vidsrc.me/embed/movie?tmdb=${movieId}`}
+            src={`https://vidsrc.me/embed/${movieId}`}
             allowFullScreen
           ></iframe>
         )}

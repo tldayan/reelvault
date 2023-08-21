@@ -55,7 +55,7 @@ export const getMovies = async(page,category) => {
 export const getShows = async(page) => {
 
   try {
-    const response = await fetch(`https://api.themoviedb.org/3/trending/tv/day?language=en-US&page=${page}`, {
+    const response = await fetch(`https://api.themoviedb.org/3/tv/popular?language=en-US&page=${page}`, {
   method: 'GET',
   headers: {
     accept: 'application/json',

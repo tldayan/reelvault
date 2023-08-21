@@ -6,9 +6,10 @@ import { PopularShowsTypeContainer } from "./PopularShows.styles.js";
 export default function PopularShows() {
   const [popularShowsData, setPopularShowsData] = useState([]);
   const popularShowsTypeContainer = useRef()
+  const [isLoading,setIsLoading] = useState(true)
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [showsPerPage] = useState(20);
+  const [showsPerPage] = useState(40);
 
   useEffect(() => {
     if (popularShowsTypeContainer.current) {
@@ -19,6 +20,7 @@ export default function PopularShows() {
   useEffect(() => {
     if (localStorage.getItem("popularShows")) {
       setPopularShowsData(JSON.parse(localStorage.getItem("popularShows")));
+      setIsLoading(false)
     } else {
       const fetchPopularShows = async () => {
         const [data1, data2, data3, data4] = await Promise.all([
@@ -38,8 +40,11 @@ export default function PopularShows() {
             JSON.stringify([...data1, ...data2, ...data3, ...data4])
           );
         }
+
+        setIsLoading(false)
       };
       fetchPopularShows();
+
     }
   }, []);
 
@@ -71,12 +76,14 @@ export default function PopularShows() {
       <h2 className="category_titles">Popular TV Shows</h2>
 
       <div className="movielist_container">
-        {!currentShows.length ? (
+        {isLoading ? (
           <div className="load_animation"></div>
         ) : (
-          currentShows.map((eachShow) => (
-            <ShowCard key={eachShow.id} eachShow={eachShow} />
-          ))
+          currentShows.map(eachShow => {
+            if(eachShow.original_language === "en") {
+              return <ShowCard key={eachShow.id} eachShow={eachShow} />
+            }
+          })
         )}
       </div>
 

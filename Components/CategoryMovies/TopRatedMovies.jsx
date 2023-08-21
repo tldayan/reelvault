@@ -5,7 +5,7 @@ import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
 
 export default function TopRatedMovies() {
   const [RatedMoviesData, setRatedMoviesData] = useState([]);
-
+  const [isLoading,setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(20);
   const category = "top_rated";
@@ -23,6 +23,7 @@ export default function TopRatedMovies() {
   useEffect(() => {
     if (localStorage.getItem("ratedMovies")) {
       setRatedMoviesData(JSON.parse(localStorage.getItem("ratedMovies")));
+      setIsLoading(false)
     } else {
       const fetchRatedMovies = async () => {
         const [data1, data2, data3] = await Promise.all([
@@ -40,6 +41,7 @@ export default function TopRatedMovies() {
           "ratedMovies",
           JSON.stringify([...data1, ...data2, ...data3])
         );
+        setIsLoading(false)
       };
 
       fetchRatedMovies();
@@ -72,7 +74,7 @@ export default function TopRatedMovies() {
     <CategoryMovieTypeContainer media={900} ref={categoryMovieTypeContainerRef}>
       <h2 className="category_titles">Top rated Movies</h2>
       <div className="movielist_container">
-        {!currentMovies.length ? (
+      {isLoading ? (
           <div className="load_animation"></div>
         ) : (
           currentMovies.map((eachMovie) => (

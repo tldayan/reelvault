@@ -6,6 +6,7 @@ import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
 export default function PopularMovies() {
   const [popularMoviesData, setPopularMoviesData] = useState([]);
   const categoryMovieTypeContainerRef = useRef()
+  const [isLoading,setIsLoading] = useState(true)
 
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(20);
@@ -22,6 +23,7 @@ export default function PopularMovies() {
   useEffect(() => {
     if (localStorage.getItem("popularMovies")) {
       setPopularMoviesData(JSON.parse(localStorage.getItem("popularMovies")));
+      setIsLoading(false)
     } else {
       const fetchPopularMovies = async () => {
         const [data1, data2, data3, data4, data5] = await Promise.all([
@@ -47,6 +49,7 @@ export default function PopularMovies() {
             JSON.stringify([...data1, ...data2, ...data3, ...data4, ...data5])
           );
         }
+        setIsLoading(false)
       };
       fetchPopularMovies();
     }
@@ -83,7 +86,7 @@ export default function PopularMovies() {
     <CategoryMovieTypeContainer media={900} ref={categoryMovieTypeContainerRef}>
       <h2 className="category_titles">Popular Movies</h2>
       <div className="movielist_container">
-        {!currentMovies.length ? (
+        {isLoading ? (
           <div className="load_animation"></div>
         ) : (
           currentMovies.map((eachMovie) => (

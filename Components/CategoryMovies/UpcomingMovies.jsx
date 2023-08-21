@@ -6,6 +6,7 @@ import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
 export default function UpcomingMovies() {
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(20);
+  const [isLoading,setIsLoading] = useState(true)
   const [UpcomingMoviesData, setUpcomingMoviesData] = useState([]);
   const category = "upcoming";
   const categoryMovieTypeContainerRef = useRef()
@@ -20,6 +21,7 @@ export default function UpcomingMovies() {
   useEffect(() => {
     if (localStorage.getItem("upcomingMovies")) {
       setUpcomingMoviesData(JSON.parse(localStorage.getItem("upcomingMovies")));
+      setIsLoading(false)
     } else {
       const fetchUpcomingMovies = async () => {
         try {
@@ -41,6 +43,7 @@ export default function UpcomingMovies() {
         } catch (error) {
           console.log(error);
         }
+        setIsLoading(false)
       };
       fetchUpcomingMovies();
     }
@@ -71,13 +74,13 @@ export default function UpcomingMovies() {
     <CategoryMovieTypeContainer media={900} ref={categoryMovieTypeContainerRef}>
       <h2 className="category_titles">Upcoming Movies</h2>
       <div className="movielist_container">
-        {!currentMovies.length ? (
-          <div className="load_animation"></div>
-        ) : (
-          currentMovies.map((eachMovie) => (
-            <MovieCard key={eachMovie.id} eachMovie={eachMovie} />
-          ))
-        )}
+        {isLoading ? (
+            <div className="load_animation"></div>
+          ) : (
+            currentMovies.map((eachMovie) => (
+              <MovieCard key={eachMovie.id} eachMovie={eachMovie} />
+            ))
+          )}
       </div>
 
       {UpcomingMoviesData.length && <ul className="pagination">
