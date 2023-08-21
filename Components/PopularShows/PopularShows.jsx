@@ -9,7 +9,7 @@ export default function PopularShows() {
   const [isLoading,setIsLoading] = useState(true)
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [showsPerPage] = useState(40);
+  const [showsPerPage] = useState(44);
 
   useEffect(() => {
     if (popularShowsTypeContainer.current) {
@@ -80,7 +80,7 @@ export default function PopularShows() {
           <div className="load_animation"></div>
         ) : (
           currentShows.map(eachShow => {
-            if(eachShow.original_language === "en") {
+            if(eachShow.original_language === "en" && eachShow.poster_path !== null) {
               return <ShowCard key={eachShow.id} eachShow={eachShow} />
             }
           })

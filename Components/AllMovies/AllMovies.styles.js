@@ -104,8 +104,9 @@ ${props => props.media && css`
 `
 
 export const CategoryButtonsContainer = styled.div`
-  border: 1px solid #3333337a;
-  background-color: #101010;
+
+/*   border: 1px solid #3333337a;
+  background-color: #101010; */
   border-radius: 5px;
   padding: 10px;
   display: flex;
@@ -117,11 +118,11 @@ export const CategoryButtonsContainer = styled.div`
 
   
 .category_buttons {
-  border: 1px solid rgba(51, 51, 51, 0.779);
-  background-color: #101010;
+/*   border: 1px solid rgba(51, 51, 51, 0.779);
+  background-color: #101010; */
   border-radius: 5px;
   text-decoration: none;
-  color: white;
+  color: rgba(211, 211, 211, 1);
   text-decoration: none;
   padding: 5px 15px;
   text-align: center;
@@ -129,17 +130,19 @@ export const CategoryButtonsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 3px;
+  border-radius: 7px;
   font-size: clamp(0.3rem, 2.5vw, 1rem);
-  font-family: 'Philosopher', sans-serif;
+  font-family: 'Quicksand', sans-serif;
+  
 }
 .category_buttons:hover {
-  background-color: white;
-  color: black;
+  background-color: rgba(208, 208, 208, 0.103);
+  transition: all 0.5s
+/*   color: black; */
 }
 .category_buttons.active{
-  background-color: white;
-  color: black;
+  background-color: rgba(208, 208, 208, 0.103);
+/*   color: black; */
 }
 
 

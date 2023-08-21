@@ -4,17 +4,16 @@ import {styled,css} from "styled-components"
 
 export const CategoryMovieTypeContainer = styled.div`
     
-  border: 1px solid #3333337a;
-  background-color: #101010;
+/*   border: 1px solid #3333337a;
+  background-color: #101010; */
   border-radius: 5px;
-  padding: 20px;
+  padding: 0px 20px;
   overflow: hidden;
   width: 95%;
   margin: 10px auto;
 
 
 .movielist_container {
-/*   border: 1px solid rgb(0, 255, 166); */
   display: grid;
   overflow: hidden;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -24,7 +23,7 @@ export const CategoryMovieTypeContainer = styled.div`
 }
     
 .category_titles {
-  border: 1px solid #333;
+/*   border: 1px solid #333; */
   text-align: center;
   padding: 10px 0px;
   font-size: 1.5rem;
