@@ -32,7 +32,8 @@ export const PopularShowsTypeContainer = styled.div`
     background-color: #101010;
   margin-top: 5px;
   margin-bottom: 20px;
-  font-family: 'Philosopher', sans-serif;
+  font-weight: normal;
+  font-family: 'Quicksand', sans-serif;
   color: rgb(228, 228, 228);
 }
 

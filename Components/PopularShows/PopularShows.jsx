@@ -8,8 +8,9 @@ export default function PopularShows() {
   const popularShowsTypeContainer = useRef()
   const [isLoading,setIsLoading] = useState(true)
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [showsPerPage] = useState(44);
+  const [currentPage, setCurrentPage] = useState(localStorage.getItem("latestPage") ? JSON.parse(localStorage.getItem("latestPage")) : 1);
+
+  const [showsPerPage] = useState(74);
 
   useEffect(() => {
     if (popularShowsTypeContainer.current) {
@@ -23,21 +24,26 @@ export default function PopularShows() {
       setIsLoading(false)
     } else {
       const fetchPopularShows = async () => {
-        const [data1, data2, data3, data4] = await Promise.all([
+        const [data1, data2, data3, data4,data5,data6,data7,data8,data9] = await Promise.all([
           getShows(1),
           getShows(2),
           getShows(3),
           getShows(4),
+          getShows(5),
+          getShows(6),
+          getShows(7),
+          getShows(8),
+          getShows(9)
         ]);
 
         if (data1.message) {
           console.log(data1.message);
         } else {
-          setPopularShowsData([...data1, ...data2, ...data3, ...data4]);
+          setPopularShowsData([...data1, ...data2, ...data3, ...data4,...data5,...data6,...data7,...data8,...data9]);
 
           localStorage.setItem(
             "popularShows",
-            JSON.stringify([...data1, ...data2, ...data3, ...data4])
+            JSON.stringify([...data1, ...data2, ...data3, ...data4,...data5,...data6,...data7,...data8,...data9])
           );
         }
 
@@ -64,12 +70,15 @@ export default function PopularShows() {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
 
+      localStorage.setItem("latestPage", pageNumber.toString())
+
     const movieContainer = document.querySelector(
       ".category_buttons_container"
     );
 
     movieContainer.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
 
   return (
     <PopularShowsTypeContainer media={900} ref={popularShowsTypeContainer}>
@@ -88,7 +97,7 @@ export default function PopularShows() {
       </div>
 
       <ul className="pagination">
-        {pageNumbers.map((eachPageNumber) => (
+        {!isLoading && pageNumbers.map((eachPageNumber) => (
           <li key={eachPageNumber}>
             <button
               className={`page_buttons ${

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useParams } from "react-router-dom";
 import { ScrollRestoration, Link } from "react-router-dom";
 import ShowDetails from "../Movie-ShowDetails/ShowDetails";
@@ -11,21 +11,38 @@ export default function ShowPlayer() {
   const showId = params.id;
   const dispatch = useDispatch();
   const EpisodeLink = useSelector((state) => state.EpisodeLink.episodeLink);
+  const storedShowName = (useSelector((state) => state.ShowName.showName) || JSON.parse(localStorage.getItem("showName")))
+  
+  const [showName, setShowName] = useState(storedShowName)
+  
+
+  useEffect(() => {
+    setShowName(storedShowName)
+    localStorage.setItem("showName", JSON.stringify(storedShowName))
+  },[storedShowName])
+
 
   useEffect(() => {
     dispatch(
       EpisodeLinkActions.setEpisodeLink(
-        `https://vidsrc.me/embed/tv?tmdb=${showId}&season=1&episode=1/`
+        `https://vidsrc.me/embed/${showId}/1-1/`
       )
     );
   }, [showId]);
 
+
+
   return (
     <>
+    <div className="back_button_container">
       <Link to="/" className="back_button">
         &#10094; Back to Home
       </Link>
+    </div>
+      
+      
       <div className="movie_player_container">
+      <p className="watching_show_notice">Watching: {showName}</p>
         {!EpisodeLink ? (
           <div className="load_animation"></div>
         ) : (

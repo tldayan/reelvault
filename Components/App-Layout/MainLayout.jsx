@@ -5,6 +5,9 @@ import searchIcon from "../../assets/search_icon.svg"
 import defaultPoster from "../../assets/no_image.jpg";
 import {React,useState,useEffect, useRef} from 'react'
 import { StyledMainApp } from "./MainLayout.styles";
+import { useDispatch } from "react-redux";
+import { MovieNameActions } from "../store/MovieNameSlice";
+import { ShowNameActions } from "../store/ShowNameSlice";
 
 export default function MainLayout() {
     const searchInput = useRef(null)
@@ -12,6 +15,7 @@ export default function MainLayout() {
     const [searchResults, setSearchResults] = useState([])
     const [animationPlaying, setAnimationPlaying] = useState(true)
     const [showId, setShowId] = useState(null)
+    const dispatch = useDispatch()
   
     
     useEffect(() => {
@@ -126,10 +130,16 @@ export default function MainLayout() {
       }
       
 
-    function closeResultList() {
+    function closeResultList(result) {
       setSearchResults([])
       results.style.height = "0px"
       searchField.style.width = "0%"
+
+      if(result.original_title) {
+        dispatch(MovieNameActions.setMovieName(result.original_title))
+      } else {
+        dispatch(ShowNameActions.setShowName(result.original_name))
+      }
     }
 
   return (
@@ -149,7 +159,7 @@ export default function MainLayout() {
                     />
                     <div className='search_list'>
                         {searchResults.map(eachResult => {
-                        return  <Link onClick={closeResultList} to={`${eachResult.original_name ? `tvshows/${eachResult.id}` : eachResult.id}`} key={eachResult.id} className='result'>
+                        return  <Link onClick={() => closeResultList(eachResult)} to={`${eachResult.original_name ? `tvshows/${eachResult.id}` : eachResult.id}`} key={eachResult.id} className='result'>
                                     <img className='search_results_movie_poster' src={eachResult.poster_path !== null ? `https://image.tmdb.org/t/p/w154${eachResult.poster_path}` : defaultPoster} alt="" />
                                     <div className='movie_result_info_container'>
                                       <p className='search_results_movie_title'>{eachResult.original_title || eachResult.original_name}</p>

@@ -9,7 +9,7 @@ export default function PopularMovies() {
   const [isLoading,setIsLoading] = useState(true)
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage] = useState(20);
+  const [moviesPerPage] = useState(40);
   const category = "popular";
 
   useEffect(() => {
@@ -95,9 +95,9 @@ export default function PopularMovies() {
         )}
       </div>
 
-      {popularMoviesData.length && <ul className="pagination">
-        {pageNumbers.map((eachPageNumber) => (
-          <li key={eachPageNumber}>
+      {!isLoading && <ul className="pagination">
+        {pageNumbers.map((eachPageNumber) => {
+          return <li key={eachPageNumber}>
             <button
               className={`page_buttons ${
                 currentPage === eachPageNumber ? "selectedPageButton" : ""
@@ -107,7 +107,7 @@ export default function PopularMovies() {
               {eachPageNumber}
             </button>
           </li>
-        ))}
+})}
       </ul>}
       </CategoryMovieTypeContainer>
   );

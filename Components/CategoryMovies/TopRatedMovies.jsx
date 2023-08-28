@@ -7,7 +7,7 @@ export default function TopRatedMovies() {
   const [RatedMoviesData, setRatedMoviesData] = useState([]);
   const [isLoading,setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage] = useState(20);
+  const [moviesPerPage] = useState(40);
   const category = "top_rated";
   const categoryMovieTypeContainerRef = useRef()
 
@@ -26,20 +26,22 @@ export default function TopRatedMovies() {
       setIsLoading(false)
     } else {
       const fetchRatedMovies = async () => {
-        const [data1, data2, data3] = await Promise.all([
+        const [data1, data2, data3,data4,data5] = await Promise.all([
           getMovies(1, category),
           getMovies(2, category),
           getMovies(3, category),
+          getMovies(4, category),
+          getMovies(5, category)
         ]);
 
         if (data1.message) {
           console.log(data1.message);
         } else {
-          setRatedMoviesData([...data1, ...data2, ...data3]);
+          setRatedMoviesData([...data1, ...data2, ...data3,...data4,...data5]);
         }
         localStorage.setItem(
           "ratedMovies",
-          JSON.stringify([...data1, ...data2, ...data3])
+          JSON.stringify([...data1, ...data2, ...data3,...data4,...data5])
         );
         setIsLoading(false)
       };
@@ -83,7 +85,7 @@ export default function TopRatedMovies() {
         )}
       </div>
 
-      {RatedMoviesData.length && <ul className="pagination">
+      {!isLoading && <ul className="pagination">
         {pages.map((eachPage) => {
           return (
             <li key={eachPage}>

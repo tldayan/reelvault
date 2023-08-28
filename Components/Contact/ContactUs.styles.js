@@ -13,6 +13,7 @@ export const ContactUsContainer = styled.div`
      font-family: 'Philosopher', sans-serif;
 
 .contact_us_title {
+  color: white;
   font-size: 1.5rem;
   text-align: center;
   display: block;

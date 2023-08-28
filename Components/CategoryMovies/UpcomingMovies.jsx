@@ -5,7 +5,7 @@ import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
 
 export default function UpcomingMovies() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [moviesPerPage] = useState(20);
+  const [moviesPerPage] = useState(40);
   const [isLoading,setIsLoading] = useState(true)
   const [UpcomingMoviesData, setUpcomingMoviesData] = useState([]);
   const category = "upcoming";
@@ -25,20 +25,22 @@ export default function UpcomingMovies() {
     } else {
       const fetchUpcomingMovies = async () => {
         try {
-          const [data1, data2, data3] = await Promise.all([
+          const [data1, data2, data3,data4,data5] = await Promise.all([
             getMovies(1, category),
             getMovies(2, category),
             getMovies(3, category),
+            getMovies(4, category),
+            getMovies(5, category)
           ]);
 
           if (data1.message) {
             console.log(data1.message);
           } else {
-            setUpcomingMoviesData([...data1, ...data2, ...data3]);
+            setUpcomingMoviesData([...data1, ...data2, ...data3,...data4,...data5]);
           }
           localStorage.setItem(
             "upcomingMovies",
-            JSON.stringify([...data1, ...data2, ...data3])
+            JSON.stringify([...data1, ...data2, ...data3,...data4,...data5])
           );
         } catch (error) {
           console.log(error);
@@ -83,7 +85,7 @@ export default function UpcomingMovies() {
           )}
       </div>
 
-      {UpcomingMoviesData.length && <ul className="pagination">
+      {!isLoading && <ul className="pagination">
         {pages.map((eachPage) => {
           return (
             <li key={eachPage}>

@@ -5,6 +5,8 @@ export const MoviePlayerContainer = styled.div`
   width: 95%;
   display: flex;
   align-items: center;
+  flex-direction: column;
+  gap: 10px;
   justify-content: center;
   margin: 0 auto;
   height: 500px;
@@ -18,6 +20,7 @@ export const MoviePlayerContainer = styled.div`
   margin: 0 auto;
   height: 100%;
   width: 100%;
+  border-radius: 10px;
 }
 
 `

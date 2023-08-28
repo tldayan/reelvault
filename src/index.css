@@ -114,7 +114,6 @@ html::-webkit-scrollbar-track {
 
 /* MAIN LOADING ANIMATION */
 svg text {
-  /* font-size: clamp(3rem, 15vw, 6.25rem); */
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 900;
   text-transform: uppercase;
@@ -215,6 +214,7 @@ svg text {
   font-size: 0.7rem;
   font-family: 'Quicksand', sans-serif;
   letter-spacing: 1px;
+  z-index: 1;
 }
 
 .movie_poster_container {
@@ -232,8 +232,8 @@ svg text {
 
 
 .movie_poster:hover {
-  transition: 0.3s;
-  transform: scale(1.03);
+  transition: 1s;
+  transform: scale(1.1);
 }
 
 /* POSTER LOADING SKELETON */
@@ -270,12 +270,13 @@ svg text {
 
 
 .movie_player_container {
- /*  border: 1px solid rgb(255, 0, 0); */
   width: 95%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  gap: 10px;
   height: 500px;
   margin-top: 25px;
 }
@@ -300,7 +301,7 @@ svg text {
 
 
 footer {
-/*     border: 1px solid rgb(255, 0, 0); */
+
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.255);
   background-color: rgb(0, 0, 0);
   border-top: 1px solid rgba(255, 255, 255, 0.254);
@@ -326,6 +327,7 @@ footer {
   padding: 1px 9px;
   font-weight: bold;
   font-size: 0.8rem;
+  z-index: 1;
   
 }
 .movie_vote {
@@ -338,6 +340,7 @@ footer {
   padding: 1px 9px;
   font-weight: bold;
   font-size: 0.8rem;
+  z-index: 1;
 }
 
 
@@ -356,35 +359,52 @@ footer {
   font-weight: bold;
 }
 
-
+.back_button_container {
+     width: 95%;
+     display: flex;
+     margin: 0 auto;
+}
 
 .back_button {
   text-decoration: none;
-  border: 1px solid #333;
   background-color: #101010;
   padding: 5px;
-  color: white;
+  color: rgba(211, 211, 211, 1);
   border-radius: 2px;
   display: inline-block;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  margin-left: 20px;
   position: relative;
+  margin-top: 10px;
   font-weight: 500;
   font-size: clamp(0.3rem, 2vw, 0.75rem);
   transition: all ease 0.4s;
 }
 
 .back_button:hover {
-  border: 1px solid #333;
-  background-color: #ffffff;
+  background-color: white;
   color: black;
+  transition: all 0.5s
 }
 
 
 .container {
   display: none;
 }
+
+.watching_show_notice {
+  color: white;
+  font-size: clamp(0.5rem, 4vw, 1.4rem);
+  align-self: flex-start;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+}
+.watching_movie_notice {
+  color: white;
+  font-size: clamp(0.5rem, 4vw, 1.4rem);
+  align-self: flex-start;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: bold;
+}
+
 
 @media (max-width:900px) {
 
@@ -402,7 +422,6 @@ footer {
   
 
   .logo {
-     /*  margin-left: 5px; */
       margin-right: auto;
       z-index: 9999;
     }

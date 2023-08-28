@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import defaultPoster from "../../assets/no_image.jpg";
 import { StyledMovieLink } from './MovieCard.style';
+import { useDispatch } from 'react-redux';
+import { MovieNameActions } from '../store/MovieNameSlice';
 
 export default function MovieCard({ eachMovie }) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [posterLoaded, setPosterLoaded] = useState(false)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -14,14 +17,21 @@ export default function MovieCard({ eachMovie }) {
     return () => clearTimeout(timer);
   }, []); 
 
+  
+  function handleMovieName(movieName) {
+    dispatch(MovieNameActions.setMovieName(movieName))
+  }
+
+
   function handlePosterLoaded() {
     setPosterLoaded(true)
   }
 
+
   return (
-    <StyledMovieLink to={`/${eachMovie.id}`} key={eachMovie.id}>
+    <StyledMovieLink to={`/${eachMovie.id}`} onClick={() => handleMovieName(eachMovie.title)} key={eachMovie.id}>
       <div className="movie_poster_container">
-        <div className="movie_language">{eachMovie.original_language.toUpperCase()}</div>
+        {posterLoaded && <div className="movie_language">{eachMovie.original_language.toUpperCase()}</div>}
         {posterLoaded && <div className="movie_date">{eachMovie.release_date.slice(0, 4)}</div>}
         {posterLoaded && <div className={"movie_vote " + (eachMovie.vote_average > 7 ? "green" : eachMovie.vote_average < 5 ? "red" : "orange")}>
           {eachMovie.vote_average.toFixed(1)}

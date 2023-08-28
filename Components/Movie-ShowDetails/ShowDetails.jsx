@@ -68,11 +68,13 @@ export default function ShowDetails({ showId }) {
   const handleEpisodeSelect = (seasonNumber, episodeNumber) => {
     dispatch(
       EpisodeLinkActions.setEpisodeLink(
-        `https://vidsrc.me/embed/tv?tmdb=${showId}&season=${seasonNumber}&episode=${episodeNumber}`
+        `https://vidsrc.me/embed/${showId}/${seasonNumber}-${episodeNumber}`
       )
     );
     setSelectedEpisode(episodeNumber);
   };
+
+  
 
   function openSeasonsContainer() {
     seasonsContainer.classList.toggle("hide");
@@ -81,6 +83,8 @@ export default function ShowDetails({ showId }) {
   useEffect(() => {
     setSelectedEpisode(1)
   },[selectedSeason])
+
+
 
 
   useEffect(() => {

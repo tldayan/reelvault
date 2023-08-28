@@ -6,14 +6,12 @@ export const TrailerContainer = styled.div`
 
 position: relative;
 
-
-
 video {
   width: 100%;
   display: block;
 
 }
-
+  
 .trailer_content {
   position: absolute;
   bottom: 10%;

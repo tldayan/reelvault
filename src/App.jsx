@@ -40,12 +40,8 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
         <Route path="/" element={<AllMovies />}>
-          <Route path="/" errorElement={<Error />} element={<PopularShows />} />
-          <Route
-            path="popular"
-            errorElement={<Error />}
-            element={<PopularMovies />}
-          />
+          <Route path="/" element={<PopularShows />} />
+          <Route path="popular" element={<PopularMovies />}/>
           <Route path="rated" element={<TopRatedMovies />} />
           <Route path="upcoming" element={<UpcomingMovies />} />
           <Route path="filter" element={<FilteredMovies />}>
