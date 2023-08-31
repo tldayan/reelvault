@@ -279,6 +279,10 @@ position: relative;
   background-color: #ffffff;
   color: #101010;
 }
+.season_button.active {
+  background-color: #19e898;
+  color: #101010;
+}
 
 .main_episode_list_container {
   border: 1px solid #333;
@@ -340,7 +344,7 @@ border-radius: 5px;
 }
 
 .episode_buttons.active {
-  background-color: white;
+  background-color: #19e898;
   color: #101010;
 }
 

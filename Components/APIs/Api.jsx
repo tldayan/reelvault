@@ -79,7 +79,7 @@ export const getShows = async(page) => {
 export const getShowDetails = async(showId) => {
   try {
     const response  = await fetch(`https://api.themoviedb.org/3/tv/${showId}?language=en-US`, {
-    method: 'GET',
+    method: 'GET', 
   headers: {
     accept: 'application/json',
     Authorization: `Bearer ${API_KEY}`

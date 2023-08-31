@@ -3,22 +3,45 @@ import { useParams } from "react-router-dom";
 import MovieDetails from "../Movie-ShowDetails/MovieDetails";
 import { ScrollRestoration, Link } from "react-router-dom";
 import { MoviePlayerContainer } from "./MoviePlayer.styles";
-import { useSelector } from "react-redux";
 
 
 export default function MoviePlayer() {
   const params = useParams();
   const movieId = params.id;
-  const storedMovieName = (useSelector((state) => state.MovieName.movieName) || JSON.parse(localStorage.getItem("movieName")))
-  
-  
-  const [movieName, setMovieName] = useState(storedMovieName)
-  
+
+  const [movieData, setMovieData] = useState({});
+  const [genres, setGenres] = useState([]);
+  const [productionCompanies, setProductionCompanies] = useState([]);
+  const [productionCountries, setProductionCountries] = useState([]);
 
   useEffect(() => {
-    setMovieName(storedMovieName)
-    localStorage.setItem("movieName", JSON.stringify(storedMovieName))
-  },[storedMovieName])
+    const API_URL = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
+
+    const fetchMovieData = async () => {
+      try {
+        const response = await fetch(API_URL, {
+          headers: {
+            accept: "application/json",
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo",
+          },
+        });
+
+        const data = await response.json();
+
+        setMovieData(data);
+        setGenres(data.genres || []);
+        setProductionCompanies(data.production_companies || []);
+        setProductionCountries(data.production_countries || []);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+
+    fetchMovieData();
+
+  }, [movieId]);
+  
 
   return (
     <>
@@ -29,7 +52,7 @@ export default function MoviePlayer() {
     </div>
       
       <MoviePlayerContainer>
-      <p className="watching_movie_notice">Watching: {movieName}</p>
+      <p className="watching_movie_notice">Watching: {movieData.original_title}</p>
         {!movieId ? (
           <div className="load_animation"></div>
         ) : (
@@ -40,7 +63,7 @@ export default function MoviePlayer() {
           ></iframe>
         )}
       </MoviePlayerContainer>
-      <MovieDetails movieId={movieId} />
+      <MovieDetails movieData={movieData} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
       <ScrollRestoration top={true} />
     </>
   );

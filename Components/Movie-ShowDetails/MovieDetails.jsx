@@ -1,40 +1,8 @@
-import React, { useEffect, useState } from "react";
 import Recommended from "../Recommended/Recommended";
 import { MovieDetailsContainer } from "./Movie-ShowDetails.styles";
 
-export default function MovieDetails({ movieId }) {
-  const [movieData, setMovieData] = useState({});
-  const [genres, setGenres] = useState([]);
-  const [productionCompanies, setProductionCompanies] = useState([]);
-  const [productionCountries, setProductionCountries] = useState([]);
-
-  useEffect(() => {
-    const API_URL = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
-
-    const fetchMovieData = async () => {
-      try {
-        const response = await fetch(API_URL, {
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo",
-          },
-        });
-
-        const data = await response.json();
-
-        setMovieData(data);
-        setGenres(data.genres || []);
-        setProductionCompanies(data.production_companies || []);
-        setProductionCountries(data.production_countries || []);
-      } catch (error) {
-        alert(error.message);
-      }
-    };
-
-    fetchMovieData();
-
-  }, [movieId]);
+export default function MovieDetails({movieData,movieId,genres,productionCompanies,productionCountries}) {
+  
 
   return (
     <>
