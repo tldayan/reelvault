@@ -10,7 +10,6 @@ export default function FilteredMovies() {
   return (
     <>
     <StyledFilteredMoviesContainer media={900}>
-       {/*  <h2 className='category_titles'>Filter Movies</h2> */}
         
         <div className='filter_buttons_container'>
             <NavLink to="action" className='filter_buttons'>Action</NavLink>

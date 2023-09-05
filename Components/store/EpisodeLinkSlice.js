@@ -7,8 +7,6 @@ const EpisodeLinkSlice = createSlice({
     initialState : {episodeLink : ""},
     reducers : {
         setEpisodeLink(state,action) {
-            const link = action.payload
-
             state.episodeLink  = action.payload
         }
     }

@@ -19,19 +19,27 @@ export default function MainLayout() {
   
     
     useEffect(() => {
+
+      let entitySearch = undefined
+    
+      if(search.endsWith(" ")) {
+        entitySearch = search.slice(0,-1)
+      } else {
+        entitySearch = search
+      }
   
-      const movieSearchApi = `https://api.themoviedb.org/3/search/movie?query=${search}&include_adult=false&language=en-US&page=1`
-      const showSearchApi = `https://api.themoviedb.org/3/search/tv?query=${search}&include_adult=false&language=en-US&page=1`
+      const movieSearchApi = `https://api.themoviedb.org/3/search/movie?query=${entitySearch}&include_adult=false&language=en-US&page=1`
+      const showSearchApi = `https://api.themoviedb.org/3/search/tv?query=${entitySearch}&include_adult=false&language=en-US&page=1`
 
       const fetchSearchData = async() => {
   
         try {
 
           const movieResponse = await fetch(movieSearchApi , {
-                  headers : {
-                    accept: 'application/json',
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo'
-                  }
+              headers : {
+              accept: 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo'
+            }
           })
 
           const showResponse = await fetch(showSearchApi , {
@@ -47,9 +55,8 @@ export default function MainLayout() {
 
           const searchData = [...movieData.results,...showData.results];
 
-          let filteredSearchData = searchData.filter(eachResult => (eachResult.original_name || eachResult.original_title).toLowerCase().includes(search.toLowerCase()))
+          let filteredSearchData = searchData.filter(eachResult => (eachResult.original_name || eachResult.original_title).toLowerCase().includes(entitySearch.toLowerCase()))
 
-          
             setSearchResults(filteredSearchData)
 
         } catch (error) {
@@ -141,6 +148,7 @@ export default function MainLayout() {
         dispatch(ShowNameActions.setShowName(result.original_name))
       }
     }
+
 
   return (
     <StyledMainApp>

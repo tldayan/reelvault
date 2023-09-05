@@ -218,7 +218,7 @@ position: relative;
   gap: 5px;
   transform: translateX(-50%);
   box-shadow: 0px 0px 25px 0px rgb(0, 0, 0);
-  height: 160px;
+  max-height: 160px;
   overflow-y: scroll;
   border-radius: 5px;
   width: 90%;
@@ -227,7 +227,7 @@ position: relative;
 }
 
 .season_list_container.hide {
-  height: 0px;
+  max-height: 0px;
   pointer-events: none;
   visibility: hidden;
   padding: 0px;

@@ -35,7 +35,7 @@ export default function ShowCard({ eachShow }) {
     <StyledShowLink to={`tvshows/${eachShow.id}`} onClick={() => handleShowName(eachShow.name)} key={eachShow.id}>
       <div className="movie_poster_container">
         {posterLoaded && <div className="movie_language">{eachShow.original_language.toUpperCase()}</div>}
-        {posterLoaded && <div className="movie_date">{eachShow.first_air_date.slice(0, 4)}</div>}
+        {posterLoaded && <div className="movie_date">{eachShow.first_air_date?.slice(0, 4)}</div>}
         {posterLoaded && <div className={"movie_vote " + (eachShow.vote_average > 7 ? "green" : eachShow.vote_average < 5 ? "red" : "orange")}>
           {eachShow.vote_average.toFixed(1)}
         </div>}
