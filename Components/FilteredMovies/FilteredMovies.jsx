@@ -6,7 +6,6 @@ import GenreDefault from '../GenreMovies/GenreDefault';
 
 export default function FilteredMovies() {
 
-
   return (
     <>
     <StyledFilteredMoviesContainer media={900}>

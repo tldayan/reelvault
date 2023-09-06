@@ -33,7 +33,7 @@ export default function MovieCard({ eachMovie }) {
       <div className="movie_poster_container">
         {posterLoaded && <div className="movie_language">{eachMovie.original_language.toUpperCase()}</div>}
         {posterLoaded && <div className="movie_date">{eachMovie.release_date.slice(0, 4)}</div>}
-        {posterLoaded && <div className={"movie_vote " + (eachMovie.vote_average > 7 ? "green" : eachMovie.vote_average < 5 ? "red" : "orange")}>
+        {posterLoaded && <div className={"movie_vote" + (eachMovie.vote_average > 7 ? "green" : eachMovie.vote_average < 5 ? "red" : "orange")}>
           {eachMovie.vote_average.toFixed(1)}
         </div>}
         {imageLoaded ? (
