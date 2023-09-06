@@ -8,6 +8,7 @@ import { StyledMainApp } from "./MainLayout.styles";
 import { useDispatch } from "react-redux";
 import { MovieNameActions } from "../store/MovieNameSlice";
 import { ShowNameActions } from "../store/ShowNameSlice";
+import { getMovieSearchData, getShowSearchData } from "../APIs/Api";
 
 export default function MainLayout() {
     const searchInput = useRef(null)
@@ -28,33 +29,14 @@ export default function MainLayout() {
         entitySearch = search
       }
   
-      const movieSearchApi = `https://api.themoviedb.org/3/search/movie?query=${entitySearch}&include_adult=false&language=en-US&page=1`
-      const showSearchApi = `https://api.themoviedb.org/3/search/tv?query=${entitySearch}&include_adult=false&language=en-US&page=1`
-
       const fetchSearchData = async() => {
   
         try {
 
-          const movieResponse = await fetch(movieSearchApi , {
-              headers : {
-              accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo'
-            }
-          })
+          const [movieResponse, showResponse] = await Promise.all([getMovieSearchData(entitySearch), getShowSearchData(entitySearch)]);
 
-          const showResponse = await fetch(showSearchApi , {
-            headers : {
-              accept: 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo'
-            }
-    })
-          
-  
-          const movieData = await movieResponse.json()
-          const showData = await showResponse.json()
-
-          const searchData = [...movieData.results,...showData.results];
-
+          const searchData = [...movieResponse.results, ...showResponse.results];
+    
           let filteredSearchData = searchData.filter(eachResult => (eachResult.original_name || eachResult.original_title).toLowerCase().includes(entitySearch.toLowerCase()))
 
             setSearchResults(filteredSearchData)

@@ -96,3 +96,46 @@ export const getShowDetails = async(showId) => {
     return {error : true, message : error.message}
   }
 }
+
+export const getMovieSearchData = async(entityName) => {
+
+
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${entityName}&include_adult=false&language=en-US&page=1`,{
+      headers : {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_KEY}`
+    }
+  })
+
+  
+  const MovieDATA = await response.json()
+  return MovieDATA
+
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+export const getShowSearchData = async(entityName) => {
+
+
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/search/tv?query=${entityName}&include_adult=false&language=en-US&page=1`,{
+      headers : {
+      accept: 'application/json',
+      Authorization: `Bearer ${API_KEY}`
+    }
+  })
+
+  
+  const ShowDATA = await response.json()
+  return ShowDATA
+
+
+  } catch (error) {
+    console.log(error)
+  }
+}
