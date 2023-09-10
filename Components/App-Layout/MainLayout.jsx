@@ -14,8 +14,6 @@ export default function MainLayout() {
     const searchInput = useRef(null)
     const [search,setSearch] = useState("")
     const [searchResults, setSearchResults] = useState([])
-    const [animationPlaying, setAnimationPlaying] = useState(true)
-    const [showId, setShowId] = useState(null)
     const dispatch = useDispatch()
   
     
@@ -47,7 +45,8 @@ export default function MainLayout() {
   
       }
   
-      if(search === 0) {
+      if(search === 0 ) {
+        
         return
       } else {
         fetchSearchData()
@@ -55,30 +54,6 @@ export default function MainLayout() {
      
     },[search])
 
-
-
-
-    useEffect(() => {
-        const results = document.querySelector(".search_list");
-        if (search) {
-          results.style.padding = "0";
-          results.style.boxShadow = "0px 0px 2px 0px rgba(0, 0, 0, 0.2)"
-        } else {
-          results.style.boxShadow = "none"
-          
-        }
-      }, [search]);
-
-      useEffect(() => {
-        const results = document.querySelector(".search_list");
-        if(searchResults.length === 1) {
-          results.style.height = "105px"
-        } else if(searchResults.length === 0) {
-          results.style.height = "0px"
-        } else {
-          results.style.height = "70vh"
-        }
-      },[searchResults])
 
     const results = document.querySelector(".search_list")
     const searchField = document.querySelector('.search_field');
@@ -115,13 +90,12 @@ export default function MainLayout() {
       function returnHome() {
         mobileMenu.style.left = "100%";
         hamburger.classList.toggle("open")
-        
       }
       
 
     function closeResultList(result) {
       setSearchResults([])
-      results.style.height = "0px"
+      results.classList.remove("active")
       searchField.style.width = "0%"
 
       if(result.original_title) {
@@ -147,7 +121,7 @@ export default function MainLayout() {
                         onChange={(e) => setSearch(e.target.value)}
                         ref={searchInput}
                     />
-                    <div className='search_list'>
+                    <div className={`search_list ${searchResults.length > 0 ? "active" : null}`}>
                         {searchResults.map(eachResult => {
                         return  <Link onClick={() => closeResultList(eachResult)} to={`${eachResult.original_name ? `tvshows/${eachResult.id}` : eachResult.id}`} key={eachResult.id} className='result'>
                                     <img className='search_results_movie_poster' src={eachResult.poster_path !== null ? `https://image.tmdb.org/t/p/w154${eachResult.poster_path}` : defaultPoster} alt="" />
@@ -173,7 +147,6 @@ export default function MainLayout() {
                 <ul className="nav_container">
                     <NavLink to="/" className="nav_links" onClick={returnHome}>Home</NavLink>
                     <NavLink to="about" className="nav_links" onClick={returnHome}>About</NavLink>
-                    {/* <NavLink to="/#movies_section" className="nav_links">Movies</NavLink> */}
                     <NavLink to="contactus" className="nav_links" onClick={returnHome}>Contact</NavLink>
                 </ul>
                 <div className="container">

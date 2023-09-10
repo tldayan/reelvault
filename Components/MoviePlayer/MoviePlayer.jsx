@@ -52,7 +52,7 @@ export default function MoviePlayer() {
     </div>
       
       <MoviePlayerContainer>
-      <p className="watching_movie_notice">Watching: {movieData.original_title}</p>
+      <p className="watching_movie_notice">Watching: {movieData.original_title ? movieData.original_title : "..."}</p>
         {!movieId ? (
           <div className="load_animation"></div>
         ) : (

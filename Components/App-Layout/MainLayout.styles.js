@@ -74,7 +74,18 @@ a {
   overflow-y: scroll;
   transition: all 0.5s;
   z-index: 998;
+  max-height:0vh;
+  box-shadow:none;
 }
+
+
+.search_list.active {
+  max-height: 80vh;
+  padding: 0;
+  box-shadow: 0px 0px 21px 0px rgba(0, 0, 0, 0.458);
+
+}
+
 
 .search_list::-webkit-scrollbar{
   width: 5px;
