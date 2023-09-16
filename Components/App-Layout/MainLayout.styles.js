@@ -26,10 +26,11 @@ nav {
 }
 
 .search_field {
-  height: 30px;
-  width: 0%;
+  height: 25px;
+  width: 100%;
+  margin-bottom: 2px;
   text-indent: 10px;
-  font-size: clamp(0.7rem, 3vw, 1.1rem);
+  font-size: clamp(0.7rem, 1vw, 1.1rem);
   border: none;
   outline: none;
   margin-left: auto;
@@ -37,12 +38,14 @@ nav {
   font-family: 'Ysabeau SC', sans-serif;
   background-color: transparent;
   color: white;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.222);
 }
 
 .search_container {
-/*   border: 2px solid rgb(255, 0, 0); */
-  width: 60%;
+  background-color: #101010;
+  border-radius: 53px;
+  padding: 5px;
+  margin: 20px auto 0px auto;
+  width: min(80%, 900px);
   position: relative;
   display: flex;
   align-items: center;
@@ -50,8 +53,8 @@ nav {
 }
 
 .search_icon {
-  cursor: pointer;
-  margin-right: 15px;
+  width: 18px;
+  margin-right: 10px;
   filter: invert(1);
   -webkit-tap-highlight-color: transparent;
 }
@@ -174,7 +177,7 @@ a {
 .nav_container {
   display: flex;
   align-self: center;
-  gap: 5px ;
+  gap: 10px ;
   font-size: 1.3rem;
 }
 

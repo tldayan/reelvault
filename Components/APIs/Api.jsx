@@ -108,10 +108,20 @@ export const getMovieSearchData = async(entityName) => {
     }
   })
 
-  
-  const MovieDATA = await response.json()
-  return MovieDATA
 
+  
+  const DATA = await response.json()
+  const movieData = DATA.results
+
+  let filteredData = []
+
+  movieData.map(eachMovie => {
+    if(eachMovie.poster_path && eachMovie.vote_count > 50 && eachMovie.release_date?.slice(0,4) > 1970) {
+      filteredData.push(eachMovie)
+    }
+  })
+
+  return filteredData
 
   } catch (error) {
     console.log(error)
@@ -129,13 +139,70 @@ export const getShowSearchData = async(entityName) => {
       Authorization: `Bearer ${API_KEY}`
     }
   })
-
   
-  const ShowDATA = await response.json()
-  return ShowDATA
+  const DATA = await response.json()
+  const showData = DATA.results
+  let filteredData = []
 
+  showData.map(eachShow => {
+    if(eachShow.poster_path && eachShow.vote_count > 50 && eachShow.first_air_date?.slice(0,4) > 2000) {
+      filteredData.push(eachShow)
+    }
+  })
+  
+  return filteredData
 
   } catch (error) {
     console.log(error)
   }
+}
+
+export const getMovieReviews = async(movieId) => {
+
+  try {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/reviews?language=en-US&page=1`, {
+    method : "GET",
+    headers : {
+      accept : "application/json",
+      Authorization : `Bearer ${API_KEY}`
+    }})
+
+    if(!response.ok) {
+      throw new Error(`Failed to fetch reviews: ${response.status}`)
+    }
+
+  const DATA = await response.json()
+
+  return DATA.results
+  } catch (err) {
+    console.log(err.message)
+  }
+
+}
+
+
+export const getShowReviews = async(showId) => {
+
+  try {
+  const response = await fetch(`https://api.themoviedb.org/3/tv/${showId}/reviews?language=en-US&page=1`,{
+    method : "GET",
+    headers : {
+      accept : "application/json",
+      Authorization : `Bearer ${API_KEY}`
+    }
+  })
+
+  if(!response.ok) {
+    throw new Error ("Could not fetch show reviews")
+  }
+
+  const DATA = await response.json()
+
+  return DATA.results
+
+  } catch (err) {
+    console.log(err.message)
+  }
+
+
 }

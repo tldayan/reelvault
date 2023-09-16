@@ -8,6 +8,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;900&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sofia&display=swap');
+
+
 * {
   margin: 0;
   padding: 0;
@@ -51,8 +54,6 @@ body {
 
 header {
 /*   border: 1px solid black; */
-  position: sticky;
-  top: 0;
   z-index: 999;
   padding: 30px 15px;
   background-color: rgb(0, 0, 0);
@@ -71,6 +72,15 @@ html::-webkit-scrollbar-track {
   background: white;
 }
 
+.slogan {
+  color: white;
+  font-family: 'Sofia', cursive;
+  margin-top: 40px;
+  text-align: center;
+  font-size: clamp(0.5rem,3.5vw,2rem);
+  user-select: none;
+}
+
 
 
 /* PAGINATION STYLINGS */
@@ -84,7 +94,6 @@ html::-webkit-scrollbar-track {
   gap: 10px ;
   margin: 50px auto 0px auto;
   padding: 10px;
-  
 }
 
 .page_buttons {
@@ -228,17 +237,23 @@ svg text {
   width: 100%;
   height: auto !important;
   display: block;
+  transition: transform 1s;
 }
-
 
 .movie_poster:hover {
-  transition: 1s;
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
+
+.movie_poster:not(:hover) {
+  transform: scale(1);
+}
+
+
+
 
 /* POSTER LOADING SKELETON */
 .movie_poster_skeleton {
-  background-color: rgb(182, 182, 182);
+  background-color: rgb(255, 255, 255);
   border-radius: 10px;
   width: 100%;
   height: 100px;
@@ -254,7 +269,7 @@ svg text {
   left: -100%; 
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent); /* Create a gradient effect */
+  background: linear-gradient(90deg, transparent, rgba(200, 200, 200, 0.875), transparent);
   animation: skeletonAnimation 1.5s infinite; 
 }
 
@@ -263,13 +278,14 @@ svg text {
     left: -100%;
   }
   100% {
-    left: 100%; 
+    left: 60%; 
   }
 }
 
 
 
 .movie_player_container {
+/*   border: 1px solid red; */
   width: 95%;
   display: flex;
   flex-direction: column;
@@ -283,12 +299,37 @@ svg text {
 
 
 .movie_player {
+/*   border: 1px solid red; */
   border: none;
-  display: block;
+  margin: 0 auto;
+  height: 0%;
+  width: 100%;
+}
+.show_player {
+/*   border: 1px solid red; */
+  border: none;
+  margin: 0 auto;
+  height: 0%;
+  width: 100%;
+  border-radius: 10px;
+}
+
+
+.movie_player_skeleton {
+ /*  border: 1px solid red; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
   height: 100%;
   width: 100%;
 }
+
+
+
+
+
+
 
 .error_message {
   color: white;

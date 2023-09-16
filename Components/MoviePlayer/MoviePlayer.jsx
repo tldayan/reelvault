@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {React, useEffect, useState,useRef } from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../Movie-ShowDetails/MovieDetails";
 import { ScrollRestoration, Link } from "react-router-dom";
@@ -9,10 +9,15 @@ export default function MoviePlayer() {
   const params = useParams();
   const movieId = params.id;
 
+  const movieLoadContainer = useRef(null);
+  const IframeElement = useRef(null);
+  
   const [movieData, setMovieData] = useState({});
   const [genres, setGenres] = useState([]);
   const [productionCompanies, setProductionCompanies] = useState([]);
   const [productionCountries, setProductionCountries] = useState([]);
+
+
 
   useEffect(() => {
     const API_URL = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
@@ -43,6 +48,15 @@ export default function MoviePlayer() {
   }, [movieId]);
   
 
+
+
+  function handleIframeLoad() {
+    
+    movieLoadContainer.current.style.display = "none"
+    IframeElement.current.style.height = "100%"
+  }
+
+
   return (
     <>
       <div className="back_button_container">
@@ -53,15 +67,18 @@ export default function MoviePlayer() {
       
       <MoviePlayerContainer>
       <p className="watching_movie_notice">Watching: {movieData.original_title ? movieData.original_title : "..."}</p>
-        {!movieId ? (
-          <div className="load_animation"></div>
-        ) : (
-          <iframe
-            className="movie_player"
-            src={`https://vidsrc.me/embed/${movieId}`}
-            allowFullScreen
-          ></iframe>
-        )}
+  <div ref={movieLoadContainer} className="movie_player_skeleton">
+    <div className="load_animation"></div>
+  </div>
+
+  <iframe
+    ref={IframeElement}
+    className="movie_player"
+    src={`https://vidsrc.me/embed/${movieId}`}
+    allowFullScreen
+    onLoad={handleIframeLoad}
+  ></iframe>
+
       </MoviePlayerContainer>
       <MovieDetails movieData={movieData} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
       <ScrollRestoration top={true} />

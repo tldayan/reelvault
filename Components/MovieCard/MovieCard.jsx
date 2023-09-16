@@ -22,7 +22,6 @@ export default function MovieCard({ eachMovie }) {
     dispatch(MovieNameActions.setMovieName(movieName))
   }
   
-
   function handlePosterLoaded() {
     setPosterLoaded(true)
   }

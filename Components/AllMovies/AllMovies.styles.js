@@ -9,7 +9,6 @@ position: relative;
 video {
   width: 100%;
   display: block;
-
 }
   
 .trailer_content {
@@ -27,7 +26,9 @@ video {
   font-size: clamp(1rem, 6vw, 6rem);
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  
 }
+
 .trailer_info {
   font-size: clamp(0.4rem, 1vw, 1.3rem);
   opacity: 0.8;
@@ -79,6 +80,7 @@ video {
   transform: scale(1.01);
   transition: all 0.8s;
 }
+
 
 
 ${props => props.media && css`

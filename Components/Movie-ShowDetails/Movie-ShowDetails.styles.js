@@ -2,10 +2,11 @@
 import {css, styled} from "styled-components"
 
 export const MovieDetailsContainer = styled.div`
-  border: 1px solid #333;
-  background-color: #101010;
+/* background-color: #101010; */
+background-color: #0b0b0b;
+
   width: 95%;
-  margin: 50px auto;
+  margin: 20px auto;
   padding: 25px;
   display: flex;
   align-items: center;
@@ -106,10 +107,10 @@ ${props => props.media && css`
 
 export const ShowDetailsContainer = styled.div`
 
-border: 1px solid #333;
-  background-color: #101010;
+/* border: 1px solid #333; */
+background-color: #0b0b0b;
   width: 95%;
-  margin: 50px auto;
+  margin: 20px auto;
   padding: 25px;
   display: flex;
   align-items: center;

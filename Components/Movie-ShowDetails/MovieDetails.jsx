@@ -1,4 +1,5 @@
 import Recommended from "../Recommended/Recommended";
+import Reviews from "../Reviews/Reviews";
 import { MovieDetailsContainer } from "./Movie-ShowDetails.styles";
 
 export default function MovieDetails({movieData,movieId,genres,productionCompanies,productionCountries}) {
@@ -10,7 +11,7 @@ export default function MovieDetails({movieData,movieId,genres,productionCompani
         <img
           className="movie_details_poster"
           src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`}
-          alt=""
+          alt="Movie Details"
         />
         {Object.keys(movieData).length !== 0 ? <div className="movie_info_container">
           <h1 className="movie_title">{movieData.original_title}</h1>
@@ -46,8 +47,11 @@ export default function MovieDetails({movieData,movieId,genres,productionCompani
           </div>
         </div> : <div className="load_animation"></div>}
       </MovieDetailsContainer>
+      
+      <Reviews movieId={movieId}/>
 
       <Recommended movieId={movieId} />
+      
     </>
   );
 }

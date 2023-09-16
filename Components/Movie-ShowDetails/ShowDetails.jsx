@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import { ShowDetailsContainer } from "./Movie-ShowDetails.styles";
+import Reviews from "../Reviews/Reviews";
 
 export default function ShowDetails({ showId,showData,setEpisodeList,setSelectedEpisode,setSelectedSeason,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
 
@@ -76,7 +77,7 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
           src={`https://image.tmdb.org/t/p/original${showData.poster_path}`}
           alt=""
         />
-        <div className="show_info_container">
+        {Object.keys(showData).length !== 0 ? <div className="show_info_container">
           <h1 className="movie_title">{showData?.name}</h1>
           <p className="movie_overview">{showData?.overview}</p>
           <div className="movie_stats_container">
@@ -106,7 +107,7 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
               )}
             </div>
           </div>
-        </div>
+        </div> : <div className="load_animation"></div>}
         <div className="shows_list_container">
           <div className="main_season_list_container">
             <button onClick={openSeasonsContainer} className="seasons_button">
@@ -149,6 +150,7 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
           </div>
         </div>
       </ShowDetailsContainer>
+      <Reviews showId={showId}/>
     </>
   );
 }

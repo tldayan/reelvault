@@ -8,7 +8,4 @@ export const StyledMovieLink = styled(Link)`
   text-decoration: none;
   overflow: hidden;
 
-
-
-
 `

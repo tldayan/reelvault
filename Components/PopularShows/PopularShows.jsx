@@ -14,7 +14,7 @@ export default function PopularShows() {
 
   useEffect(() => {
     if (popularShowsTypeContainer.current) {
-      popularShowsTypeContainer.current.scrollIntoView({ behavior: "smooth" });
+      popularShowsTypeContainer.current.scrollIntoView();
     }
   }, [currentPage]);
 
@@ -72,11 +72,6 @@ export default function PopularShows() {
 
       localStorage.setItem("latestPage", pageNumber.toString())
 
-    const movieContainer = document.querySelector(
-      ".category_buttons_container"
-    );
-
-    movieContainer.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
 

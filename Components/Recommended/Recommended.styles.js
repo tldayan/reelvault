@@ -4,8 +4,8 @@ import {styled} from "styled-components"
 
 
 export const RecommendedContainer = styled.div`
-  border: 1px solid #333;
-  background-color: #101010;
+  /* border: 1px solid #333; */
+ background-color: #0b0b0b;
   width: 95%;
   margin: 50px auto;
   padding: 25px;
@@ -50,12 +50,12 @@ swiper-slide:last-child {
 }
 
 .category_titles {
-  border: 1px solid #333;
+/*   border: 1px solid #333; */
   text-align: center;
   padding: 10px 0px;
   font-size: 1.5rem;
   border-radius: 5px;
-    background-color: #101010;
+    background-color: #000000;
   margin-top: 5px;
   margin-bottom: 20px;
   font-family: 'Philosopher', sans-serif;

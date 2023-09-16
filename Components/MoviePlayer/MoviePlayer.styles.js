@@ -18,7 +18,7 @@ export const MoviePlayerContainer = styled.div`
   border: none;
   display: block;
   margin: 0 auto;
-  height: 100%;
+  height: 0%;
   width: 100%;
   border-radius: 10px;
 }

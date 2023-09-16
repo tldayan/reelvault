@@ -14,7 +14,7 @@ export default function PopularMovies() {
 
   useEffect(() => {
     if (categoryMovieTypeContainerRef.current) {
-      categoryMovieTypeContainerRef.current.scrollIntoView({ behavior: "smooth" });
+      categoryMovieTypeContainerRef.current.scrollIntoView();
     }
   }, [currentPage]);
   
@@ -74,12 +74,6 @@ export default function PopularMovies() {
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
-
-    const movieContainer = document.querySelector(
-      ".category_buttons_container"
-    );
-
-    movieContainer.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   return (

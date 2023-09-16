@@ -25,13 +25,19 @@ import ShowPlayer from "../Components/ShowPlayer/ShowPlayer";
 
 function App() {
   const [isAnimationPlaying, setIsAnimationPlaying] = useState(true);
+  const [animationPlayed] = useState(sessionStorage.getItem("animationPlayed") || "false")
 
+  
   useEffect(() => {
-    const animationTimeout = setTimeout(() => {
-      setIsAnimationPlaying(false);
-    }, 5000);
 
-    return () => clearTimeout(animationTimeout);
+    scrollTo(0,0)
+
+    const animationTimeout = setTimeout(() => {
+          setIsAnimationPlaying(false);
+          sessionStorage.setItem("animationPlayed", "true")
+        }, 5000);
+
+        return () => clearTimeout(animationTimeout);
   }, []);
 
 
@@ -61,16 +67,22 @@ function App() {
   );
 
   useEffect(() => {
-    if (isAnimationPlaying) {
-      document.body.style.overflow = "hidden";
+
+    if(animationPlayed === "false") {
+      if (isAnimationPlaying) {
+            document.body.style.overflow = "hidden";
+          } else {
+            document.body.style.overflow = "auto";
+          }
     } else {
-      document.body.style.overflow = "auto";
+      return
     }
+
   }, [isAnimationPlaying]);
 
   return (
     <>
-      {isAnimationPlaying && (
+      {animationPlayed === "false" && isAnimationPlaying && 
         <svg
           className={`animation ${isAnimationPlaying ? "" : "active"}`}
           width="100%"
@@ -79,8 +91,8 @@ function App() {
             ReelVault
           </text>
         </svg>
-      )}
-      <div className={`fade-in ${isAnimationPlaying ? "" : "active"}`}>
+      }
+      <div className={`fade-in ${animationPlayed === "false" && isAnimationPlaying ? "" : "active"}`}>
       <RouterProvider router={router}>
         </RouterProvider>
       </div>
