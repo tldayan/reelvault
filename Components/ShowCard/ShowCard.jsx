@@ -44,6 +44,7 @@ export default function ShowCard({ eachShow }) {
             className="movie_poster"
             src={eachShow.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/original${eachShow.poster_path}`}
             alt="imagePoster"
+            loading='lazy'
             onLoad={handlePosterLoaded}
           />
         ) : (

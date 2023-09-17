@@ -10,7 +10,7 @@ export const GenreMovieTypeContainer = styled.div`
   width: 98%;
   font-family: 'Quicksand', sans-serif;
   font-weight: bold;
-  margin: 10px auto;
+  margin: 10px auto 70px auto;
   
 
 

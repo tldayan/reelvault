@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import MovieDetails from "../Movie-ShowDetails/MovieDetails";
 import { ScrollRestoration, Link } from "react-router-dom";
 import { MoviePlayerContainer } from "./MoviePlayer.styles";
+import { getTrailer } from "../APIs/Api";
 
 
 export default function MoviePlayer() {
@@ -16,6 +17,7 @@ export default function MoviePlayer() {
   const [genres, setGenres] = useState([]);
   const [productionCompanies, setProductionCompanies] = useState([]);
   const [productionCountries, setProductionCountries] = useState([]);
+  const [trailerKey, setTrailerKey] = useState("")
 
 
 
@@ -34,13 +36,17 @@ export default function MoviePlayer() {
 
         const data = await response.json();
 
+        const movieTrailerKey = await getTrailer(movieId)
+        setTrailerKey(`${movieTrailerKey}`)
         setMovieData(data);
         setGenres(data.genres || []);
         setProductionCompanies(data.production_companies || []);
         setProductionCountries(data.production_countries || []);
+        
       } catch (error) {
         alert(error.message);
       }
+
     };
 
     fetchMovieData();
@@ -51,7 +57,6 @@ export default function MoviePlayer() {
 
 
   function handleIframeLoad() {
-    
     movieLoadContainer.current.style.display = "none"
     IframeElement.current.style.height = "100%"
   }
@@ -80,7 +85,7 @@ export default function MoviePlayer() {
   ></iframe>
 
       </MoviePlayerContainer>
-      <MovieDetails movieData={movieData} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
+      <MovieDetails trailerKey={trailerKey} movieData={movieData} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
       <ScrollRestoration top={true} />
     </>
   );

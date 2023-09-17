@@ -1,11 +1,13 @@
 
 import {NavLink,Link, Outlet} from "react-router-dom"
-import {React} from 'react'
+import {React, useEffect, useState} from 'react'
 import { StyledMainApp } from "./MainLayout.styles";
 
 
 export default function MainLayout() {
 
+
+    const [showChevron, setShowChevron] = useState(false);
     const mobileMenu = document.querySelector("ul");
     const hamburger = document.getElementById('hamburger');
     
@@ -25,6 +27,26 @@ export default function MainLayout() {
         mobileMenu.style.left = "100%";
         hamburger.classList.toggle("open")
       }
+      
+
+      useEffect(() => {
+        const handleScroll = () => {
+        const scrollPosition = window.scrollY;
+  
+        if (scrollPosition > 0) {
+          setShowChevron(true); // Show the "chevron_up" div if user is anywhere else but at the top
+        } else {
+          setShowChevron(false); // Hide the "chevron_up" div if user is at the top
+        }
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+  
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+      },[])
+
       
 
 
@@ -54,6 +76,7 @@ export default function MainLayout() {
         <main>
             <Outlet/>
         </main>
+        <div onClick={() => window.scrollTo(0,0)} className='chevron_up' style={{ opacity: showChevron ? '1' : '0',cursor: showChevron ? "pointer" : "auto" }}></div>
         <footer>
             <Link to="/" className="logo">ReelVault</Link>
             <p className="copyright">&copy; 2023 ReelVault. All rights reserved.</p>

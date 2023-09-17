@@ -85,7 +85,7 @@ html::-webkit-scrollbar-track {
 
 /* PAGINATION STYLINGS */
 .pagination {
-  border: 1px solid #3333337a;
+  /* border: 1px solid #3333337a; */
   border-radius: 5px;
   list-style-type: none;
   display: flex;
@@ -97,7 +97,8 @@ html::-webkit-scrollbar-track {
 }
 
 .page_buttons {
-  border: 1px solid #3333337a;
+  /* border: 1px solid #3333337a; */
+  border: none;
   background-color: #101010;
   border-radius: 5px;
   padding: 10px;
@@ -446,6 +447,41 @@ footer {
   font-weight: bold;
 }
 
+.chevron_up {
+  position: fixed;
+  bottom: 5%;
+  right: 2%;
+  /* bottom:1%;
+  left: 50%; */
+  transform: translate(-50%,-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  /*   border: 2px solid transparent; */
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 999;
+  transition: all ease 0.3s;
+}
+
+.chevron_up::after {
+  content: "";
+  position: absolute;
+  top: 40%;
+  left: 30%;
+  transform: translate(50%, 50%);
+  width: 10px;
+  height: 10px;
+  border-top: 2px solid;
+  border-right: 2px solid;
+  transform: rotate(-45deg);
+  color: black;
+}
+
 
 @media (max-width:900px) {
 
@@ -462,6 +498,11 @@ footer {
   }
   
 
+  .chevron_up {
+    bottom:1.1%;
+    left: 50%;
+  }
+  
   .logo {
       margin-right: auto;
       z-index: 9999;

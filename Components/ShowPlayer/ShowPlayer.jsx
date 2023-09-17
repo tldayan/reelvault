@@ -34,7 +34,8 @@ export default function ShowPlayer() {
       }
 
       setShowData(ShowData);
-      setSeasonList(ShowData.seasons.slice(1));
+      let filteredSeasons = ShowData.seasons.filter(eachSeason => eachSeason.name !== "Specials" && eachSeason.air_date !== null)
+      setSeasonList([...filteredSeasons]);
       setGenres(ShowData.genres || []);
       setProductionCompanies(ShowData.production_companies || []);
       setProductionCountries(ShowData.production_countries || []);

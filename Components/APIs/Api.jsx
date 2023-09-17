@@ -206,3 +206,26 @@ export const getShowReviews = async(showId) => {
 
 
 }
+
+export const getTrailer = async(movieId) => {
+
+  try {
+
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos`,{
+      method: "GET",
+      headers : {
+        accept : "application/json",
+        Authorization : `Bearer ${API_KEY}`
+      }  
+    })
+
+    const Data = await response.json()
+    
+    return Data.results.find(eachType => eachType.type === "Trailer" && eachType.size === 1080).key
+
+  } catch (err) {
+    console.log(err.message)
+  }
+
+
+}

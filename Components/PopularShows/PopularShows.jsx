@@ -8,15 +8,7 @@ export default function PopularShows() {
   const popularShowsTypeContainer = useRef()
   const [isLoading,setIsLoading] = useState(true)
 
-  const [currentPage, setCurrentPage] = useState(localStorage.getItem("latestPage") ? JSON.parse(localStorage.getItem("latestPage")) : 1);
 
-  const [showsPerPage] = useState(74);
-
-  useEffect(() => {
-    if (popularShowsTypeContainer.current) {
-      popularShowsTypeContainer.current.scrollIntoView();
-    }
-  }, [currentPage]);
 
   useEffect(() => {
     if (localStorage.getItem("popularShows")) {
@@ -54,26 +46,6 @@ export default function PopularShows() {
     }
   }, []);
 
-  const indexOfLastShow = currentPage * showsPerPage;
-  const indexOfFirstShow = indexOfLastShow - showsPerPage;
-  const currentShows = popularShowsData.slice(
-    indexOfFirstShow,
-    indexOfLastShow
-  );
-
-  const pageNumbers = [];
-
-  for (let i = 1; i <= Math.ceil(popularShowsData.length / showsPerPage); i++) {
-    pageNumbers.push(i);
-  }
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-
-      localStorage.setItem("latestPage", pageNumber.toString())
-
-  };
-
 
   return (
     <PopularShowsTypeContainer media={900} ref={popularShowsTypeContainer}>
@@ -83,7 +55,7 @@ export default function PopularShows() {
         {isLoading ? (
           <div className="load_animation"></div>
         ) : (
-          currentShows.map(eachShow => {
+          popularShowsData.map(eachShow => {
             if(eachShow.original_language === "en" && eachShow.poster_path !== null) {
               return <ShowCard key={eachShow.id} eachShow={eachShow} />
             }
@@ -91,20 +63,6 @@ export default function PopularShows() {
         )}
       </div>
 
-      <ul className="pagination">
-        {!isLoading && pageNumbers.map((eachPageNumber) => (
-          <li key={eachPageNumber}>
-            <button
-              className={`page_buttons ${
-                currentPage === eachPageNumber ? "selectedPageButton" : ""
-              }`}
-              onClick={() => paginate(eachPageNumber)}
-            >
-              {eachPageNumber}
-            </button>
-          </li>
-        ))}
-      </ul>
       </PopularShowsTypeContainer>
   );
 }

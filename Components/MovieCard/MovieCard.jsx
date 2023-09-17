@@ -40,6 +40,7 @@ export default function MovieCard({ eachMovie }) {
             className="movie_poster"
             src={eachMovie.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/original${eachMovie.poster_path}`}
             alt="imagePoster"
+            loading='lazy'
             onLoad={handlePosterLoaded}
           />
         ) : (

@@ -4,13 +4,12 @@ import {css, styled} from "styled-components"
 export const MovieDetailsContainer = styled.div`
 /* background-color: #101010; */
 background-color: #0b0b0b;
-
+/*   border: 1px solid red; */
   width: 95%;
   margin: 20px auto;
   padding: 25px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 15px;
   color: #8f8f8f;
   font-family: 'Philosopher', sans-serif;
@@ -18,8 +17,17 @@ background-color: #0b0b0b;
   font-size: clamp(0.5rem, 5vw, 1rem);
   text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.182);
 
+
+  .trailer {
+    border: 1px solid rgba(86, 86, 86, 0.582);
+    border-radius: 10px;
+    align-self: stretch;
+    width: 50%;
+   /*  box-shadow: 0px 0px 25px rgba(255, 255, 255, 0.068); */
+  }
+
 .movie_details_poster {
-/*   border: 1px solid red; */
+  /* border: 1px solid red; */
   width: 150px;
   height: auto;
   align-self: flex-start;
@@ -38,7 +46,7 @@ background-color: #0b0b0b;
 }
 
 .movie_info_container {
-/*   border: 1px solid rgb(255, 255, 255); */
+  /* border: 1px solid red; */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -99,6 +107,12 @@ ${props => props.media && css`
   width: 50%;
 }
 
+.trailer {
+    border-radius: 10px;
+    justify-self: stretch;
+    height: 200px;
+    width: 100%;
+  }
 
 }
 `}
@@ -345,7 +359,7 @@ border-radius: 5px;
 }
 
 .episode_buttons.active {
-  background-color: #19e898;
+  background-color: #00ff00;
   color: #101010;
 }
 

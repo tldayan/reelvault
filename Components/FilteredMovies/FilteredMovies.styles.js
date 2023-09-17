@@ -5,7 +5,7 @@ import {styled,css} from "styled-components"
 
 export const StyledFilteredMoviesContainer = styled.div`
 
- /*  border: 1px solid #3333337a; */
+  border: 1px solid #3333337a;
 /*   background-color: #101010; */
   border-radius: 5px;
 /*   padding: 10px; */
