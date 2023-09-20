@@ -55,7 +55,7 @@ export const getMovies = async(page,category) => {
 export const getShows = async(page) => {
 
   try {
-    const response = await fetch(`https://api.themoviedb.org/3/tv/popular?language=en-US&page=${page}`, {
+    const response = await fetch(`https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=${page}`, {
   method: 'GET',
   headers: {
     accept: 'application/json',
@@ -145,7 +145,7 @@ export const getShowSearchData = async(entityName) => {
   let filteredData = []
 
   showData.map(eachShow => {
-    if(eachShow.poster_path && eachShow.vote_count > 50 && eachShow.first_air_date?.slice(0,4) > 2000) {
+    if(eachShow.poster_path && eachShow.vote_count > 50 && eachShow.first_air_date?.slice(0,4) > 1993) {
       filteredData.push(eachShow)
     }
   })
@@ -221,7 +221,7 @@ export const getTrailer = async(movieId) => {
 
     const Data = await response.json()
     
-    return Data.results.find(eachType => eachType.type === "Trailer" && eachType.size === 1080).key
+    return Data.results.find(eachType => eachType.type === "Trailer" && eachType.size === 1080 || eachType.size === 2160)?.key
 
   } catch (err) {
     console.log(err.message)

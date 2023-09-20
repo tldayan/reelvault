@@ -175,7 +175,7 @@ background-color: #0b0b0b;
 
 
 .movie_stats_container {
-/*   border: 1px solid white; */
+  /* border: 1px solid white; */
   display: flex;
   align-items: center;
   margin-top: auto;
@@ -185,15 +185,17 @@ background-color: #0b0b0b;
   display: flex;
   flex-direction: column;
   gap: 5px ;
-/*   border: 1px solid white; */
+  /* border: 1px solid white; */
 }
 
 .first_stats_container {
   align-self: stretch;
+   order:1;
 }
 
 .second_stats_container {
-  align-self: stretch;
+  align-self: stretch;  
+
 }
 
 .show_info_container {
@@ -206,6 +208,7 @@ background-color: #0b0b0b;
 
 .main_season_list_container {
 /*   border: 1px solid white; */
+margin-top: 0px;
   height: 20%;
 position: relative;
 }
@@ -397,6 +400,16 @@ ${props => props.media && css`
 
 
 }
+
+.main_season_list_container {
+
+margin-top: 5px;
+
+}
+
+
+
+
 `}
 
 `

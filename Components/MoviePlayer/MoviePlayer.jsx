@@ -4,6 +4,7 @@ import MovieDetails from "../Movie-ShowDetails/MovieDetails";
 import { ScrollRestoration, Link } from "react-router-dom";
 import { MoviePlayerContainer } from "./MoviePlayer.styles";
 import { getTrailer } from "../APIs/Api";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 
 export default function MoviePlayer() {
@@ -52,10 +53,9 @@ export default function MoviePlayer() {
     fetchMovieData();
 
   }, [movieId]);
+
+
   
-
-
-
   function handleIframeLoad() {
     movieLoadContainer.current.style.display = "none"
     IframeElement.current.style.height = "100%"
@@ -73,7 +73,7 @@ export default function MoviePlayer() {
       <MoviePlayerContainer>
       <p className="watching_movie_notice">Watching: {movieData.original_title ? movieData.original_title : "..."}</p>
   <div ref={movieLoadContainer} className="movie_player_skeleton">
-    <div className="load_animation"></div>
+    <LoadingAnimation />
   </div>
 
   <iframe

@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import { ShowDetailsContainer } from "./Movie-ShowDetails.styles";
 import Reviews from "../Reviews/Reviews";
+import Recommended from "../Recommended/Recommended";
 
-export default function ShowDetails({ showId,showData,setEpisodeList,setSelectedEpisode,setSelectedSeason,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
+export default function ShowDetails({ showId,showData,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
 
 
 
@@ -82,29 +83,32 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
           <p className="movie_overview">{showData?.overview}</p>
           <div className="movie_stats_container">
             <div className="first_stats_container">
-              {genres.length > 0 && (
-                <p>
-                  Genre: {genres.map((eachgenre) => eachgenre.name).join(", ")}
+            {genres.length > 0 && (
+                <p className="entity_genre">
+                  Genre: <span className="entity_info">{genres.map((eachgenre) => eachgenre.name).join(", ")}</span>
                 </p>
-              )}
-              <p>
-                Language:{" "}
-                {showData.original_language &&
-                  showData.original_language.toUpperCase()}
-              </p>
-            </div>
-            <div className="second_stats_container">
-              {productionCountries.length > 0 && (
-                <p>Country: {productionCountries[0].name}</p>
               )}
               {productionCompanies.length > 0 && (
-                <p>
+                <p className="entity_production">
                   Production:{" "}
-                  {productionCompanies
-                    .map((eachCompany) => eachCompany.name)
-                    .join(", ")}
+                  <span className="entity_info">{productionCompanies[0].name}</span>
                 </p>
               )}
+              
+            </div>
+            <div className="second_stats_container">
+            <p className="entity_language">
+                Language:{" "}
+                <span className="entity_info">{showData.original_language &&
+                  showData.original_language.toUpperCase()}</span>
+              </p>
+              {showReleasedDate && (
+                <p className="entity_released">Released: <span className="entity_info">{showReleasedDate}</span></p>
+              )}
+              {productionCountries.length > 0 && (
+                <p className="entity_country">Country: <span className="entity_info">{productionCountries[0].name}</span></p>
+              )}
+            
             </div>
           </div>
         </div> : <div className="load_animation"></div>}
@@ -151,6 +155,7 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
         </div>
       </ShowDetailsContainer>
       <Reviews showId={showId}/>
+      <Recommended showId={showId}/>
     </>
   );
 }

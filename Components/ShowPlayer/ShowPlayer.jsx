@@ -6,6 +6,7 @@ import { getShowDetails } from "../APIs/Api";
 import { useDispatch } from "react-redux";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import { useSelector } from "react-redux";
+import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 export default function ShowPlayer() {
   const params = useParams();
@@ -20,6 +21,7 @@ export default function ShowPlayer() {
   const [genres, setGenres] = useState([]);
   const [productionCompanies, setProductionCompanies] = useState([]);
   const [productionCountries, setProductionCountries] = useState([]);
+  const [showReleasedDate, setShowReleasedDate] = useState("")
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [episodeList, setEpisodeList] = useState([]);
@@ -37,6 +39,7 @@ export default function ShowPlayer() {
       let filteredSeasons = ShowData.seasons.filter(eachSeason => eachSeason.name !== "Specials" && eachSeason.air_date !== null)
       setSeasonList([...filteredSeasons]);
       setGenres(ShowData.genres || []);
+      setShowReleasedDate(ShowData.first_air_date || "")
       setProductionCompanies(ShowData.production_companies || []);
       setProductionCountries(ShowData.production_countries || []);
     };
@@ -71,10 +74,10 @@ export default function ShowPlayer() {
       
       
       <div className="movie_player_container">
-      <p className="watching_show_notice">Watching: {showData.original_name}</p>
+      <p className="watching_show_notice">Watching: {showData.original_name ? showData.original_name : "..."}</p>
           
       <div ref={showLoadContainer} className="movie_player_skeleton">
-        <div className="load_animation"></div>
+      <LoadingAnimation />
       </div>  
           <iframe
           ref={IframeShowElement}
@@ -84,7 +87,7 @@ export default function ShowPlayer() {
             onLoad={handleIframeLoad}
           ></iframe>
       </div>
-      <ShowDetails showId={showId} showData={showData} setSelectedSeason={setSelectedSeason} setSelectedEpisode={setSelectedEpisode} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={selectedSeason} selectedEpisode={selectedEpisode} seasonList={seasonList} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
+      <ShowDetails showId={showId} showReleasedDate={showReleasedDate} showData={showData} setSelectedSeason={setSelectedSeason} setSelectedEpisode={setSelectedEpisode} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={selectedSeason} selectedEpisode={selectedEpisode} seasonList={seasonList} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
       <ScrollRestoration top={true} />
     </>
   );
