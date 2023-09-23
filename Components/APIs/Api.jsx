@@ -229,3 +229,22 @@ export const getTrailer = async(movieId) => {
 
 
 }
+
+export const fetchMovieData = async(movieId) => {
+
+      try {
+        const response = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?language=en-US`, {
+          headers: {
+            accept: "application/json",
+            Authorization : `Bearer ${API_KEY}`
+          },
+        });
+
+        const DATA = await response.json()
+        return DATA
+
+      } catch (err) {
+        console.log(err.message)
+      }
+
+}

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import MovieDetails from "../Movie-ShowDetails/MovieDetails";
 import { ScrollRestoration, Link } from "react-router-dom";
 import { MoviePlayerContainer } from "./MoviePlayer.styles";
-import { getTrailer } from "../APIs/Api";
+import { fetchMovieData, getTrailer } from "../APIs/Api";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 
@@ -23,35 +23,27 @@ export default function MoviePlayer() {
 
 
   useEffect(() => {
-    const API_URL = `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`;
 
-    const fetchMovieData = async () => {
+    const fetchMovieDetails = async() => {
+
       try {
-        const response = await fetch(API_URL, {
-          headers: {
-            accept: "application/json",
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1OGM1ZTU5YjRmMGUxMDQ1ODRjMzRlMjRmODZlOWJjMCIsInN1YiI6IjY0NTYzNzFlYzNjODkxMDEwNDE4ZWNkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZhRGCPIxeuJxggm9kJSFa7zmeFMV3byY4l9KprRAMxo",
-          },
-        });
 
-        const data = await response.json();
+        const movieData = await fetchMovieData(movieId);
+        const movieTrailerKey = await getTrailer(movieId);
 
-        const movieTrailerKey = await getTrailer(movieId)
         setTrailerKey(`${movieTrailerKey}`)
-        setMovieData(data);
-        setGenres(data.genres || []);
-        setProductionCompanies(data.production_companies || []);
-        setProductionCountries(data.production_countries || []);
-        
-      } catch (error) {
-        alert(error.message);
-      }
+        setMovieData(movieData);
+        setGenres(movieData.genres || []);
+        setProductionCompanies(movieData.production_companies || []);
+        setProductionCountries(movieData.production_countries || []);
 
-    };
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
 
-    fetchMovieData();
-
+    fetchMovieDetails()
+    
   }, [movieId]);
 
 
@@ -60,7 +52,6 @@ export default function MoviePlayer() {
     movieLoadContainer.current.style.display = "none"
     IframeElement.current.style.height = "100%"
   }
-
 
   return (
     <>
