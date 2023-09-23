@@ -7,6 +7,7 @@ import { CategoryButtonsContainer, TrailerContainer } from './AllMovies.styles'
 import searchIcon from "../../assets/search_icon.svg"
 import { getMovieSearchData, getShowSearchData } from "../APIs/Api";
 import SearchResultCard from '../SearchResultCard/SearchResultCard'
+import sadFace from "../../assets/sad_face.png"
 
 export default function AllMovies() {
   
@@ -16,7 +17,10 @@ export default function AllMovies() {
   const [searchDataLoading, setSearchDataLoading] = useState(false)
   const searchField = useRef(null)
 
-  
+  function removeSpecialCharacters(input) {
+    return input.replace(/[:\-]/g, "").toLowerCase();
+  }
+
   useEffect(() => {
 
     setSearchDataLoading(true)
@@ -38,7 +42,11 @@ export default function AllMovies() {
 
         const searchData = [...movieResponse, ...showResponse];
   
-        let filteredSearchData = searchData.filter(eachResult => (eachResult.original_name || eachResult.original_title).toLowerCase().includes(entitySearch.toLowerCase()))
+        let filteredSearchData = searchData.filter((eachResult) => {
+          const title = removeSpecialCharacters(eachResult.original_name || eachResult.original_title);
+          const searchQuery = removeSpecialCharacters(entitySearch);
+          return title.includes(searchQuery);
+        });
 
           setSearchResults(filteredSearchData)
           setSearchDataLoading(false)
@@ -103,7 +111,7 @@ useEffect(() => {
                     <div className={`search_list ${search !== "" ? "active" : null}`}>
                         {searchDataLoading ? <div className="race-by"></div> : searchResults.length ? searchResults.map(eachResult => {
                         return  <SearchResultCard key={eachResult.id} eachResult={eachResult} />
-                        }) : <p className='no_search_result'>No results for "{search}"</p>}
+                        }) : <div className='no_search_results_container'><img src={sadFace} alt="" /><p className='no_search_result'>No results for "{search}"</p></div>}
                     </div>
                     <img
                     className="search_icon" src={searchIcon} alt="" 

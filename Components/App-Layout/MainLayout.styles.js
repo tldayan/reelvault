@@ -103,9 +103,16 @@ a {
   background: black;
 }
 
+.no_search_results_container {
+  margin: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap:5px;
+}
+
 .no_search_result {
   text-align: center;
-  margin: 50px;
   font-weight : bold;
   font-family: 'Quicksand', sans-serif;
 }
