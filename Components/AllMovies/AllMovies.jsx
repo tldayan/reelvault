@@ -5,19 +5,21 @@ import movieTrailer from "../../assets/Trailer1.mp4"
 import playButton from "../../assets/play-solid.svg"
 import { CategoryButtonsContainer, TrailerContainer } from './AllMovies.styles'
 import searchIcon from "../../assets/search_icon.svg"
-import starIcon from "../../assets/star-solid.svg"
-import defaultPoster from "../../assets/no_image.jpg"
 import { getMovieSearchData, getShowSearchData } from "../APIs/Api";
+import SearchResultCard from '../SearchResultCard/SearchResultCard'
 
 export default function AllMovies() {
   
   const searchInput = useRef(null)
   const [search,setSearch] = useState("")
   const [searchResults, setSearchResults] = useState([])
+  const [searchDataLoading, setSearchDataLoading] = useState(false)
   const searchField = useRef(null)
 
   
   useEffect(() => {
+
+    setSearchDataLoading(true)
 
     const searchTimer = setTimeout(() => {
       let entitySearch = undefined
@@ -39,6 +41,7 @@ export default function AllMovies() {
         let filteredSearchData = searchData.filter(eachResult => (eachResult.original_name || eachResult.original_title).toLowerCase().includes(entitySearch.toLowerCase()))
 
           setSearchResults(filteredSearchData)
+          setSearchDataLoading(false)
 
       } catch (error) {
         alert(error.message)
@@ -46,7 +49,8 @@ export default function AllMovies() {
 
     }
 
-    if(search === 0 ) { 
+    if(search === "" ) { 
+      setSearchDataLoading(false)
         return
       } else {
         fetchSearchData()
@@ -96,23 +100,10 @@ useEffect(() => {
                         ref={searchInput}
                         onClick={scrollToField}
                     />
-                    <div className={`search_list ${searchResults.length > 0 ? "active" : null}`}>
-                        {searchResults.map(eachResult => {
-                        return  <Link onClick={() => closeResultList(eachResult)} to={`${eachResult.original_name ? `tvshows/${eachResult.id}` : eachResult.id}`} key={eachResult.id} className='result'>
-                                    <img className='search_results_movie_poster' src={eachResult.poster_path !== null ? `https://image.tmdb.org/t/p/w154${eachResult.poster_path}` : defaultPoster} alt="" />
-                                    <div className='movie_result_info_container'>
-                                      <p className='search_results_movie_title'>{eachResult.original_title || eachResult.original_name}</p>
-                                      <p className='release_date'>{eachResult.release_date || eachResult.first_air_date}</p>
-                                      <div className='movie_metrics_container'>
-                                          <p>{eachResult.original_name ? "Show" : "Movie"}</p>&#8226;
-                                          <p>{eachResult.original_language.charAt(0).toUpperCase() + eachResult.original_language.slice(1)}
-                                          </p>&#8226;
-                                          <img className="star" src={starIcon} alt="" />
-                                          <p>{eachResult.vote_average.toFixed(2)}</p>
-                                      </div>
-                                    </div>
-                                </Link>
-                        })}
+                    <div className={`search_list ${search !== "" ? "active" : null}`}>
+                        {searchDataLoading ? <div className="race-by"></div> : searchResults.length ? searchResults.map(eachResult => {
+                        return  <SearchResultCard key={eachResult.id} eachResult={eachResult} />
+                        }) : <p className='no_search_result'>No results for "{search}"</p>}
                     </div>
                     <img
                     className="search_icon" src={searchIcon} alt="" 

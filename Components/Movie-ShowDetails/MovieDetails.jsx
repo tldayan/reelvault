@@ -44,7 +44,7 @@ export default function MovieDetails({movieData,movieId,trailerKey,genres,produc
             </div>
           </div>
         </div> : <div className="load_animation"></div>}
-        {trailerKey !== "null" && <iframe className="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} title="YouTube player" frameBorder="0" allow="encrypted-media; fullscreen" allowfullscreen></iframe>}
+        {trailerKey !== "null" && <iframe className="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} title="YouTube player" frameBorder="0" allow="encrypted-media; fullscreen"></iframe>}
       </MovieDetailsContainer>
       
       <Reviews movieId={movieId}/>

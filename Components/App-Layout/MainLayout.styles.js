@@ -37,6 +37,7 @@ nav {
   transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
   font-family: 'Ysabeau SC', sans-serif;
   background-color: transparent;
+  text-decoration: none;
   color: white;
 }
 
@@ -79,6 +80,7 @@ a {
   z-index: 998;
   max-height:0vh;
   box-shadow:none;
+  overflow-wrap: break-word;
 }
 
 
@@ -86,7 +88,6 @@ a {
   max-height: 80vh;
   padding: 0;
   box-shadow: 0px 0px 21px 0px rgba(0, 0, 0, 0.458);
-
 }
 
 
@@ -95,14 +96,19 @@ a {
 }
 
 .search_list::-webkit-scrollbar-thumb {
-  background: black;
-}
-
-.search_list::-webkit-scrollbar-track {
   background: white;
 }
 
+.search_list::-webkit-scrollbar-track {
+  background: black;
+}
 
+.no_search_result {
+  text-align: center;
+  margin: 50px;
+  font-weight : bold;
+  font-family: 'Quicksand', sans-serif;
+}
 
 
 .result {
