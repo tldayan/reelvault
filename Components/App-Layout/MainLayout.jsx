@@ -6,6 +6,7 @@ import { StyledMainApp } from "./MainLayout.styles";
 
 export default function MainLayout() {
 
+  
 
     const [showChevron, setShowChevron] = useState(false);
     const mobileMenu = document.querySelector("ul");
@@ -14,6 +15,12 @@ export default function MainLayout() {
     function openHamburger() {
       
         hamburger.classList.toggle('open');
+
+        if(document.body.style.overflow === "hidden") {
+          document.body.style.overflow = "auto";
+        } else {
+          document.body.style.overflow = "hidden";
+        }
       
         if (hamburger.classList.contains("open")) {
           mobileMenu.style.left = "0%";

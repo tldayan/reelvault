@@ -120,7 +120,6 @@ export const CategoryButtonsContainer = styled.div`
 .category_buttons {
 /*   border: 1px solid rgba(51, 51, 51, 0.779);
   background-color: #101010; */
-  border-radius: 5px;
   text-decoration: none;
   color: rgba(211, 211, 211, 1);
   text-decoration: none;
@@ -130,11 +129,11 @@ export const CategoryButtonsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 7px;
+  border-radius: 4px;
   font-size: clamp(0.3rem, 2.5vw, 1rem);
   font-family: 'Quicksand', sans-serif;
-  
 }
+
 .category_buttons:hover {
   background-color: rgba(208, 208, 208, 0.103);
   transition: all 0.5s
