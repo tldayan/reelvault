@@ -197,21 +197,21 @@ a {
 
 .nav_links {
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: rgba(255, 255, 255, 0.674);
   padding: 3px 5px;
   border-radius: 3px;
-  font-size: clamp(0.4rem, 5vw, 1rem);
+  font-size: clamp(0.4rem, 5vw, 1.1rem);
   font-family: 'Philosopher', sans-serif;
+  letter-spacing:1px;
 }
 
 .nav_links:hover {
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
+  color:rgb(255, 255, 255);
 }
 
 .nav_links.active {
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
+  color:rgb(255, 255, 255);
+  letter-spacing:1px;
 }
 
 
