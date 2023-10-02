@@ -1,5 +1,5 @@
 import {React, useEffect, useState,useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import MovieDetails from "../Movie-ShowDetails/MovieDetails";
 import { ScrollRestoration, Link } from "react-router-dom";
 import { MoviePlayerContainer } from "./MoviePlayer.styles";
@@ -8,6 +8,7 @@ import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 
 
 export default function MoviePlayer() {
+  const navigate = useNavigate()
   const params = useParams();
   const movieId = params.id;
 
@@ -25,7 +26,6 @@ export default function MoviePlayer() {
   useEffect(() => {
 
     const fetchMovieDetails = async() => {
-
       try {
 
         const movieData = await fetchMovieData(movieId);
@@ -42,7 +42,13 @@ export default function MoviePlayer() {
     }
   }
 
-    fetchMovieDetails()
+
+  if (!/^\d+$/.test(params.id)) { // if id does not contain any numerical values.
+    navigate("/error");
+    return
+  }
+
+  fetchMovieDetails()
     
   }, [movieId]);
 
@@ -76,7 +82,7 @@ export default function MoviePlayer() {
   ></iframe>
 
       </MoviePlayerContainer>
-      <MovieDetails trailerKey={trailerKey} movieData={movieData} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
+      {/^\d+$/.test(params.id) && <MovieDetails trailerKey={trailerKey} movieData={movieData} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />}
       <ScrollRestoration top={true} />
     </>
   );

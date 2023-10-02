@@ -89,7 +89,7 @@ export const getShowDetails = async(showId) => {
     throw new Error (`Failed to fetch Show Details : ${response.status}`)
   }
 
-  const DATA = response.json()
+  const DATA = await response.json()
   return DATA
   
   } catch (error) {

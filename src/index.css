@@ -611,6 +611,46 @@ footer {
   color: black;
 }
 
+.error_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  gap: 10px;
+}
+
+.error_notice {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  color: white;
+  font-family: Inter,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;
+}
+.return_home_btn {
+  background-color: white;
+  border-radius: 3px;
+  text-decoration: none;
+  padding: 5px 10px;
+  color: black;
+  transition: all 0.4s;
+}
+.return_home_btn:hover {
+  border: 1px solid white;
+  background-color: black;
+  color: white;
+
+}
+.reel_logo {
+  padding: 0px 5px;
+  margin: 0 auto;
+  border: 2px solid rgb(255, 255, 255);
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  margin-right: auto;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.4rem, 4vw, 1.5rem);
+}
 
 @media (max-width:900px) {
 

@@ -21,6 +21,7 @@ import ComedyMovies from "../Components/GenreMovies/ComedyMovies";
 import HorrorMovies from "../Components/GenreMovies/HorrorMovies";
 import PopularShows from "../Components/PopularShows/PopularShows";
 import ShowPlayer from "../Components/ShowPlayer/ShowPlayer";
+import Error from "../Components/Error/Error";
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
         <Route path="contactus" element={<ContactUs />} />
         <Route path="tvshows/:id" element={<ShowPlayer />} />
         <Route path=":id" element={<MoviePlayer />} />
+        <Route path="error" element={<Error />}/>
       </Route>
     )
   );
