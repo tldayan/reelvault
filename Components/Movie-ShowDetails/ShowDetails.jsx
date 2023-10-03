@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import { ShowDetailsContainer } from "./Movie-ShowDetails.styles";
 import Reviews from "../Reviews/Reviews";
 import Recommended from "../Recommended/Recommended";
+import { useRef } from "react";
+import { showsWatchlistActions } from "../store/showsWatchlistSlice";
 
 export default function ShowDetails({ showId,showData,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
 
-
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const newEpisodeList = [];
@@ -36,7 +38,6 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
   };
 
 
-  const dispatch = useDispatch();
 
   const handleEpisodeSelect = (seasonNumber, episodeNumber) => {
     dispatch(
@@ -70,6 +71,19 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
     window.scrollTo(0, 0);
   }, [selectedEpisode,selectedSeason]);
 
+  const watchlist = useSelector((state) => state.showsWatchlist)
+
+  function handleWatchlist() {
+    
+    if(watchlist.some(eachEntity => eachEntity.showId == showId)) {
+      
+      dispatch(showsWatchlistActions.removeFromWatchlist(showId))
+    } else {
+      dispatch(showsWatchlistActions.addToWatchlist(showData))
+    }
+  }
+
+
   return (
     <>
       <ShowDetailsContainer media={900}>
@@ -79,7 +93,7 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
           alt=""
         />
         {Object.keys(showData).length !== 0 ? <div className="show_info_container">
-          <h1 className="movie_title">{showData?.name}</h1>
+          <h1 className="movie_title">{showData?.name} <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.showId == showId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.showId == showId) ? "In Watchlist" : "+ Watchlist"}</button></h1>
           <p className="movie_overview">{showData?.overview}</p>
           <div className="movie_stats_container">
             <div className="first_stats_container">

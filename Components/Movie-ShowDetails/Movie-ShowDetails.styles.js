@@ -36,6 +36,8 @@ background-color: #0b0b0b;
 }
 
 .movie_title {
+  display: flex;
+  flex-direction: row;
   margin-bottom: 10px;
   color: white;
 }
@@ -146,6 +148,8 @@ background-color: #0b0b0b;
 }
 
 .movie_title {
+  display: flex;
+  flex-direction: row;
   margin-bottom: 10px;
   color: white;
 }
@@ -298,7 +302,7 @@ position: relative;
   color: #101010;
 }
 .season_button.active {
-  background-color: #19e898;
+  background-color: #00ff00;
   color: #101010;
 }
 

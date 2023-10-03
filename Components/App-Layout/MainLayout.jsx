@@ -6,8 +6,6 @@ import { StyledMainApp } from "./MainLayout.styles";
 
 export default function MainLayout() {
 
-  
-
     const [showChevron, setShowChevron] = useState(false);
     const mobileMenu = document.querySelector("ul");
     const hamburger = document.getElementById('hamburger');
@@ -33,6 +31,7 @@ export default function MainLayout() {
       function returnHome() {
         mobileMenu.style.left = "100%";
         hamburger.classList.toggle("open")
+        document.body.style.overflow = "auto";
       }
       
 
@@ -66,8 +65,10 @@ export default function MainLayout() {
 
                 <ul className="nav_container">
                     <NavLink to="/" className="nav_links" onClick={returnHome}>Home</NavLink>
-                    <NavLink to="about" className="nav_links" onClick={returnHome}>About</NavLink>
+                    <NavLink to="watchlist" className="nav_links" onClick={returnHome}>Watchlist</NavLink>
                     <NavLink to="contactus" className="nav_links" onClick={returnHome}>Contact</NavLink>
+                    <NavLink to="about" className="nav_links" onClick={returnHome}>About</NavLink>
+                    
                 </ul>
                 <div className="container">
                     <div id="hamburger" onClick={openHamburger}>

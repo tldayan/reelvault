@@ -1,9 +1,23 @@
+import { useDispatch, useSelector } from "react-redux";
 import Recommended from "../Recommended/Recommended";
 import Reviews from "../Reviews/Reviews";
 import { MovieDetailsContainer } from "./Movie-ShowDetails.styles";
+import { moviesWatchlistAction } from "../store/moviesWatchlistSlice";
 
 export default function MovieDetails({movieData,movieId,trailerKey,genres,productionCompanies,productionCountries}) {
   
+  const dispatch = useDispatch()
+  const watchlist = useSelector((state) => state.moviesWatchlist)
+
+  function handleWatchlist() {
+
+    if(watchlist.some(eachEntity => eachEntity.movieId == movieId)) { 
+      dispatch(moviesWatchlistAction.removeFromWatchlist(movieId))
+    } else {
+      dispatch(moviesWatchlistAction.addToWatchlist(movieData))
+    }
+  }
+
 
   return (
     <>
@@ -14,7 +28,7 @@ export default function MovieDetails({movieData,movieId,trailerKey,genres,produc
           alt=""
         />
         {Object.keys(movieData).length !== 0 ? <div className="movie_info_container">
-          <h1 className="movie_title">{movieData.original_title}</h1>
+          <h1 className="movie_title">{movieData.original_title} <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "In Watchlist" : "+ Watchlist"}</button></h1>
           <p className="movie_overview">{movieData.overview}</p>
           <div className="movie_stats_container">
             <div className="first_stats_container">
