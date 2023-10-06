@@ -58,7 +58,7 @@ export default function Recommended({movieId,showId}) {
 
   return (
     ((recommendedShowData.length > 0 || recommendedMovieData.length > 0) && <RecommendedContainer>
-       <h4 className='category_titles'>Recommended Movies</h4>
+       <h4 className='category_titles'>Recommended {recommendedShowData.length > 0 ? "Shows" : "Movies"}</h4>
        <swiper-container slides-per-view="auto" mousewheel="true">
         {recommendedMovieData.length > 0 ? recommendedMovieData.map(eachMovie => { 
             if(eachMovie?.poster_path && eachMovie?.vote_count > 50 && eachMovie?.release_date?.slice(0,4) > 2000) {
