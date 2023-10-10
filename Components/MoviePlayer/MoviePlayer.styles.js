@@ -23,4 +23,6 @@ export const MoviePlayerContainer = styled.div`
   border-radius: 10px;
 }
 
+
+
 `

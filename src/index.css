@@ -439,6 +439,37 @@ svg text {
   border-radius: 10px;
 }
 
+.refresh_notice {
+  position: fixed;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.208);
+  top: -5%;
+  left: 50%;
+  font-family: 'Quicksand', sans-serif;
+  font-size: clamp(0.3rem, 2vw, 0.9rem);
+  transform: translateX(-50%);
+  padding: 2px 6px;
+  border-radius: 2px;
+  color : rgb(0, 0, 0);
+  z-index: 999;
+  transition: all 0.5s;
+}
+
+.refresh_notice.active {
+  top: 5%;
+}
+
+.refresh_link {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.refresh_link:hover {
+  color: rgb(0, 89, 255);
+}
+
+
+
 
 .movie_player_skeleton {
  /*  border: 1px solid red; */

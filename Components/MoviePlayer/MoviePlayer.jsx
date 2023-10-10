@@ -13,6 +13,7 @@ export default function MoviePlayer() {
   const movieId = params.id;
 
   const movieLoadContainer = useRef(null);
+  const refreshPageNotice = useRef(null)
   const IframeElement = useRef(null);
   
   const [movieData, setMovieData] = useState({});
@@ -20,7 +21,8 @@ export default function MoviePlayer() {
   const [productionCompanies, setProductionCompanies] = useState([]);
   const [productionCountries, setProductionCountries] = useState([]);
   const [trailerKey, setTrailerKey] = useState("")
-
+  const [movieLoaded, setMovieLoaded] = useState(false)
+  const movieLoadedRef = useRef(movieLoaded);
 
 
   useEffect(() => {
@@ -53,14 +55,43 @@ export default function MoviePlayer() {
   }, [movieId]);
 
 
+  useEffect(() => {
+    movieLoadedRef.current = movieLoaded;
+  }, [movieLoaded]);
+
+  useEffect(() => {
+
+    refreshPageNotice.current.classList.remove('active');
+
+    const timeoutId = setTimeout(() => {
+      if (movieLoadedRef.current === false) {
+        refreshPageNotice.current.classList.add('active');
+      }
+    }, 5500);
+
+
+    const timeoutId2 = setTimeout(() => {
+      if(movieLoadedRef.current === true) {
+        refreshPageNotice.current.classList.remove("active")
+      }
+    },8000)
+
+    return () => {
+      clearTimeout(timeoutId);
+      clearTimeout(timeoutId2)
+    };
+  }, [movieId]);
   
   function handleIframeLoad() {
+    setMovieLoaded(true)
+
     movieLoadContainer.current.style.display = "none"
     IframeElement.current.style.height = "100%"
   }
 
   return (
     <>
+    <p ref={refreshPageNotice} className="refresh_notice">Movie not loading? <span onClick={() => window.location.reload()} className="refresh_link">Refresh page</span></p>
       <div className="back_button_container">
       <Link to="/" className="back_button">
         &#10094; Back to Home
