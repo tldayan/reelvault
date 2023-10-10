@@ -25,6 +25,10 @@ export default function ShowPlayer() {
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [episodeList, setEpisodeList] = useState([]);
+  const [showLoaded, setShowLoaded] = useState(false)
+  const showLoadedValue = useRef(showLoaded)
+  const refreshPageNotice = useRef(null)
+
 
   useEffect(() => {
 
@@ -57,15 +61,49 @@ export default function ShowPlayer() {
     );
     
   }, [showId]);
+
   
 
   function handleIframeLoad() {
+
+    setShowLoaded(true)
+
     showLoadContainer.current.style.display = "none"
     IframeShowElement.current.style.height = "100%"
   }
 
+  useEffect(() => {
+    showLoadedValue.current = showLoaded
+  },[showLoaded])
+
+  useEffect(() => {
+
+    refreshPageNotice.current.classList.remove("active")
+
+    const timeout1 = setTimeout(() => {
+      if(showLoadedValue.current === false) {
+        refreshPageNotice.current.classList.add("active")
+      }
+    },5500)
+
+    const timeout2 = setTimeout(() => {
+
+      if(showLoadedValue.current === true) {
+        refreshPageNotice.current.classList.remove("active")
+      }
+    },8000)
+
+    return () => {
+      clearTimeout(timeout1)
+      clearTimeout(timeout2)
+    }
+
+  },[showId])
+
+
   return (
     <>
+    <p ref={refreshPageNotice} className="refresh_notice">Show not loading? <span onClick={() => window.location.reload()} className="refresh_link">Refresh page</span></p>
     <div className="back_button_container">
       <Link to="/" className="back_button">
         &#10094; Back to Home
