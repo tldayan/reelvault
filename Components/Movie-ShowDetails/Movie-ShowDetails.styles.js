@@ -279,6 +279,7 @@ position: relative;
   height: 100%;
   color: white;
   border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
 }
 .seasons_button:hover {
@@ -291,6 +292,7 @@ position: relative;
   background-color: #101010;
     border-radius: 5px;
   white-space: nowrap;
+  font-weight: bold;
   width: 100%;
   height: 30px;
   color: white;
@@ -356,6 +358,7 @@ border-radius: 5px;
   border-radius: 5px;
   outline: none;
   border: none;
+  font-weight: bold;
   cursor: pointer;
   font-size: clamp(0.4rem, 3vw,0.7rem);
 }
