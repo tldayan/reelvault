@@ -4,10 +4,10 @@ import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import { ShowDetailsContainer } from "./Movie-ShowDetails.styles";
 import Reviews from "../Reviews/Reviews";
 import Recommended from "../Recommended/Recommended";
-import { useRef } from "react";
 import { showsWatchlistActions } from "../store/showsWatchlistSlice";
+import eye from "../../assets/eye.png"
 
-export default function ShowDetails({ showId,showData,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
+export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
 
   const dispatch = useDispatch()
 
@@ -93,7 +93,7 @@ export default function ShowDetails({ showId,showData,setEpisodeList,setSelected
           alt=""
         />
         {Object.keys(showData).length !== 0 ? <div className="show_info_container">
-          <h1 className="movie_title">{showData?.name} <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.showId == showId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.showId == showId) ? "In Watchlist" : "+ Watchlist"}</button></h1>
+          <h1 className="movie_title">{showData?.name} <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.showId == showId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.showId == showId) ? "In Watchlist" : "+ Watchlist"}</button><button onClick={() => window.open(`https://www.youtube.com/watch?v=${showTrailerKey}`)} className={`trailer_btn`}><img className="eye_icon" src={eye} loading="lazy"></img>Trailer</button></h1>
           <p className="movie_overview">{showData?.overview}</p>
           <div className="movie_stats_container">
             <div className="first_stats_container">

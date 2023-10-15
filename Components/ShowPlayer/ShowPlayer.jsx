@@ -2,7 +2,7 @@ import React, { useEffect,useState,useRef } from "react";
 import { useParams } from "react-router-dom";
 import { ScrollRestoration, Link } from "react-router-dom";
 import ShowDetails from "../Movie-ShowDetails/ShowDetails";
-import { getShowDetails } from "../APIs/Api";
+import { getShowDetails, getShowTrailer } from "../APIs/Api";
 import { useDispatch } from "react-redux";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import { useSelector } from "react-redux";
@@ -26,6 +26,7 @@ export default function ShowPlayer() {
   const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [episodeList, setEpisodeList] = useState([]);
   const [showLoaded, setShowLoaded] = useState(false)
+  const [showTrailerKey, setShowTrailerKey] = useState("")
   const showLoadedValue = useRef(showLoaded)
   const refreshPageNotice = useRef(null)
 
@@ -34,6 +35,7 @@ export default function ShowPlayer() {
 
     const fetchShowData = async () => {
       const ShowData = await getShowDetails(showId);
+      const ShowTrailerId = await getShowTrailer(showId)
 
       if (showData.message) {
         console.log(showData.message);
@@ -46,11 +48,14 @@ export default function ShowPlayer() {
       setShowReleasedDate(ShowData.first_air_date || "")
       setProductionCompanies(ShowData.production_companies || []);
       setProductionCountries(ShowData.production_countries || []);
+      setShowTrailerKey(ShowTrailerId)
     };
 
     fetchShowData();
     setSelectedEpisode(1);
     setSelectedSeason(1);
+    
+
   }, [showId]);
 
   useEffect(() => {
@@ -125,7 +130,7 @@ export default function ShowPlayer() {
             onLoad={handleIframeLoad}
           ></iframe>
       </div>
-      <ShowDetails showId={showId} showReleasedDate={showReleasedDate} showData={showData} setSelectedSeason={setSelectedSeason} setSelectedEpisode={setSelectedEpisode} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={selectedSeason} selectedEpisode={selectedEpisode} seasonList={seasonList} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
+      <ShowDetails showId={showId} showTrailerKey={showTrailerKey} showReleasedDate={showReleasedDate} showData={showData} setSelectedSeason={setSelectedSeason} setSelectedEpisode={setSelectedEpisode} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={selectedSeason} selectedEpisode={selectedEpisode} seasonList={seasonList} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
       <ScrollRestoration top={true} />
     </>
   );

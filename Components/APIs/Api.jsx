@@ -230,6 +230,35 @@ export const getTrailer = async(movieId) => {
 
 }
 
+
+export const getShowTrailer = async(showId) => {
+
+  try {
+
+    const response = await fetch(`https://api.themoviedb.org/3/tv/${showId}/videos?language=en-US`, {
+    method : "GET",  
+    headers : {
+        accept : "application/json",
+        Authorization : `Bearer ${API_KEY}`
+      }
+    })
+
+    if(response.ok) {
+      const Data = await response.json()
+      return Data.results[0].key
+    }
+
+  } catch(err) {
+    console.log(err.message)
+  }
+
+}
+
+
+
+
+
+
 export const fetchMovieData = async(movieId) => {
 
       try {
