@@ -3,15 +3,13 @@ import { useParams } from "react-router-dom";
 import { ScrollRestoration, Link } from "react-router-dom";
 import ShowDetails from "../Movie-ShowDetails/ShowDetails";
 import { getShowDetails, getShowTrailer } from "../APIs/Api";
-import { useDispatch } from "react-redux";
-import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import { useSelector } from "react-redux";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
+import ExistingShowModal from "../ExistingShowModal/ExistingShowModal";
 
 export default function ShowPlayer() {
   const params = useParams();
   const showId = params.id;
-  const dispatch = useDispatch();
   const EpisodeLink = useSelector((state) => state.EpisodeLink.episodeLink);
 
   const showLoadContainer = useRef(null);
@@ -27,6 +25,10 @@ export default function ShowPlayer() {
   const [episodeList, setEpisodeList] = useState([]);
   const [showLoaded, setShowLoaded] = useState(false)
   const [showTrailerKey, setShowTrailerKey] = useState("")
+  const [recentlyWatched, setRecentlyWatched] = useState(false)
+  const [existingShow,setExistingShow] = useState({})
+
+
   const showLoadedValue = useRef(showLoaded)
   const refreshPageNotice = useRef(null)
 
@@ -54,17 +56,30 @@ export default function ShowPlayer() {
     fetchShowData();
     setSelectedEpisode(1);
     setSelectedSeason(1);
+  
     
-
   }, [showId]);
 
   useEffect(() => {
-    dispatch(
-      EpisodeLinkActions.setEpisodeLink(
-        `https://vidsrc.me/embed/${showId}/1-1/`
-      )
-    );
+
+    const showDetailsJSON = localStorage.getItem("ShowDetails");
+
+    if (showDetailsJSON) {
+      const showDetails = JSON.parse(showDetailsJSON);
+
+      const existingShow = showDetails.find(eachObj => eachObj.showId === showId)
+      setExistingShow(existingShow)
+
+      if(existingShow) {
+        setRecentlyWatched(true)
+      } else {
+        setRecentlyWatched(false)
+
+
+      }
     
+    }
+
   }, [showId]);
 
   
@@ -106,9 +121,23 @@ export default function ShowPlayer() {
   },[showId])
 
 
+
+  useEffect(() => {
+      if(recentlyWatched) {
+        document.body.style.overflow = "hidden"
+      } else {
+        document.body.style.overflow = "visible"
+      }
+  },[recentlyWatched])
+
   return (
     <>
+
+    {recentlyWatched && <ExistingShowModal setSelectedEpisode={setSelectedEpisode} setSelectedSeason={setSelectedSeason} existingShow={existingShow} recentlyWatched={recentlyWatched} setRecentlyWatched={setRecentlyWatched} />}
+    {recentlyWatched && <div className="dark_overlay"></div>}
+
     <p ref={refreshPageNotice} className="refresh_notice">Show not loading? <span onClick={() => window.location.reload()} className="refresh_link">Refresh page</span></p>
+    
     <div className="back_button_container">
       <Link to="/" className="back_button">
         &#10094; Back to Home

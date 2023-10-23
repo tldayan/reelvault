@@ -35,9 +35,38 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
   const handleSeasonSelect = (index) => {
     setSelectedSeason(index + 1);
     seasonsContainer.classList.toggle("hide");
+    setSelectedEpisode(1)
   };
 
 
+  useEffect(() => {
+    if(selectedEpisode > 1 || selectedSeason > 1) {
+
+      const existingData = JSON.parse(localStorage.getItem("ShowDetails")) || []
+
+      if(existingData.find(eachObj => eachObj.showId === showId)) {
+        const updatedData = existingData.map(eachObj => {
+        if (eachObj.showId === showId) {
+          return {
+            ...eachObj,
+            showSeason: selectedSeason,
+            showEpisode: selectedEpisode
+          };
+        }
+        return eachObj;
+      })
+
+      localStorage.setItem("ShowDetails", JSON.stringify(updatedData))
+
+      } else {
+        const newShow = {showId : showId, showSeason : selectedSeason, showEpisode : selectedEpisode}
+
+        localStorage.setItem("ShowDetails", JSON.stringify([...existingData, newShow]))
+      }
+      
+    }
+  },[selectedEpisode,selectedSeason])
+  
 
   const handleEpisodeSelect = (seasonNumber, episodeNumber) => {
     dispatch(
@@ -49,22 +78,17 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
   };
 
   useEffect(() => {
+    
     dispatch(
       EpisodeLinkActions.setEpisodeLink(
-        `https://vidsrc.me/embed/${showId}/${selectedSeason}-1`
+        `https://vidsrc.me/embed/${showId}/${selectedSeason}-${selectedEpisode}`
       )
     );
   },[selectedSeason])
 
-  
-
   function openSeasonsContainer() {
     seasonsContainer.classList.toggle("hide");
   }
-
-  useEffect(() => {
-    setSelectedEpisode(1)
-  },[selectedSeason])
 
 
   useEffect(() => {
