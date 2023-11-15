@@ -171,7 +171,7 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
             </ul>
           </div>
           <div className="main_episode_list_container">
-            <ul className="episode_list_container">
+            {Object.keys(showData).length !== 0 ? <ul className="episode_list_container">
               {episodeList.map((index) => {
                 return (
                   <li key={index}>
@@ -188,7 +188,7 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
                   </li>
                 );
               })}
-            </ul>
+            </ul> : <div style={{marginTop: 65}} className="load_animation"></div>}
           </div>
         </div>
       </ShowDetailsContainer>
