@@ -3,13 +3,16 @@ import { useParams } from "react-router-dom";
 import { ScrollRestoration, Link } from "react-router-dom";
 import ShowDetails from "../Movie-ShowDetails/ShowDetails";
 import { getShowDetails, getShowTrailer } from "../APIs/Api";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import ExistingShowModal from "../ExistingShowModal/ExistingShowModal";
+import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 
 export default function ShowPlayer() {
   const params = useParams();
   const showId = params.id;
+  const dispatch = useDispatch()
+
   const EpisodeLink = useSelector((state) => state.EpisodeLink.episodeLink);
 
   const showLoadContainer = useRef(null);
@@ -34,6 +37,8 @@ export default function ShowPlayer() {
 
 
   useEffect(() => {
+
+    dispatch(EpisodeLinkActions.setEpisodeLink(`https://2embed.org/series.php?id=${showId}/1/1`))
 
     const fetchShowData = async () => {
       const ShowData = await getShowDetails(showId);
@@ -74,8 +79,6 @@ export default function ShowPlayer() {
         setRecentlyWatched(true)
       } else {
         setRecentlyWatched(false)
-
-
       }
     
     }
@@ -108,14 +111,13 @@ export default function ShowPlayer() {
 
     const timeout2 = setTimeout(() => {
 
-      if(showLoadedValue.current === true) {
-        refreshPageNotice.current.classList.remove("active")
-      }
+      refreshPageNotice.current.classList.remove("active")
     },8000)
 
     return () => {
       clearTimeout(timeout1)
       clearTimeout(timeout2)
+      
     }
 
   },[showId])

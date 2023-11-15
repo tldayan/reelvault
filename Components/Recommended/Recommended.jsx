@@ -7,6 +7,7 @@ import { RecommendedContainer } from './Recommended.styles';
 import { useDispatch } from 'react-redux';
 import { MovieNameActions } from '../store/MovieNameSlice';
 import { ShowNameActions } from '../store/ShowNameSlice';
+import { EpisodeLinkActions } from '../store/EpisodeLinkSlice';
 register();
 
 const API_KEY = import.meta.env.VITE_REACT_APP_API_KEY;
@@ -51,6 +52,7 @@ export default function Recommended({movieId,showId}) {
           dispatch(MovieNameActions.setMovieName(entityName))  
         } else {
           dispatch(ShowNameActions.setShowName(entityName))
+          
         }
         
     }
