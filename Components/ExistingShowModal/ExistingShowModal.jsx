@@ -23,7 +23,7 @@ export default function ExistingShowModal({setSelectedEpisode,setSelectedSeason,
         
         dispatch(
             EpisodeLinkActions.setEpisodeLink(
-              `https://2embed.org/series.php?id=${existingShow.showId}/1-1`
+              `https://2embed.org/series.php?id=${existingShow.showId}/1/1`
             )
           );
 
