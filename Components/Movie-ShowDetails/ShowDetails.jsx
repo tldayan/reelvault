@@ -6,32 +6,22 @@ import Reviews from "../Reviews/Reviews";
 import Recommended from "../Recommended/Recommended";
 import { showsWatchlistActions } from "../store/showsWatchlistSlice";
 import eye from "../../assets/eye.png"
-import { getSeasonEpisodeName } from "../APIs/Api";
 
 export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const fetchEpisodeData = async (season, showId, episodeNumber) => {
-      const episodeName = await getSeasonEpisodeName(season, showId, episodeNumber);
-      return { episodeNum: episodeNumber, episodeName };
-    };
-  
-    const loadEpisodeData = async () => {
-      const newEpisodeList = [];
-  
-      for (let i = 0; i < seasonList[selectedSeason - 1]?.episode_count || 0; i++) {
-        const episodeData = await fetchEpisodeData(selectedSeason, showId, i + 1);
-        newEpisodeList.push(episodeData);
-      }
-  
-      setEpisodeList(newEpisodeList);
-    };
-  
-    loadEpisodeData();
+    const newEpisodeList = [];
+    for (
+      let i = 0;
+      i < seasonList[selectedSeason - 1]?.episode_count || 0;
+      i++
+    ) {
+      newEpisodeList.push(i);
+    }
+    setEpisodeList(newEpisodeList);
   }, [seasonList, selectedSeason]);
-  
 
   const [seasonsContainer, setSeasonsContainer] = useState(null);
 
@@ -43,7 +33,6 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
   }, []);
 
   const handleSeasonSelect = (index) => {
-    setEpisodeList([])
     setSelectedSeason(index + 1);
     seasonsContainer.classList.toggle("hide");
     setSelectedEpisode(1)
@@ -182,10 +171,10 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
             </ul>
           </div>
           <div className="main_episode_list_container">
-            {episodeList.length !== 0 ? <ul className="episode_list_container">
-              {episodeList.map((eachObj,index) => {
+            {Object.keys(showData).length !== 0 ? <ul className="episode_list_container">
+              {episodeList.map((index) => {
                 return (
-                  <li key={eachObj.i}>
+                  <li key={index}>
                     <button
                       onClick={() =>
                         handleEpisodeSelect(selectedSeason, index + 1)
@@ -194,7 +183,7 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
                         selectedEpisode === index + 1 ? "active" : null
                       }`}
                     >
-                      Ep {index + 1} - {eachObj.episodeName}
+                      Episode {index + 1}
                     </button>
                   </li>
                 );
