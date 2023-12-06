@@ -256,9 +256,6 @@ export const getShowTrailer = async(showId) => {
 
 
 
-
-
-
 export const fetchMovieData = async(movieId) => {
 
       try {
@@ -277,3 +274,18 @@ export const fetchMovieData = async(movieId) => {
       }
 
 }
+
+
+export async function getSeasonEpisodeName(seasonNumber,showId,episodeCount) {
+
+  const res = await fetch(`https://api.themoviedb.org/3/tv/${showId}/season/${seasonNumber}/episode/${episodeCount}?language=en-US`, {
+    headers : {
+      Authorization : `Bearer ${API_KEY}`
+    }
+  })
+
+  const EpisodeData = await res.json()
+
+  return EpisodeData.name
+}
+

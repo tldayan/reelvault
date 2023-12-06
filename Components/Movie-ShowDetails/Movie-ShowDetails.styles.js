@@ -354,9 +354,10 @@ border-radius: 5px;
   color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border-radius: 5px;
   outline: none;
+  padding-left: 20px;
   border: none;
   font-weight: bold;
   cursor: pointer;
@@ -366,6 +367,7 @@ border-radius: 5px;
 .episode_buttons:hover {
   background-color: white;
   color: #101010;
+  transition: all 0.3s ease
 }
 
 .episode_buttons.active {
