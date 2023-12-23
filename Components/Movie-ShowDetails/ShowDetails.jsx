@@ -7,7 +7,7 @@ import Recommended from "../Recommended/Recommended";
 import { showsWatchlistActions } from "../store/showsWatchlistSlice";
 import eye from "../../assets/eye.png"
 
-export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
+export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
 
   const dispatch = useDispatch()
 
@@ -183,7 +183,7 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
                         selectedEpisode === index + 1 ? "active" : null
                       }`}
                     >
-                      Episode {index + 1}
+                      Episode {index + 1} - {seasonEpisodeNames?.episodes[index]?.name}
                     </button>
                   </li>
                 );

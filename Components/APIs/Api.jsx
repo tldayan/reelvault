@@ -277,3 +277,22 @@ export const fetchMovieData = async(movieId) => {
       }
 
 }
+
+export const fetchEpisodeNames = async(showId,seasonNumber) => {
+
+      try {
+        const response = await fetch(`https://api.themoviedb.org/3/tv/${showId}/season/${seasonNumber}`, {
+          headers: {
+            accept: "application/json",
+            Authorization : `Bearer ${API_KEY}`
+          },
+        });
+        const DATA = await response.json()
+
+        return DATA
+
+      } catch (err) {
+        console.log(err.message)
+      }
+
+}
