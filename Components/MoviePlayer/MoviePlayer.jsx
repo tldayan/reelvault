@@ -107,7 +107,7 @@ export default function MoviePlayer() {
   <iframe
     ref={IframeElement}
     className="movie_player"
-    src={`https://2embed.org/e.php?id=${movieId}`}
+    src={`https://vidsrc.xyz/embed/movie/${movieId}`}
     allowFullScreen
     onLoad={handleIframeLoad}
   ></iframe>

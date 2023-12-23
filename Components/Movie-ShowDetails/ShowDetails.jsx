@@ -71,7 +71,7 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
   const handleEpisodeSelect = (seasonNumber, episodeNumber) => {
     dispatch(
       EpisodeLinkActions.setEpisodeLink(
-        `https://2embed.org/series.php?id=${showId}/${seasonNumber}/${episodeNumber}`
+        `https://vidsrc.xyz/embed/tv/${showId}/${seasonNumber}-${episodeNumber}`
       )
     );
     setSelectedEpisode(episodeNumber);
@@ -81,7 +81,7 @@ export default function ShowDetails({ showId,showData,showTrailerKey,setEpisodeL
     
     dispatch(
       EpisodeLinkActions.setEpisodeLink(
-        `https://2embed.org/series.php?id=${showId}/${selectedSeason}/${selectedEpisode}`
+        `https://vidsrc.xyz/embed/tv/${showId}/${selectedSeason}-${selectedEpisode}`
       )
     );
   },[selectedSeason])
