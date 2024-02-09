@@ -3,7 +3,7 @@ import {
   createBrowserRouter,
   RouterProvider,
   createRoutesFromElements,
-  Route
+  Route,
 } from "react-router-dom";
 import MainLayout from "../Components/App-Layout/MainLayout";
 import AllMovies from "../Components/AllMovies/AllMovies";
@@ -24,32 +24,29 @@ import ShowPlayer from "../Components/ShowPlayer/ShowPlayer";
 import Error from "../Components/Error/Error";
 import Watchlist from "../Components/Watchlist/Watchlist";
 
-
 function App() {
   const [isAnimationPlaying, setIsAnimationPlaying] = useState(true);
-  const [animationPlayed] = useState(sessionStorage.getItem("animationPlayed") || "false")
+  const [animationPlayed] = useState(
+    sessionStorage.getItem("animationPlayed") || "false"
+  );
 
-  
   useEffect(() => {
-
-    scrollTo(0,0)
+    scrollTo(0, 0);
 
     const animationTimeout = setTimeout(() => {
-          setIsAnimationPlaying(false);
-          sessionStorage.setItem("animationPlayed", "true")
-        }, 5000);
+      setIsAnimationPlaying(false);
+      sessionStorage.setItem("animationPlayed", "true");
+    }, 5000);
 
-        return () => clearTimeout(animationTimeout);
+    return () => clearTimeout(animationTimeout);
   }, []);
-
-
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
         <Route path="/" element={<AllMovies />}>
           <Route path="/" element={<PopularShows />} />
-          <Route path="popular" element={<PopularMovies />}/>
+          <Route path="popular" element={<PopularMovies />} />
           <Route path="rated" element={<TopRatedMovies />} />
           <Route path="upcoming" element={<UpcomingMovies />} />
           <Route path="filter" element={<FilteredMovies />}>
@@ -65,28 +62,26 @@ function App() {
         <Route path="watchlist" element={<Watchlist />} />
         <Route path="tvshows/:id" element={<ShowPlayer />} />
         <Route path=":id" element={<MoviePlayer />} />
-        <Route path="error" element={<Error />}/>
+        <Route path="error" element={<Error />} />
       </Route>
     )
   );
 
   useEffect(() => {
-
-    if(animationPlayed === "false") {
+    if (animationPlayed === "false") {
       if (isAnimationPlaying) {
-            document.body.style.overflow = "hidden";
-          } else {
-            document.body.style.overflow = "auto";
-          }
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
     } else {
-      return
+      return;
     }
-
   }, [isAnimationPlaying]);
 
   return (
     <>
-      {animationPlayed === "false" && isAnimationPlaying && 
+      {animationPlayed === "false" && isAnimationPlaying && (
         <svg
           className={`animation ${isAnimationPlaying ? "" : "active"}`}
           width="100%"
@@ -95,10 +90,13 @@ function App() {
             ReelVault
           </text>
         </svg>
-      }
-      <div className={`fade-in ${animationPlayed === "false" && isAnimationPlaying ? "" : "active"}`}>
-      <RouterProvider router={router}>
-        </RouterProvider>
+      )}
+      <div
+        className={`fade-in ${
+          animationPlayed === "false" && isAnimationPlaying ? "" : "active"
+        }`}
+      >
+        <RouterProvider router={router}></RouterProvider>
       </div>
     </>
   );

@@ -4,67 +4,85 @@ import MovieCard from "../MovieCard/MovieCard.jsx";
 import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
 
 export default function UpcomingMovies() {
-
-  const ratingHighButton = useRef(null)
-  const ratingLowButton = useRef(null)
-  const newMovieButton = useRef(null)
-  const oldMovieButton = useRef(null)
-  const sortList = useRef(null)
+  const ratingHighButton = useRef(null);
+  const ratingLowButton = useRef(null);
+  const newMovieButton = useRef(null);
+  const oldMovieButton = useRef(null);
+  const sortList = useRef(null);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [moviesPerPage] = useState(40);
-  const [isLoading,setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
+  const storedTimestamp = parseInt(
+    localStorage.getItem("upcomingMoviesTimestamp")
+  );
+  const currentTime = new Date().getTime();
+  const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+  const timeDifference = currentTime - storedTimestamp;
   const [UpcomingMoviesData, setUpcomingMoviesData] = useState([]);
   const category = "upcoming";
-  const categoryMovieTypeContainerRef = useRef()
+  const categoryMovieTypeContainerRef = useRef();
 
   useEffect(() => {
     if (categoryMovieTypeContainerRef.current) {
-      categoryMovieTypeContainerRef.current.scrollIntoView({ behavior: "smooth" });
+      categoryMovieTypeContainerRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
     }
   }, [currentPage]);
 
-
   useEffect(() => {
-    if (localStorage.getItem("upcomingMovies")) {
+    if (
+      localStorage.getItem("upcomingMovies") &&
+      storedTimestamp !== null &&
+      timeDifference < oneDayInMilliseconds
+    ) {
       setUpcomingMoviesData(JSON.parse(localStorage.getItem("upcomingMovies")));
-      setIsLoading(false)
+      setIsLoading(false);
     } else {
       const fetchUpcomingMovies = async () => {
         try {
-          const [data1, data2, data3,data4,data5] = await Promise.all([
+          const [data1, data2, data3, data4, data5] = await Promise.all([
             getMovies(1, category),
             getMovies(2, category),
             getMovies(3, category),
             getMovies(4, category),
-            getMovies(5, category)
+            getMovies(5, category),
           ]);
 
           if (data1.message) {
             console.log(data1.message);
           } else {
-            setUpcomingMoviesData([...data1, ...data2, ...data3,...data4,...data5]);
+            setUpcomingMoviesData([
+              ...data1,
+              ...data2,
+              ...data3,
+              ...data4,
+              ...data5,
+            ]);
           }
           localStorage.setItem(
             "upcomingMovies",
-            JSON.stringify([...data1, ...data2, ...data3,...data4,...data5])
+            JSON.stringify([...data1, ...data2, ...data3, ...data4, ...data5])
+          );
+          localStorage.setItem(
+            "upcomingMoviesTimestamp",
+            JSON.stringify(currentTime)
           );
         } catch (error) {
           console.log(error);
         }
-        setIsLoading(false)
+        setIsLoading(false);
       };
       fetchUpcomingMovies();
     }
   }, []);
 
-
   function handleSortList() {
-
-    if(sortList.current.classList.contains("active")) {
-      sortList.current.classList.remove("active")
+    if (sortList.current.classList.contains("active")) {
+      sortList.current.classList.remove("active");
     } else {
-      sortList.current.classList.add("active")
+      sortList.current.classList.add("active");
     }
   }
 
@@ -73,34 +91,37 @@ export default function UpcomingMovies() {
     ratingLowButton.current.classList.remove("selectedSort");
     newMovieButton.current.classList.remove("selectedSort");
     oldMovieButton.current.classList.remove("selectedSort");
-  
+
     if (sortOption === "rating_high" || sortOption === "rating_low") {
       let sortedMovies = [...UpcomingMoviesData].sort(
         (a, b) =>
           (sortOption === "rating_high" ? b : a).vote_average -
           (sortOption === "rating_high" ? a : b).vote_average
       );
-  
-      (sortOption === "rating_high" ? ratingHighButton : ratingLowButton).current.classList.add("selectedSort");
-  
-      setUpcomingMoviesData(sortedMovies);
 
+      (sortOption === "rating_high"
+        ? ratingHighButton
+        : ratingLowButton
+      ).current.classList.add("selectedSort");
+
+      setUpcomingMoviesData(sortedMovies);
     } else {
-      (sortOption === "new" ? newMovieButton : oldMovieButton).current.classList.add("selectedSort");
-  
+      (sortOption === "new"
+        ? newMovieButton
+        : oldMovieButton
+      ).current.classList.add("selectedSort");
+
       let sortedMovies = [...UpcomingMoviesData].sort(
         (a, b) =>
           (sortOption === "new" ? b : a).release_date?.slice(0, 4) -
           (sortOption === "new" ? a : b).release_date?.slice(0, 4)
       );
-  
+
       setUpcomingMoviesData(sortedMovies);
-    } 
+    }
 
-    sortList.current.classList.remove("active")
+    sortList.current.classList.remove("active");
   }
-  
-
 
   const indexEnd = currentPage * moviesPerPage;
   const indexStart = indexEnd - moviesPerPage;
@@ -125,43 +146,72 @@ export default function UpcomingMovies() {
 
   return (
     <CategoryMovieTypeContainer media={900} ref={categoryMovieTypeContainerRef}>
-      <h2 className="category_titles">Upcoming Movies 
-      <div className="sort_container">
-          <button onClick={handleSortList} className="sort_button">Sort</button>
+      <h2 className="category_titles">
+        Upcoming Movies
+        <div className="sort_container">
+          <button onClick={handleSortList} className="sort_button">
+            Sort
+          </button>
           <div ref={sortList} className="sort_list">
-            <button ref={ratingHighButton} onClick={() => sortMoviesBy("rating_high")} className="sort_options">Rating &#9650;</button>
-            <button ref={ratingLowButton} onClick={() => sortMoviesBy("rating_low")} className="sort_options">Rating  &#9660;</button>
-            <button ref={newMovieButton} onClick={() => sortMoviesBy("new")} className="sort_options">Newer &#9650;</button>
-            <button ref={oldMovieButton} onClick={() => sortMoviesBy("old")} className="sort_options">Older &#9660;</button>
-          </div> 
+            <button
+              ref={ratingHighButton}
+              onClick={() => sortMoviesBy("rating_high")}
+              className="sort_options"
+            >
+              Rating &#9650;
+            </button>
+            <button
+              ref={ratingLowButton}
+              onClick={() => sortMoviesBy("rating_low")}
+              className="sort_options"
+            >
+              Rating &#9660;
+            </button>
+            <button
+              ref={newMovieButton}
+              onClick={() => sortMoviesBy("new")}
+              className="sort_options"
+            >
+              Newer &#9650;
+            </button>
+            <button
+              ref={oldMovieButton}
+              onClick={() => sortMoviesBy("old")}
+              className="sort_options"
+            >
+              Older &#9660;
+            </button>
+          </div>
         </div>
       </h2>
       <div className="movielist_container">
         {isLoading ? (
-            <div className="load_animation"></div>
-          ) : (
-            currentMovies.map((eachMovie) => (
-              <MovieCard key={eachMovie.id} eachMovie={eachMovie} />
-            ))
-          )}
+          <div className="load_animation"></div>
+        ) : (
+          currentMovies.map((eachMovie) => (
+            <MovieCard key={eachMovie.id} eachMovie={eachMovie} />
+          ))
+        )}
       </div>
 
-      {!isLoading && <ul className="pagination">
-        {pages.map((eachPage) => {
-          return (
-            <li key={eachPage}>
-              <button
-                onClick={() => paginate(eachPage)}
-                className={`page_buttons ${
-                  currentPage === eachPage ? "selectedPageButton" : null
-                }`}
-              >
-                {eachPage}
-              </button>
-            </li>
-          );
-        })}
-      </ul>}
+      {!isLoading && (
+        <ul className="pagination">
+          {pages.map((eachPage) => {
+            return (
+              <li key={eachPage}>
+                <button
+                  onClick={() => paginate(eachPage)}
+                  className={`page_buttons ${
+                    currentPage === eachPage ? "selectedPageButton" : null
+                  }`}
+                >
+                  {eachPage}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </CategoryMovieTypeContainer>
   );
 }
