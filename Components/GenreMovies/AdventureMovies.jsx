@@ -13,8 +13,8 @@ export default function AdventureMovies() {
     } else {
       const fetchAdventureMovies = async () => {
         const [data1, data2] = await Promise.all([
-          getGenreMovies(1),
-          getGenreMovies(2),
+          getGenreMovies(1, genreId),
+          getGenreMovies(2, genreId),
         ]);
 
         if (data1.error) {
