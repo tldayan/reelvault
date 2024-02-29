@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { getMovies } from "../APIs/Api.jsx";
 import MovieCard from "../MovieCard/MovieCard.jsx";
 import { CategoryMovieTypeContainer } from "./CategoryMovies.style.js";
+import { sortMoviesAge, sortMoviesRating } from "../../helperFuncs/sortMovies.js";
 
 export default function PopularMovies() {
   const ratingHighButton = useRef(null);
@@ -83,31 +84,21 @@ export default function PopularMovies() {
     oldMovieButton.current.classList.remove("selectedSort");
 
     if (sortOption === "rating_high" || sortOption === "rating_low") {
-      let sortedMovies = [...popularMoviesData].sort(
-        (a, b) =>
-          (sortOption === "rating_high" ? b : a).vote_average -
-          (sortOption === "rating_high" ? a : b).vote_average
-      );
 
       (sortOption === "rating_high"
         ? ratingHighButton
         : ratingLowButton
       ).current.classList.add("selectedSort");
 
-      setPopularMoviesData(sortedMovies);
+      setPopularMoviesData(sortMoviesRating(popularMoviesData,sortOption));
     } else {
       (sortOption === "new"
         ? newMovieButton
         : oldMovieButton
       ).current.classList.add("selectedSort");
 
-      let sortedMovies = [...popularMoviesData].sort(
-        (a, b) =>
-          (sortOption === "new" ? b : a).release_date?.slice(0, 4) -
-          (sortOption === "new" ? a : b).release_date?.slice(0, 4)
-      );
 
-      setPopularMoviesData(sortedMovies);
+      setPopularMoviesData(sortMoviesAge(popularMoviesData,sortOption));
     }
 
     sortList.current.classList.remove("active");
