@@ -11,7 +11,7 @@ export default function ExistingShowModal({setSelectedEpisode,setSelectedSeason,
     const handleResumeEpisode = () => {
         
         dispatch(
-            EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${existingShow.showId}/${existingShow.showSeason}-${existingShow.showEpisode}`)
+            EpisodeLinkActions.setEpisodeLink(`https://vidsrc.to/embed/tv/${existingShow.showId}/${existingShow.showSeason}/${existingShow.showEpisode}`)
         )
         setRecentlyWatched(false)
         setSelectedEpisode(existingShow.showEpisode)    
@@ -23,7 +23,7 @@ export default function ExistingShowModal({setSelectedEpisode,setSelectedSeason,
         
         dispatch(
             EpisodeLinkActions.setEpisodeLink(
-              `https://vidsrc.xyz/embed/tv/${existingShow.showId}/1-1`
+              `https://vidsrc.to/embed/tv/${existingShow.showId}/1/1`
             )
           );
 

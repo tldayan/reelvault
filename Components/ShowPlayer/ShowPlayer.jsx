@@ -39,7 +39,7 @@ export default function ShowPlayer() {
 
   useEffect(() => {
 
-    dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${showId}/1-1`))
+    dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.to/embed/tv/${showId}/1/1`))
 
     const fetchShowData = async () => {
       const ShowData = await getShowDetails(showId);
