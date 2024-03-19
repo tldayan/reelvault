@@ -22,7 +22,7 @@ export default function MovieDetails({movieData,movieId,trailerKey,genres,produc
   const shareEntity = () => {
     const shareData = {
       title: movieData.original_title,
-      text: `Share with friends`,
+      text: `Watch ${movieData.original_title}: `,
       url: window.location.href,
     };
     
