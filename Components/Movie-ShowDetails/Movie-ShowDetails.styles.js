@@ -63,7 +63,13 @@ background-color: #0b0b0b;
   align-self: stretch;
 }
 
-
+.buttons_container {
+ /*  border: 1px solid red; */
+ 
+  display: flex;
+  padding: 10px 0 0 0;
+/*   margin-top: auto; */
+}
 
 
 .movie_stats_container {

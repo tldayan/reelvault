@@ -19,6 +19,22 @@ export default function MovieDetails({movieData,movieId,trailerKey,genres,produc
   }
 
 
+  const shareEntity = () => {
+    const shareData = {
+      title: movieData.original_title,
+      text: `Share with friends`,
+      url: window.location.href,
+    };
+    
+     if(window.navigator.canShare(shareData)) {
+      window.navigator.share(shareData)
+     } else{
+      return
+     }
+  }
+
+
+
   return (
     <>
       <MovieDetailsContainer media={900}>
@@ -28,8 +44,9 @@ export default function MovieDetails({movieData,movieId,trailerKey,genres,produc
           alt=""
         />
         {Object.keys(movieData).length !== 0 ? <div className="movie_info_container">
-          <h1 className="movie_title">{movieData.original_title} <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "In Watchlist" : "+ Watchlist"}</button></h1>
+          <h1 className="movie_title">{movieData.original_title} </h1>
           <p className="movie_overview">{movieData.overview}</p>
+          
           <div className="movie_stats_container">
             <div className="first_stats_container">
             <p className="entity_language">
@@ -56,6 +73,11 @@ export default function MovieDetails({movieData,movieId,trailerKey,genres,produc
                 </p>
               )}
             </div>
+            
+          </div>
+          <div className="buttons_container">
+            <button className="share_btn" onClick={shareEntity}>Share</button>
+            <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "In Watchlist" : "+ Watchlist"}</button>
           </div>
         </div> : <div className="load_animation"></div>}
         { Object.keys(movieData).length !== 0  && trailerKey !== "null" && <iframe className="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} title="YouTube player" frameBorder="0" allow="encrypted-media; fullscreen"></iframe>}
