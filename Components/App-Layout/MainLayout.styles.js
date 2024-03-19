@@ -30,7 +30,8 @@ nav {
   width: 100%;
   margin-bottom: 2px;
   text-indent: 10px;
-  font-size: clamp(0.7rem, 1vw, 1.1rem);
+  /* font-size: clamp(0.7rem, 1vw, 1.1rem); */
+  font-size: 16px;
   border: none;
   outline: none;
   margin-left: auto;

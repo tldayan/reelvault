@@ -236,7 +236,7 @@ svg text {
   animation: animated-stroke 4s forwards;
   font-family: "Raleway", sans-serif;
   text-anchor: middle;
-  dominant-baseline: middle;
+/*   dominant-baseline: middle; */
 }
 
 
