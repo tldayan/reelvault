@@ -13,17 +13,17 @@ video {
   
 .trailer_content {
   position: absolute;
-  bottom: 10%;
-  left: 4%;
+  bottom: 7%;
+  left: 2%;
   width: 40%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   color: white;
 }
 
 .trailer_title {
-  font-size: clamp(1rem, 5vw, 6rem);
+  font-size: clamp(1.2rem, 4vw, 6rem);
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
