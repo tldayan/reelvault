@@ -90,9 +90,9 @@ useEffect(() => {
     <TrailerContainer media={900}>
       <video src={movieTrailer} autoPlay loop muted/>
       <div className='trailer_content'>
-        <h4 className='trailer_title'>Fast X</h4>
-        <Link to="/385687" className='watch_trailer_btn'><img className='play_button' src={playButton} alt="" />Play</Link>
-        <p className='trailer_info'>Dom Toretto's family faces their deadliest threat yet: a vengeful enemy from the shadows, determined to destroy everything Dom loves.</p>
+        <h4 className='trailer_title'>Kung Fu Panda 4</h4>
+        <Link to="/1011985" className='watch_trailer_btn'><img className='play_button' src={playButton} alt="" />Play</Link>
+        <p className='trailer_info'>Po trains a new Dragon Warrior to succeed him while battling the villain Chameleon, who brings back past foes.</p>
       </div>
     </TrailerContainer>
 
