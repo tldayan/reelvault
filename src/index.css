@@ -526,7 +526,7 @@ svg text {
   padding: 4px;
   width: 90px;
   height: 30px;
-  margin: 5px 0;
+/*   margin: 5px 0; */
   white-space: nowrap;
   outline: none;
   border-radius: 3px;
@@ -535,7 +535,7 @@ svg text {
   border: 1px solid white;
   cursor: pointer;
   transition: 0.3s all;
-  margin-left: 5px;
+  margin-right: 5px;
   display: flex;
   align-items: center;
   justify-content: center;

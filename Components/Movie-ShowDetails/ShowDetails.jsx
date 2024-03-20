@@ -107,6 +107,23 @@ export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTra
     }
   }
 
+  
+  const shareEntity = () => {
+    const shareData = {
+      title: showData?.name,
+      text: `Watch ${showData?.name}:`,
+      url: window.location.href,
+    };
+    
+     if(window.navigator.canShare(shareData)) {
+      window.navigator.share(shareData)
+     } else{
+      return
+     }
+  }
+
+
+
 
   return (
     <>
@@ -117,7 +134,7 @@ export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTra
           alt=""
         />
         {Object.keys(showData).length !== 0 ? <div className="show_info_container">
-          <h1 className="movie_title">{showData?.name} <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.showId == showId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.showId == showId) ? "In Watchlist" : "+ Watchlist"}</button>{showTrailerKey && <button onClick={() => window.open(`https://www.youtube.com/watch?v=${showTrailerKey}`)} className={`trailer_btn`}><img className="eye_icon" src={eye} loading="lazy"></img>Trailer</button>}</h1>
+          <h1 className="movie_title">{showData?.name}</h1>
           <p className="movie_overview">{showData?.overview}</p>
           <div className="movie_stats_container">
             <div className="first_stats_container">
@@ -148,6 +165,13 @@ export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTra
               )}
             
             </div>
+            
+
+          </div>
+          <div className="buttons_container">
+            {showTrailerKey && <button onClick={() => window.open(`https://www.youtube.com/watch?v=${showTrailerKey}`)} className={`trailer_btn`}><img className="eye_icon" src={eye} loading="lazy"></img>Trailer</button>}
+            <button className="share_btn" onClick={shareEntity}>Share</button>
+            <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.showId == showId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.showId == showId) ? "In Watchlist" : "+ Watchlist"}</button>
           </div>
         </div> : <div className="load_animation"></div>}
         <div className="shows_list_container">

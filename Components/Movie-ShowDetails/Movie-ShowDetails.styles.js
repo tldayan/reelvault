@@ -323,6 +323,13 @@ border-radius: 5px;
   overflow-y: scroll;
 }
 
+.buttons_container {
+  /* border: 1px solid red; */
+ 
+  display: flex;
+  padding: 10px 0 0 0;
+/*   margin-top: auto; */
+}
 
 
 .main_episode_list_container::-webkit-scrollbar-thumb {
