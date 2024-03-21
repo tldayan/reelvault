@@ -2,6 +2,7 @@ import {React,useState,useEffect, useRef} from 'react'
 import {Outlet} from "react-router-dom"
 import {Link, NavLink} from "react-router-dom"
 import movieTrailer from "../../assets/Trailer1.mp4"
+import cinemaBg from "../../assets/cinema_bg2.jpg"
 import playButton from "../../assets/play-solid.svg"
 import { CategoryButtonsContainer, TrailerContainer } from './AllMovies.styles'
 import searchIcon from "../../assets/search_icon.svg"
@@ -88,7 +89,13 @@ useEffect(() => {
     <>
 
     <TrailerContainer media={900}>
-      <video src={movieTrailer} autoPlay loop muted/>
+      
+      {<img className='cinema_bg' src={cinemaBg} alt="" />}
+      <div className='trailer_container'>
+        {<video src={movieTrailer} controls={false} autoPlay loop muted/>}
+        {<div className='video_shadow'></div>}
+      </div>
+      
       <div className='trailer_content'>
         <h4 className='trailer_title'>Kung Fu Panda 4</h4>
         <Link to="/1011985" className='watch_trailer_btn'><img className='play_button' src={playButton} alt="" />Play</Link>

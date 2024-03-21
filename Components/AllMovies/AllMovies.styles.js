@@ -3,12 +3,53 @@ import {styled,css} from "styled-components"
 
 
 export const TrailerContainer = styled.div`
-
+ /*  border: 1px solid red; */
 position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+
+
+.trailer_container {
+/*   border: 1px solid aqua; */
+  width: 46%;
+  height: 31%;
+  position: absolute;
+  top: 10%;
+  z-index: 9999999999999999;
+  border-radius: 10px;
+}
+
+
+.cinema_bg {
+/*   border: 1px solid aqua; */
+  width: 90%;
+  filter: hue-rotate(10deg) saturate(3) brightness(0.3) contrast(1) blur(2px);
+  background-color: gold;
+  margin: 0 auto;
+  box-shadow: -1px -1px 10px 25px black;
+}
 
 video {
+  opacity: 0.8;
+  border-radius: 10px;
+  top: 0;
+  left: 0;
+  position: absolute;
   width: 100%;
   display: block;
+  z-index: 9999999;
+/*   box-shadow:0 0 100px rgba(249, 234, 164, 0.161); */
+}
+
+.video_shadow {
+  position: absolute;
+  width: 100%;
+  height: 121.4%;
+  top: 0;
+  z-index: 99999999;
+  box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 1);
+  
 }
   
 .trailer_content {
@@ -27,7 +68,7 @@ video {
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
-  
+  z-index: 9999999999;
 }
 
 .trailer_info {
