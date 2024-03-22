@@ -23,6 +23,19 @@ justify-content: center;
 
 }
 
+@media (prefers-color-scheme: light) {
+
+  .cinema_bg {
+    box-shadow: -1px -1px 10px 25px black;
+}
+
+.video_shadow {
+  box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 1);
+}
+
+
+}
+
 
 
 
@@ -44,7 +57,7 @@ justify-content: center;
   filter: hue-rotate(10deg) saturate(3) brightness(0.3) contrast(1) blur(2px);
   background-color: gold;
   margin: 0 auto;
-  box-shadow: -1px -1px 10px 25px black;
+  /* box-shadow: -1px -1px 10px 25px black; */
 }
 
 video {
@@ -64,7 +77,7 @@ video {
   height: 121.4%;
   top: 0;
   z-index: 99999999;
-  box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 1);
+ /*  box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 1); */
   
 }
   
