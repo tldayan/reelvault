@@ -10,6 +10,23 @@ align-items: center;
 justify-content: center;
 
 
+@media (prefers-color-scheme: dark) {
+
+  .cinema_bg {
+  box-shadow: none;
+}
+
+.video_shadow {
+  box-shadow: none;
+}
+
+
+}
+
+
+
+
+
 .trailer_container {
 /*   border: 1px solid aqua; */
   width: 46%;
@@ -39,7 +56,6 @@ video {
   width: 100%;
   display: block;
   z-index: 9999999;
-/*   box-shadow:0 0 100px rgba(249, 234, 164, 0.161); */
 }
 
 .video_shadow {
