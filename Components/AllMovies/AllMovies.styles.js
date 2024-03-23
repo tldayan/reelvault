@@ -10,7 +10,7 @@ align-items: center;
 justify-content: center;
 
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
 
   .cinema_bg {
   box-shadow: none;
@@ -34,9 +34,32 @@ justify-content: center;
 }
 
 
+} */
+
+${(props) =>
+      props.theme === "dark" &&
+      css`
+        .cinema_bg {
+  box-shadow: none;
 }
 
+.video_shadow {
+  box-shadow: none;
+}
+      `}
 
+    ${(props) =>
+      props.theme === "light" &&
+      css`
+        .cinema_bg {
+    box-shadow: -1px -1px 10px 25px black;
+}
+
+.video_shadow {
+  box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 1);
+}
+      `}
+  
 
 
 

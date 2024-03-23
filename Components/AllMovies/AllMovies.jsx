@@ -17,6 +17,22 @@ export default function AllMovies() {
   const [searchResults, setSearchResults] = useState([])
   const [searchDataLoading, setSearchDataLoading] = useState(false)
   const searchField = useRef(null)
+  const theme = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light'
+
+
+/* if (window.matchMedia) {
+  const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  if (darkModeQuery.matches) {
+    alert('Dark mode is enabled');
+  } else {
+    alert('Light mode is enabled');
+  }
+} else {
+  alert('prefers-color-scheme not supported');
+}
+ */
+
+  alert(theme)
 
   function removeSpecialCharacters(input) {
     return input.replace(/[:\-]/g, "").toLowerCase();
@@ -88,7 +104,7 @@ useEffect(() => {
   return (
     <>
 
-    <TrailerContainer media={900}>
+    <TrailerContainer media={900} theme={theme}>
       
       {<img className='cinema_bg' src={cinemaBg} alt="" />}
       <div className='trailer_container'>
