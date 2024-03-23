@@ -35,7 +35,7 @@ justify-content: center;
 
 
 } */
-
+/* 
 ${(props) =>
       props.theme === "dark" &&
       css`
@@ -58,7 +58,7 @@ ${(props) =>
 .video_shadow {
   box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 1);
 }
-      `}
+      `} */
   
 
 

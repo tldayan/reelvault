@@ -17,7 +17,7 @@ export default function AllMovies() {
   const [searchResults, setSearchResults] = useState([])
   const [searchDataLoading, setSearchDataLoading] = useState(false)
   const searchField = useRef(null)
-  const theme = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light'
+  /* const theme = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light' */
 
 
 /* if (window.matchMedia) {
