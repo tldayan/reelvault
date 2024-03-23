@@ -32,7 +32,7 @@ export default function AllMovies() {
 }
  */
 
-/*   alert(theme) */
+  alert(theme)
 
   function removeSpecialCharacters(input) {
     return input.replace(/[:\-]/g, "").toLowerCase();
