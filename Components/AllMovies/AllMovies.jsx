@@ -104,7 +104,7 @@ useEffect(() => {
   return (
     <>
 
-    <TrailerContainer media={900} theme={theme}>
+    <TrailerContainer media={900} /* theme={theme} */>
       
       {<img className='cinema_bg' src={cinemaBg} alt="" />}
       <div className='trailer_container'>
