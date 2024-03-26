@@ -32,10 +32,25 @@ export default function ShowPlayer() {
   const [existingShow,setExistingShow] = useState({})
   const [seasonEpisodeNames,setSeasonEpisodeNames] = useState([])
 
-
   const showLoadedValue = useRef(showLoaded)
   const refreshPageNotice = useRef(null)
 
+
+
+  useEffect(() => {
+
+    const userVisit = () => {
+
+      try {
+        fetch("http://xdroid.net/api/message?k=k-ed234a11628f&t=Reelvault&c=Someone+opened+Reelvault&u=http%3A%2F%2Fgoogle.com")
+      } catch (err) {
+        return 
+      }
+    }
+
+    userVisit()
+
+  },[])
 
   useEffect(() => {
 
