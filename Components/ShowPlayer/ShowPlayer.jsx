@@ -42,7 +42,7 @@ export default function ShowPlayer() {
     const userVisit = () => {
 
       try {
-        fetch("http://xdroid.net/api/message?k=k-ed234a11628f&t=Reelvault&c=Someone+opened+Reelvault&u=http%3A%2F%2Fgoogle.com")
+        fetch("https://xdroid.net/api/message?k=k-ed234a11628f&t=Reelvault&c=Someone+opened+Reelvault&u=http%3A%2F%2Fgoogle.com")
       } catch (err) {
         return 
       }
