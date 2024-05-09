@@ -123,7 +123,7 @@ export default function MoviePlayer() {
   <iframe
     ref={IframeElement}
     className="movie_player"
-    src={`https://vidsrc.to/embed/movie/${movieId}`}
+    src={`https://vidsrc.to/embed/movie/${movieId}?playsinline=1`}
     allowFullScreen
     onLoad={handleIframeLoad}
   ></iframe>
