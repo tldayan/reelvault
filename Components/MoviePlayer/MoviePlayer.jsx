@@ -123,9 +123,10 @@ export default function MoviePlayer() {
   <iframe
     ref={IframeElement}
     className="movie_player"
-    src={`https://vidsrc.to/embed/movie/${movieId}?playsinline=1`}
+    src={`https://vidsrc.to/embed/movie/${movieId}`}
     allowFullScreen
     onLoad={handleIframeLoad}
+    sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
   ></iframe>
 
       </MoviePlayerContainer>
