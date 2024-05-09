@@ -126,7 +126,8 @@ export default function MoviePlayer() {
     src={`https://vidsrc.to/embed/movie/${movieId}`}
     allowFullScreen
     onLoad={handleIframeLoad}
-    playsinline  // for iOS Safari
+    playsInline  // for iOS Safari
+    webkit-playsinline // for Android
   ></iframe>
 
       </MoviePlayerContainer>
