@@ -127,7 +127,6 @@ export default function MoviePlayer() {
     allowFullScreen
     onLoad={handleIframeLoad}
     playsinline  // for iOS Safari
-    webkit-playsinline // for Android
   ></iframe>
 
       </MoviePlayerContainer>
