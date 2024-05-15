@@ -802,7 +802,7 @@ footer {
 }
 
 .watching_show_notice {
-  color: white;
+  color: var(--primary);
   font-size: clamp(0.5rem, 4vw, 1.4rem);
   align-self: flex-start;
   font-family: 'Quicksand', sans-serif;
