@@ -28,7 +28,7 @@ export default function MovieCard({ eachMovie }) {
 
 
   return (
-    <StyledMovieLink to={`/${eachMovie.id}`} onClick={() => handleMovieName(eachMovie.title)} key={eachMovie.id}>
+    <StyledMovieLink to={`/movies/${eachMovie.id}`} onClick={() => handleMovieName(eachMovie.title)} key={eachMovie.id}>
       <div className="movie_poster_container">
         {posterLoaded && <div className="movie_language">{eachMovie.original_language.toUpperCase()}</div>}
         {posterLoaded && <div className="movie_date">{eachMovie.release_date.slice(0, 4)}</div>}

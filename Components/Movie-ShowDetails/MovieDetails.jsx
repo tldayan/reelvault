@@ -3,8 +3,9 @@ import Recommended from "../Recommended/Recommended";
 import Reviews from "../Reviews/Reviews";
 import { MovieDetailsContainer } from "./Movie-ShowDetails.styles";
 import { moviesWatchlistAction } from "../store/moviesWatchlistSlice";
+import EntityDetailsSkeleton from "./EntityDetailsSkeleton";
 
-export default function MovieDetails({movieData,movieId,trailerKey,genres,productionCompanies,productionCountries}) {
+export default function MovieDetails({movieData,movieDataLoading,movieId,trailerKey,genres,productionCompanies,productionCountries}) {
   
   const dispatch = useDispatch()
   const watchlist = useSelector((state) => state.moviesWatchlist)
@@ -37,13 +38,13 @@ export default function MovieDetails({movieData,movieId,trailerKey,genres,produc
 
   return (
     <>
-      <MovieDetailsContainer media={900}>
+      {!movieDataLoading ? <MovieDetailsContainer media={900}>
         <img
           className="movie_details_poster"
           src={`https://image.tmdb.org/t/p/original${movieData.poster_path}`}
-          alt=""
+          alt="movie_poster"
         />
-        {Object.keys(movieData).length !== 0 ? <div className="movie_info_container">
+        <div className="movie_info_container">
           <h1 className="movie_title">{movieData.original_title} </h1>
           <p className="movie_overview">{movieData.overview}</p>
           
@@ -79,9 +80,9 @@ export default function MovieDetails({movieData,movieId,trailerKey,genres,produc
             <button className="share_btn" onClick={shareEntity}>Share</button>
             <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "In Watchlist" : "+ Watchlist"}</button>
           </div>
-        </div> : <div className="load_animation"></div>}
+        </div>
         { Object.keys(movieData).length !== 0  && trailerKey !== "null" && <iframe className="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} title="YouTube player" frameBorder="0" allow="encrypted-media; fullscreen"></iframe>}
-      </MovieDetailsContainer>
+      </MovieDetailsContainer> : <EntityDetailsSkeleton /> }
       
       <Reviews movieId={movieId}/>
 

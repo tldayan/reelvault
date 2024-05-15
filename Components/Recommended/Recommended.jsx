@@ -65,7 +65,7 @@ export default function Recommended({movieId,showId}) {
             if(eachMovie?.poster_path && eachMovie?.vote_count > 50 && eachMovie?.release_date?.slice(0,4) > 2000) {
                 return (
                 <swiper-slide key={eachMovie?.id}>
-                    <Link className='recommended_link' onClick={() => handleNameChange(eachMovie?.original_title)} to={`../${eachMovie?.id}`}><img className='recommended_movie_poster' src={eachMovie?.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/w500${eachMovie?.poster_path}`} alt="" /><p className='recommended_movie_title'>{eachMovie?.title.length > 15  ? `${eachMovie?.title.slice(0, 15)}...` : eachMovie?.title}</p>
+                    <Link className='recommended_link' onClick={() => handleNameChange(eachMovie?.original_title)} to={`../movies/${eachMovie?.id}`}><img className='recommended_movie_poster' src={eachMovie?.poster_path === null ? defaultPoster : `https://image.tmdb.org/t/p/w500${eachMovie?.poster_path}`} alt="" /><p className='recommended_movie_title'>{eachMovie?.title.length > 15  ? `${eachMovie?.title.slice(0, 15)}...` : eachMovie?.title}</p>
                         <div className="movie_language">{eachMovie?.original_language.toUpperCase()}</div>
                         <div className="movie_date">{eachMovie?.release_date.slice(0,4)}</div>
                     </Link>

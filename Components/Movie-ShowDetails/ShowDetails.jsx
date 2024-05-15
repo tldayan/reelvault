@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import { ShowDetailsContainer } from "./Movie-ShowDetails.styles";
@@ -6,10 +6,20 @@ import Reviews from "../Reviews/Reviews";
 import Recommended from "../Recommended/Recommended";
 import { showsWatchlistActions } from "../store/showsWatchlistSlice";
 import eye from "../../assets/eye.png"
+import { UpdateUserShowDetails } from "../APIs/mongo/UpdateUserShowDetails";
+import { getUserShowDetails } from "../APIs/mongo/UserShowDetail";
+import EntityDetailsSkeleton from "./EntityDetailsSkeleton";
+import { deleteUserShowDetails } from "../APIs/mongo/deleteUserShowDetails";
 
-export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
+export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
 
   const dispatch = useDispatch()
+  const storedUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const [username] = useState(storedUserInfo ? storedUserInfo.username : null);
+  const seasonsContainer = useRef(null);
+  let episodeButton = useRef(null)
+  let episodeListContainer = useRef(null)
+  
 
   useEffect(() => {
     const newEpisodeList = [];
@@ -23,84 +33,114 @@ export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTra
     setEpisodeList(newEpisodeList);
   }, [seasonList, selectedSeason]);
 
-  const [seasonsContainer, setSeasonsContainer] = useState(null);
-
-  useEffect(() => {
-    const seasonsContainerElement = document.querySelector(
-      ".season_list_container"
-    );
-    setSeasonsContainer(seasonsContainerElement);
-  }, []);
 
   const handleSeasonSelect = (index) => {
     setSelectedSeason(index + 1);
-    seasonsContainer.classList.toggle("hide");
     setSelectedEpisode(1)
+    seasonsContainer.current.classList.add("hide")
   };
 
 
-  useEffect(() => {
-    if(selectedEpisode > 1 || selectedSeason > 1) {
+  useEffect(() => { 
 
-      const existingData = JSON.parse(localStorage.getItem("ShowDetails")) || []
 
-      if(existingData.find(eachObj => eachObj.showId === showId)) {
-        const updatedData = existingData.map(eachObj => {
-        if (eachObj.showId === showId) {
-          return {
-            ...eachObj,
-            showSeason: selectedSeason,
-            showEpisode: selectedEpisode
-          };
+    let isLastEpisodeOfLastSeason = seasonList[seasonList.length - 1]?.episode_count === selectedEpisode && seasonList.length === selectedSeason
+
+    if(isLastEpisodeOfLastSeason) {
+
+        const deleteUserShowDetailsReq = async() => {
+          await deleteUserShowDetails(username,showId)
         }
-        return eachObj;
-      })
+  
+        deleteUserShowDetailsReq()
+      } else if((selectedEpisode > 1 || selectedSeason > 1) && username && showData.name) {
 
-      localStorage.setItem("ShowDetails", JSON.stringify(updatedData))
-
-      } else {
-        const newShow = {showId : showId, showSeason : selectedSeason, showEpisode : selectedEpisode}
-
-        localStorage.setItem("ShowDetails", JSON.stringify([...existingData, newShow]))
-      }
+      const UpdateUserShowsDetailsRequest = async() => {
+        
+            const ShowDetails = {showId : showId, showName : showData?.name, poster_url : showData?.poster_path, showSeason : selectedSeason, showEpisode : selectedEpisode}
+            
+            await UpdateUserShowDetails(ShowDetails,username)
+        }
       
+      UpdateUserShowsDetailsRequest()
+    
+    } else if (username) {
+        const fetchUserShowDetails = async() => {
+  
+          const fetchUserShowDetailsReq = await getUserShowDetails(username)
+  
+          if(fetchUserShowDetailsReq === 404) {
+            return
+          } else {
+  
+            const showExists = fetchUserShowDetailsReq.some((eachObj) => eachObj.showId === showId)
+
+            if(showExists) {
+              const currentShow = fetchUserShowDetailsReq.find((eachObj) => eachObj.showId === showId)
+  
+              setSelectedSeason(currentShow.showSeason)
+              setSelectedEpisode(currentShow.showEpisode)
+              handleEpisodeSelect(currentShow.showSeason,currentShow.showEpisode)
+            }
+          }
+        }
+
+        fetchUserShowDetails()
     }
+
   },[selectedEpisode,selectedSeason])
   
-
+    
   const handleEpisodeSelect = (seasonNumber, episodeNumber) => {
     dispatch(
       EpisodeLinkActions.setEpisodeLink(
-        `https://vidsrc.to/embed/tv/${showId}/${seasonNumber}/${episodeNumber}`
+        `https://vidsrc.xyz/embed/tv/${showId}/${seasonNumber}/${episodeNumber}`
       )
     );
     setSelectedEpisode(episodeNumber);
+    seasonsContainer.current.classList.add("hide")
   };
+
+
+
+
 
   useEffect(() => {
     
     dispatch(
       EpisodeLinkActions.setEpisodeLink(
-        `https://vidsrc.to/embed/tv/${showId}/${selectedSeason}/${selectedEpisode}`
+        `https://vidsrc.xyz/embed/tv/${showId}/${selectedSeason}/${selectedEpisode}`
       )
     );
   },[selectedSeason])
 
   function openSeasonsContainer() {
-    seasonsContainer.classList.toggle("hide");
+    seasonsContainer.current.classList.toggle("hide") 
   }
+
 
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [selectedEpisode,selectedSeason]);
+  
+    if (episodeListContainer.current) {
+      const activeEpisodeButton = episodeListContainer.current.querySelector(".episode_buttons.active");
+  
+      if (activeEpisodeButton) {
+        episodeListContainer.current.scroll({
+          top: activeEpisodeButton.offsetTop - episodeListContainer.current.offsetTop,
+          behavior: "smooth"
+        });
+      }
+    }
+  }, [selectedEpisode, selectedSeason, showData]);
+  
 
   const watchlist = useSelector((state) => state.showsWatchlist)
 
   function handleWatchlist() {
     
     if(watchlist.some(eachEntity => eachEntity.showId == showId)) {
-      
       dispatch(showsWatchlistActions.removeFromWatchlist(showId))
     } else {
       dispatch(showsWatchlistActions.addToWatchlist(showData))
@@ -123,17 +163,15 @@ export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTra
   }
 
 
-
-
   return (
     <>
-      <ShowDetailsContainer media={900}>
+      {!showDataLoading ? <ShowDetailsContainer media={900}>
         <img
           className="movie_details_poster"
           src={`https://image.tmdb.org/t/p/original${showData.poster_path}`}
-          alt=""
+          alt="poster"
         />
-        {Object.keys(showData).length !== 0 ? <div className="show_info_container">
+        <div className="show_info_container">
           <h1 className="movie_title">{showData?.name}</h1>
           <p className="movie_overview">{showData?.overview}</p>
           <div className="movie_stats_container">
@@ -173,13 +211,13 @@ export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTra
             <button className="share_btn" onClick={shareEntity}>Share</button>
             <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.showId == showId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.showId == showId) ? "In Watchlist" : "+ Watchlist"}</button>
           </div>
-        </div> : <div className="load_animation"></div>}
+        </div>
         <div className="shows_list_container">
           <div className="main_season_list_container">
             <button onClick={openSeasonsContainer} className="seasons_button">
               Season {selectedSeason}&nbsp;&#9660;
             </button>
-            <ul className="season_list_container hide">
+            <ul ref={seasonsContainer} className="season_list_container hide">
               {seasonList.map((eachSeason, index) => {
                 return (
                   <li key={eachSeason.id}>
@@ -194,15 +232,16 @@ export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTra
               })}
             </ul>
           </div>
-          <div className="main_episode_list_container">
-            {Object.keys(showData).length !== 0 ? <ul className="episode_list_container">
+          <div ref={episodeListContainer} className="main_episode_list_container">
+            <ul className="episode_list_container">
               {episodeList.map((index) => {
                 return (
-                  <li key={index}>
+                  <li key={index + 1}>
                     <button
                       onClick={() =>
                         handleEpisodeSelect(selectedSeason, index + 1)
                       }
+                      ref={episodeButton}
                       className={`episode_buttons ${
                         selectedEpisode === index + 1 ? "active" : null
                       }`}
@@ -212,10 +251,10 @@ export default function ShowDetails({ showId,seasonEpisodeNames,showData,showTra
                   </li>
                 );
               })}
-            </ul> : <div style={{marginTop: 65}} className="load_animation"></div>}
+            </ul>
           </div>
         </div>
-      </ShowDetailsContainer>
+      </ShowDetailsContainer> : <EntityDetailsSkeleton />}
       <Reviews showId={showId}/>
       <Recommended showId={showId}/>
     </>

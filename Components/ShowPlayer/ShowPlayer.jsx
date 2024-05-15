@@ -5,7 +5,6 @@ import ShowDetails from "../Movie-ShowDetails/ShowDetails";
 import { fetchEpisodeNames, getShowDetails, getShowTrailer } from "../APIs/Api";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
-import ExistingShowModal from "../ExistingShowModal/ExistingShowModal";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 
 export default function ShowPlayer() {
@@ -18,6 +17,7 @@ export default function ShowPlayer() {
   const showLoadContainer = useRef(null);
   const IframeShowElement = useRef(null);
   const [showData, setShowData] = useState({});
+  const [showDataLoading,setShowDataLoading] = useState(false)
   const [seasonList, setSeasonList] = useState([]);
   const [genres, setGenres] = useState([]);
   const [productionCompanies, setProductionCompanies] = useState([]);
@@ -29,7 +29,7 @@ export default function ShowPlayer() {
   const [showLoaded, setShowLoaded] = useState(false)
   const [showTrailerKey, setShowTrailerKey] = useState("")
   const [recentlyWatched, setRecentlyWatched] = useState(false)
-  const [existingShow,setExistingShow] = useState({})
+  const [existingShow] = useState({})
   const [seasonEpisodeNames,setSeasonEpisodeNames] = useState([])
 
   const showLoadedValue = useRef(showLoaded)
@@ -37,7 +37,7 @@ export default function ShowPlayer() {
 
 
 
-  useEffect(() => {
+  /* useEffect(() => {
 
     const userVisit = () => {
 
@@ -50,13 +50,13 @@ export default function ShowPlayer() {
 
     userVisit()
 
-  },[])
+  },[]) */
 
   useEffect(() => {
-
-    dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.to/embed/tv/${showId}/1/1`))
+      dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${showId}/1/1`))
 
     const fetchShowData = async () => {
+      setShowDataLoading(true)
       const ShowData = await getShowDetails(showId);
       const ShowTrailerId = await getShowTrailer(showId)
     
@@ -66,6 +66,7 @@ export default function ShowPlayer() {
       }
 
       setShowData(ShowData);
+      setShowDataLoading(false)
       let filteredSeasons = ShowData.seasons.filter(eachSeason => eachSeason.name !== "Specials" && eachSeason.air_date !== null)
       setSeasonList([...filteredSeasons]);
       setGenres(ShowData.genres || []);
@@ -76,16 +77,16 @@ export default function ShowPlayer() {
       
     };
 
-    fetchShowData();
-    setSelectedEpisode(1);
-    setSelectedSeason(1);
-  
     
+    fetchShowData();
+      setSelectedEpisode(1); /* USE SEASON AND EPISODE IN PARAMS */
+      setSelectedSeason(1);
+  
   }, [showId]);
 
 
-useEffect(() => {
 
+useEffect(() => {
 
   const getEpisodeNames = async () => {
     const seasonEpisodeName = await fetchEpisodeNames(showId,selectedSeason)
@@ -100,27 +101,6 @@ useEffect(() => {
 
 
 
-  useEffect(() => {
-
-    const showDetailsJSON = localStorage.getItem("ShowDetails");
-
-    if (showDetailsJSON) {
-      const showDetails = JSON.parse(showDetailsJSON);
-
-      const existingShow = showDetails.find(eachObj => eachObj.showId === showId)
-      setExistingShow(existingShow)
-
-      if(existingShow) {
-        setRecentlyWatched(true)
-      } else {
-        setRecentlyWatched(false)
-      }
-    
-    }
-
-  }, [showId]);
-
-  
 
   function handleIframeLoad() {
 
@@ -145,14 +125,12 @@ useEffect(() => {
     },5500)
 
     const timeout2 = setTimeout(() => {
-
       refreshPageNotice.current.classList.remove("active")
     },8000)
 
     return () => {
       clearTimeout(timeout1)
       clearTimeout(timeout2)
-      
     }
 
   },[showId])
@@ -169,9 +147,6 @@ useEffect(() => {
 
   return (
     <>
-
-    {recentlyWatched && <ExistingShowModal setSelectedEpisode={setSelectedEpisode} setSelectedSeason={setSelectedSeason} existingShow={existingShow} recentlyWatched={recentlyWatched} setRecentlyWatched={setRecentlyWatched} />}
-    {recentlyWatched && <div className="dark_overlay"></div>}
 
     <p ref={refreshPageNotice} className="refresh_notice">Show not loading? <span onClick={() => window.location.reload()} className="refresh_link">Refresh page</span></p>
     
@@ -196,7 +171,7 @@ useEffect(() => {
             onLoad={handleIframeLoad}
           ></iframe>
       </div>
-      <ShowDetails showId={showId} showTrailerKey={showTrailerKey} seasonEpisodeNames={seasonEpisodeNames} showReleasedDate={showReleasedDate} showData={showData} setSelectedSeason={setSelectedSeason} setSelectedEpisode={setSelectedEpisode} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={selectedSeason} selectedEpisode={selectedEpisode} seasonList={seasonList} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
+      <ShowDetails showId={showId} showDataLoading={showDataLoading} showTrailerKey={showTrailerKey} seasonEpisodeNames={seasonEpisodeNames} showReleasedDate={showReleasedDate} showData={showData} setSelectedSeason={setSelectedSeason} setSelectedEpisode={setSelectedEpisode} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={selectedSeason} selectedEpisode={selectedEpisode} seasonList={seasonList} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
       <ScrollRestoration top={true} />
     </>
   );

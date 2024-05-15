@@ -11,10 +11,9 @@ export const StyledMainApp = styled.div`
 
   .logo {
   padding: 0px 5px;
-  border: 2px solid rgb(255, 255, 255);
+  border: 2px solid var(--primary);
   text-decoration: none;
-  color: rgb(255, 255, 255);
-  margin-right: auto;
+  color: var(--primary);
   font-family: 'Cinzel', serif;
   font-size: clamp(0.4rem, 4vw, 1.5rem);
 }
@@ -23,6 +22,45 @@ nav {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+
+.auth_buttons,.logout_btn {
+  border: 1px solid var(--primary);
+  border-radius: 3px;
+  padding: 5px 10px;
+  background-color : transparent;
+  outline: none;
+  color : var(--primary);
+  cursor: pointer;
+  font-family : "Quicksand";
+  margin-left : 5px;
+  font-size: clamp(0.3rem, 2.5vw, 0.8rem);
+  transition : ease 0.2s;
+}
+
+.username {
+  font-size: clamp(0.3rem, 3.5vw, 1rem);
+}
+
+.userlogo {
+  width: clamp(10px, 4vw, 23px);
+}
+
+.userlogo.light {
+  width: clamp(10px, 4vw, 23px);
+  filter : invert(1)
+}
+
+.auth_buttons:hover,.logout_btn:hover {
+  border: 1px solid var(--primary);
+  color : var(--background);
+  background-color : var(--primary);
+}
+
+
+.auth_buttons:first-of-type,.logout_btn:first-of-type {
+  margin-left : auto;
 }
 
 .search_field {
@@ -39,11 +77,11 @@ nav {
   font-family: 'Ysabeau SC', sans-serif;
   background-color: transparent;
   text-decoration: none;
-  color: white;
+  color: var(--primary);
 }
 
 .search_container {
-  background-color: #101010;
+  background-color: var(--searchContianerBgColor);
   border-radius: 53px;
   padding: 5px;
   margin: 20px auto 0px auto;
@@ -193,25 +231,27 @@ a {
   align-self: center;
   gap: 10px ;
   font-size: 1.3rem;
+  width : 100%;
+  margin-left: 20px;
 }
 
 
 .nav_links {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.674);
+  color: var(--navLinksColor);
   padding: 3px 5px;
   border-radius: 3px;
-  font-size: clamp(0.4rem, 5vw, 1.1rem);
-  font-family: 'Philosopher', sans-serif;
+  font-size: clamp(0.4rem, 5vw, 1rem);
+  font-family : "Quicksand";
   letter-spacing:1px;
 }
 
 .nav_links:hover {
-  color:rgb(255, 255, 255);
+  color:var(--navLinksColorActive);
 }
 
 .nav_links.active {
-  color:rgb(255, 255, 255);
+  color:var(--navLinksColorActive);
   letter-spacing:1px;
 }
 
@@ -220,6 +260,7 @@ a {
 .copyright {
   font-size: clamp(0.5rem, 1vw, 1rem);
   font-family: 'Quicksand', sans-serif;
+  color : var(--primary)
 }
 
 #hamburger {
@@ -234,7 +275,7 @@ a {
 
   #hamburger .line {
     fill: none;
-    stroke: #ffffff;
+    stroke: var(--primary);
     stroke-width: 6;
     transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1), stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -267,7 +308,32 @@ a {
   }
 
 
-${props => props.media && css`
+  .user_profile_container {
+    /* border: 1px solid red; */
+    color : var(--primary);
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family : "Quicksand";
+    margin-right : 10px;
+  }
+
+
+@media (max-width:900px) {
+
+  .auth_buttons:first-of-type,.logout_btn:first-of-type {
+  margin-left : 0;
+}
+
+.nav_container {
+  margin-left: 0px;
+}
+
+}
+
+/* ${props => props.media && css`
 
 @media (max-width: ${props.media}px) {
 
@@ -306,6 +372,10 @@ ${props => props.media && css`
       padding: 5px 20px;
     }
 
+    .auth_buttons:first-of-type,.logout_btn:first-of-type {
+  margin-left : auto;
+  color : aqua !important;
+}
     .container {
     display: flex;
     justify-content: center;
@@ -315,5 +385,5 @@ ${props => props.media && css`
     
 }
 `}
-
+ */
 `

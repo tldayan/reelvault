@@ -15,7 +15,7 @@ export const MoviePlayerContainer = styled.div`
 
 
 .movie_player {
-  border: none;
+  border: 1px solid var(--fadedPrimary);
   display: block;
   margin: 0 auto;
   height: 0%;

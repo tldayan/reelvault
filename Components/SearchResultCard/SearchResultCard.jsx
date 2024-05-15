@@ -5,8 +5,8 @@ import defaultPoster from "../../assets/no_image.jpg"
 
 export default function SearchResultCard({eachResult}) {
   return (
-    <Link to={`${eachResult.original_name ? `tvshows/${eachResult.id}` : eachResult.id}`} key={eachResult.id} className='result'>
-        <img className='search_results_movie_poster' src={eachResult.poster_path !== null ? `https://image.tmdb.org/t/p/w154${eachResult.poster_path}` : defaultPoster} alt="" />
+    <Link to={`${eachResult.original_name ? `tvshows/${eachResult.id}` : `movies/${eachResult.id}`}`} key={eachResult.id} className='result'>
+        <img className='search_results_movie_poster' src={eachResult.poster_path !== null ? `https://image.tmdb.org/t/p/w154${eachResult.poster_path}` : defaultPoster} alt="entity_poster" />
         <div className='movie_result_info_container'>
           <p className='search_results_movie_title'>{eachResult.original_title || eachResult.original_name}</p>
           <p className='release_date'>{eachResult.release_date || eachResult.first_air_date}</p>

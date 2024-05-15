@@ -2,6 +2,10 @@
 import {NavLink,Link, Outlet} from "react-router-dom"
 import {React, useEffect, useState} from 'react'
 import { StyledMainApp } from "./MainLayout.styles";
+import LoginSignupComponent from "../LoginSignup/LoginSignUpComponent";
+import { handleLogoutApi } from "../APIs/Authentication/logout";
+import userLogo from "../../assets/user.svg"
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
 
 
 export default function MainLayout() {
@@ -9,7 +13,19 @@ export default function MainLayout() {
     const [showChevron, setShowChevron] = useState(false);
     const mobileMenu = document.querySelector("ul");
     const hamburger = document.getElementById('hamburger');
-    
+    const [authType, setAuthType] = useState(undefined)
+    const [isUserLogged,setIsUserLogged] = useState(() => JSON.parse(localStorage.getItem("isUserLogged")) || false)
+    const storedUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const [username] = useState(storedUserInfo ? storedUserInfo.username : null);
+    const [accessTokenRecieved,setAccessTokenRecieved] = useState(false)
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    const toggleDarkMode = () => {
+      setIsDarkMode(!isDarkMode);
+      document.documentElement.classList.toggle('light', !isDarkMode);
+    };
+
+
     function openHamburger() {
       
         hamburger.classList.toggle('open');
@@ -53,7 +69,79 @@ export default function MainLayout() {
       };
       },[])
 
+
+      const handleLogout = async() => {
+
+        if(isUserLogged) {
+          
+          const logoutResponse = await handleLogoutApi()
+
+          if(logoutResponse === 200 || logoutResponse === 204) {
+            localStorage.setItem("isUserLogged", false); 
+            localStorage.removeItem("userInfo")
+            setIsUserLogged(false)
+            window.location.reload()
+          } else {
+            console.log(logoutResponse.message)
+          }
+
+        }
+      }
+
+
+      const accessTokenRequest = async() => {
+
+        try {
+
+          const response = await fetch("http://localhost:3200/refresh", {
+            method : "POST",
+            credentials : "include"
+          })
+
+          if(response.ok) {
+            setAccessTokenRecieved(true)
+            console.log("access token recieved")
+          }
+
+          if(response.status === 401) {
+            handleLogout()
+          }
+
+        } catch (err) {
+          console.log(err.message)
+        }
+      } 
       
+
+      useEffect(() => {
+        if(isUserLogged) {
+          accessTokenRequest()
+        }
+      },[])
+
+
+      let accessTokenReqInterval;
+
+const startAccessTokenInterval = () => {
+  accessTokenReqInterval = setInterval(accessTokenRequest, 300000);
+};
+
+const stopAccessTokenInterval = () => {
+  clearInterval(accessTokenReqInterval);
+};
+
+useEffect(() => {
+  if (isUserLogged) {
+    startAccessTokenInterval();
+  } else {
+    stopAccessTokenInterval();
+  }
+
+  return () => {
+    stopAccessTokenInterval(); // Cleanup
+  };
+}, [isUserLogged]);
+
 
 
   return (
@@ -61,15 +149,28 @@ export default function MainLayout() {
         <header>
             <nav>
                 <Link to="/" className="logo">ReelVault</Link>
-                
-
+                {authType && <div className="dark_overlay"></div>}
+                {authType && <LoginSignupComponent authType={authType} setAuthType={setAuthType} setIsUserLogged={setIsUserLogged} />}
                 <ul className="nav_container">
                     <NavLink to="/" className="nav_links" onClick={returnHome}>Home</NavLink>
                     <NavLink to="watchlist" className="nav_links" onClick={returnHome}>Watchlist</NavLink>
                     <NavLink to="contactus" className="nav_links" onClick={returnHome}>Contact</NavLink>
                     <NavLink to="about" className="nav_links" onClick={returnHome}>About</NavLink>
-                    
                 </ul>
+
+                  <ThemeToggle toggleDarkMode={toggleDarkMode}/>
+
+                {/* <div className="user_profile_container">
+                  {isUserLogged && <img className={`userlogo ${isDarkMode ? "light" : ""}`} src={userLogo} alt="user" />}
+                  {isUserLogged && <p className="username">{username ? username : "..."}</p>}
+                </div>
+                {isUserLogged ? <button className="logout_btn" onClick={handleLogout}>Logout</button> : 
+                    <>
+                      <button className="auth_buttons" onClick={() => setAuthType("login")}>Login</button>
+                      <button className="auth_buttons" onClick={() => setAuthType("signup")}>SignUp</button>
+                    </> } */}
+                
+
                 <div className="container">
                     <div id="hamburger" onClick={openHamburger}>
                         <svg width="50" height="50" viewBox="0 0 100 100">
@@ -82,7 +183,7 @@ export default function MainLayout() {
             </nav>
         </header>
         <main>
-            <Outlet/>
+            <Outlet context={[accessTokenRecieved]}/>
         </main>
         <div onClick={() => window.scrollTo(0,0)} className='chevron_up' style={{ opacity: showChevron ? '1' : '0',cursor: showChevron ? "pointer" : "auto" }}></div>
         <footer>

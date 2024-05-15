@@ -4,7 +4,7 @@ import {styled} from "styled-components"
 export const StyledWatchlistContainer = styled.div`
 
 
-background-color: #101010b6;
+/* background-color: #101010b6; */
 margin: 20px auto;
 width: 95%;
 min-height: 90vh;
@@ -20,10 +20,10 @@ h3 {
   padding: 10px 10px;
   margin-bottom: 10px;
   border-radius: 5px;
-    background-color: #101010;
+/*     background-color: #101010; */
   font-weight: normal;
   font-family: 'Quicksand', sans-serif;
-  color: rgb(228, 228, 228);
+  color: var(--primary);
 
 }
 

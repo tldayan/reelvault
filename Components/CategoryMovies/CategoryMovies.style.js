@@ -23,20 +23,20 @@ export const CategoryMovieTypeContainer = styled.div`
 }
     
 .category_titles {
-/*   border: 1px solid #333; */
-  font-size: clamp(0.6rem, 5vw, 1.5rem);
+/*   border: 1px solid red; */
+font-size: clamp(0.6rem, 5vw, 1.5rem);
 display: flex;
 align-items :center;
   text-align: center;
   padding: 10px 10px;
 /*   font-size: 1.5rem; */
   border-radius: 5px;
-    background-color: #101010;
+/*   background-color: #101010; */
   margin-top: 5px;
   margin-bottom: 20px;
   font-weight: normal;
   font-family: 'Quicksand', sans-serif;
-  color: rgb(228, 228, 228);
+  color: var(--categoryMainTitleColor);
 }
 
 

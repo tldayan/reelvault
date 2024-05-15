@@ -3,38 +3,18 @@ import {styled,css} from "styled-components"
 
 
 export const TrailerContainer = styled.div`
- /*  border: 1px solid red; */
+/*   border: 2px solid red; */
 position: relative;
-display: flex;
+/* display: flex;
 align-items: center;
-justify-content: center;
+justify-content: center; */
+height: 600px;
+width: 100%;
+/* overflow: hidden; */
+/* user-select : none; */
 
 
-/* @media (prefers-color-scheme: dark) {
 
-  .cinema_bg {
-  box-shadow: none;
-}
-
-.video_shadow {
-  box-shadow: none;
-}
-
-
-}
-
-@media (prefers-color-scheme: light) {
-
-  .cinema_bg {
-    box-shadow: -1px -1px 10px 25px black;
-}
-
-.video_shadow {
-  box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 1);
-}
-
-
-} */
 /* 
 ${(props) =>
       props.theme === "dark" &&
@@ -69,7 +49,7 @@ ${(props) =>
   height: 31%;
   position: absolute;
   top: 10%;
-  z-index: 9999999999999999;
+  z-index: 1;
   border-radius: 10px;
 }
 
@@ -91,7 +71,7 @@ video {
   position: absolute;
   width: 100%;
   display: block;
-  z-index: 9999999;
+  z-index: 99999;
 }
 
 .video_shadow {
@@ -99,20 +79,22 @@ video {
   width: 100%;
   height: 121.4%;
   top: 0;
-  z-index: 99999999;
+  z-index: 999999;
   box-shadow: inset 0px 0px 10px 10px rgba(0, 0, 0, 1);
   
 }
   
 .trailer_content {
   position: absolute;
-  bottom: 7%;
-  left: 2%;
-  width: 40%;
+  bottom: 0%;
+  left: 0%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;
   color: white;
+  background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(52, 52, 52, 0));
+  z-index: 2;
 }
 
 .trailer_title {
@@ -120,7 +102,7 @@ video {
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   white-space: nowrap;
-  z-index: 9999999999;
+  z-index: 99;
 }
 
 .trailer_info {
@@ -132,6 +114,7 @@ video {
   border-radius: 5px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: 'Quicksand', sans-serif;
+  z-index: 99;
 }
 
 
@@ -152,6 +135,7 @@ video {
   align-items: center;
   justify-content: center;
   gap: 10px ;
+  z-index: 99;
 }
 
 
@@ -181,6 +165,7 @@ ${props => props.media && css`
 
 @media (max-width: ${props.media}px) {
 
+  height : auto;
 
   .watch_trailer_btn {
     gap: 4px
@@ -215,7 +200,7 @@ export const CategoryButtonsContainer = styled.div`
 /*   border: 1px solid rgba(51, 51, 51, 0.779);
   background-color: #101010; */
   text-decoration: none;
-  color: rgba(211, 211, 211, 1);
+  color: var(--categoryTitleColor);
   text-decoration: none;
   padding: 5px 15px;
   text-align: center;
@@ -226,18 +211,18 @@ export const CategoryButtonsContainer = styled.div`
   border-radius: 4px;
   font-size: clamp(0.3rem, 2.5vw, 1rem);
   font-family: 'Quicksand', sans-serif;
+  margin-top: 10px;
 }
 
 .category_buttons:hover {
-  background-color: rgba(208, 208, 208, 0.103);
-  transition: all 0.5s
+  background-color: var(--categoryTitleHoverBg);
+  transition: all 0.5s;
 /*   color: black; */
 }
 .category_buttons.active{
-  background-color: rgba(208, 208, 208, 0.103);
+  background-color: var(--categoryTitleHoverBg);
 /*   color: black; */
 }
-
 
 
 

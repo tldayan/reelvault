@@ -31,12 +31,12 @@ align-items :center;
   padding: 10px 10px;
 /*   font-size: 1.5rem; */
   border-radius: 5px;
-    background-color: #101010;
+   /*  background-color: #101010; */
   margin-top: 5px;
   margin-bottom: 20px;
   font-weight: normal;
   font-family: 'Quicksand', sans-serif;
-  color: rgb(228, 228, 228);
+  color: var(--categoryMainTitleColor);
 }
 
 
@@ -50,10 +50,10 @@ align-items :center;
   cursor: pointer;
   border: none;
   outline: none;
-  background-color: #ffffff;
+  background-color: var(--primary);
   padding: 2px 10px;
   border-radius: 3px;
-  color: black;
+  color: var(--background);
   font-weight: bold;
 font-family: 'Quicksand', sans-serif;
   font-size: clamp(0.6rem, 1vw, 0.8rem);

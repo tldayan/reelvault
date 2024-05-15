@@ -17,6 +17,7 @@ export default function MoviePlayer() {
   const IframeElement = useRef(null);
   
   const [movieData, setMovieData] = useState({});
+  const [movieDataLoading,setMovieDataLoading] = useState(false)
   const [genres, setGenres] = useState([]);
   const [productionCompanies, setProductionCompanies] = useState([]);
   const [productionCountries, setProductionCountries] = useState([]);
@@ -44,6 +45,7 @@ export default function MoviePlayer() {
   useEffect(() => {
 
     const fetchMovieDetails = async() => {
+      setMovieDataLoading(true)
       try {
 
         const movieData = await fetchMovieData(movieId);
@@ -51,6 +53,7 @@ export default function MoviePlayer() {
 
         setTrailerKey(`${movieTrailerKey}`)
         setMovieData(movieData);
+        setMovieDataLoading(false)
         setGenres(movieData.genres || []);
         setProductionCompanies(movieData.production_companies || []);
         setProductionCountries(movieData.production_countries || []);
@@ -119,17 +122,17 @@ export default function MoviePlayer() {
   <div ref={movieLoadContainer} className="movie_player_skeleton">
     <LoadingAnimation />
   </div>
-
+  
   <iframe
     ref={IframeElement}
     className="movie_player"
-    src={`https://vidsrc.to/embed/movie/${movieId}`}
+    src={`https://vidsrc.xyz/embed/movie/${movieId}`} /* .to before */
     allowFullScreen
     onLoad={handleIframeLoad}
   ></iframe>
 
       </MoviePlayerContainer>
-      {/^\d+$/.test(params.id) && <MovieDetails trailerKey={trailerKey} movieData={movieData} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />}
+      {/^\d+$/.test(params.id) && <MovieDetails trailerKey={trailerKey} movieData={movieData} movieDataLoading={movieDataLoading} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />}
       <ScrollRestoration top={true} />
     </>
   );

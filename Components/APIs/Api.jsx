@@ -5,7 +5,6 @@ const API_URL = import.meta.env.VITE_GENRES_API_URL;
 
 
 export const getGenreMovies = async(page,genreId) => {
-
   try {
     const response = await fetch(`${API_URL}?inc_video=false&language=en-US&page=${page}&with_genres=${genreId}`,
   {headers : {
@@ -28,7 +27,13 @@ export const getGenreMovies = async(page,genreId) => {
 
 
 export const getMovies = async(page,category) => {
+
+  if(category === "rated") {
+    category = "top_rated"
+  }
+  
   const API_URL = `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`
+
 
   try {
     const response = await fetch(`${API_URL}`, {

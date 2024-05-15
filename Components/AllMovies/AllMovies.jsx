@@ -1,14 +1,14 @@
 import {React,useState,useEffect, useRef} from 'react'
-import {Outlet} from "react-router-dom"
-import {Link, NavLink} from "react-router-dom"
-import movieTrailer from "../../assets/Trailer1.mp4"
-import cinemaBg from "../../assets/cinema_bg2.jpg"
-import playButton from "../../assets/play-solid.svg"
-import { CategoryButtonsContainer, TrailerContainer } from './AllMovies.styles'
+import {Outlet, useOutletContext} from "react-router-dom"
+import {NavLink} from "react-router-dom"
+import { CategoryButtonsContainer } from './AllMovies.styles'
 import searchIcon from "../../assets/search_icon.svg"
 import { getMovieSearchData, getShowSearchData } from "../APIs/Api";
 import SearchResultCard from '../SearchResultCard/SearchResultCard'
 import sadFace from "../../assets/sad_face.png"
+import ResumeShowsContainer from '../ResumeShowsContainer/ResumeShowsContainer'
+import MoviesSlider from '../MovieSlider/MoviesSlider'
+
 
 export default function AllMovies() {
   
@@ -17,22 +17,7 @@ export default function AllMovies() {
   const [searchResults, setSearchResults] = useState([])
   const [searchDataLoading, setSearchDataLoading] = useState(false)
   const searchField = useRef(null)
-  /* const theme = window?.matchMedia?.('(prefers-color-scheme:dark)')?.matches ? 'dark' : 'light' */
-
-
-/* if (window.matchMedia) {
-  const darkModeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  if (darkModeQuery.matches) {
-    alert('Dark mode is enabled');
-  } else {
-    alert('Light mode is enabled');
-  }
-} else {
-  alert('prefers-color-scheme not supported');
-}
- */
-
-  /* alert(theme) */
+  const [accessTokenRecieved] = useOutletContext()
 
   function removeSpecialCharacters(input) {
     return input.replace(/[:\-]/g, "").toLowerCase();
@@ -63,7 +48,7 @@ export default function AllMovies() {
           const title = removeSpecialCharacters(eachResult.original_name || eachResult.original_title);
           const searchQuery = removeSpecialCharacters(entitySearch);
           return title.includes(searchQuery);
-        });
+        }).sort((a,b) => b.popularity - a.popularity);
 
           setSearchResults(filteredSearchData)
           setSearchDataLoading(false)
@@ -95,30 +80,12 @@ export default function AllMovies() {
         const elementTop = element.getBoundingClientRect().top;
         window.scrollBy({ top: elementTop - offset});
     }
-}
+  }
 
-useEffect(() => {
-  scrollToField()
-},[search])
 
   return (
     <>
-
-    <TrailerContainer media={900} /* theme={theme} */>
-      
-      {<img className='cinema_bg' src={cinemaBg} alt="" />}
-      <div className='trailer_container'>
-        {<video src={movieTrailer} controls={false} autoPlay loop muted/>}
-        {<div className='video_shadow'></div>}
-      </div>
-      
-      <div className='trailer_content'>
-        <h4 className='trailer_title'>Kung Fu Panda 4</h4>
-        <Link to="/1011985" className='watch_trailer_btn'><img className='play_button' src={playButton} alt="" />Play</Link>
-        <p className='trailer_info'>Po trains a new Dragon Warrior to succeed him while battling the villain Chameleon, who brings back past foes.</p>
-      </div>
-    </TrailerContainer>
-
+      <MoviesSlider />
     <p className='slogan'>ReelVault ~ Where the World Watches.</p>
 
     <div id='search_container' className="search_container" ref={searchField}>
@@ -130,6 +97,8 @@ useEffect(() => {
                         onChange={(e) => setSearch(e.target.value)}
                         ref={searchInput}
                         onClick={scrollToField}
+                        onFocus={scrollToField}
+                        spellCheck="false"
                     />
                     <div className={`search_list ${search !== "" ? "active" : null}`}>
                         {searchDataLoading ? <div className="race-by"></div> : searchResults.length ? searchResults.map(eachResult => {
@@ -137,15 +106,17 @@ useEffect(() => {
                         }) : <div className='no_search_results_container'><img src={sadFace} alt="" /><p className='no_search_result'>No results for "{search}"</p></div>}
                     </div>
                     <img
-                    className="search_icon" src={searchIcon} alt="" 
+                    className="search_icon" src={searchIcon} alt="searchIcon" 
                     />
                 </div>
 
+    {accessTokenRecieved && <ResumeShowsContainer />}
+
     <CategoryButtonsContainer>
       <NavLink className='category_buttons' to="/">Popular Shows</NavLink>
-      <NavLink className='category_buttons' to="popular">Popular Movies</NavLink>
-      <NavLink className='category_buttons' to="rated">Rated Movies</NavLink>
-      <NavLink className='category_buttons' to="upcoming">Upcoming Movies</NavLink>
+      <NavLink className='category_buttons' to="/popular">Popular Movies</NavLink>
+      <NavLink className='category_buttons' to="/rated">Rated Movies</NavLink>
+      <NavLink className='category_buttons' to="/upcoming">Upcoming Movies</NavLink>
       <NavLink className='category_buttons' to="filter">Filter</NavLink>
     </CategoryButtonsContainer>
 
