@@ -33,7 +33,6 @@ export default function ShowPlayer() {
   const [seasonEpisodeNames,setSeasonEpisodeNames] = useState([])
 
   const showLoadedValue = useRef(showLoaded)
-  const refreshPageNotice = useRef(null)
 
 
 
@@ -115,8 +114,6 @@ useEffect(() => {
 
   return (
     <>
-
-    <p ref={refreshPageNotice} className="refresh_notice">Show not loading? <span onClick={() => window.location.reload()} className="refresh_link">Refresh page</span></p>
     
     <div className="back_button_container">
       <Link to="/" className="back_button">
