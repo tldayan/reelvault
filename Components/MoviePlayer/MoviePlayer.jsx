@@ -5,6 +5,7 @@ import { ScrollRestoration, Link } from "react-router-dom";
 import { MoviePlayerContainer } from "./MoviePlayer.styles";
 import { fetchMovieData, getTrailer } from "../APIs/Api";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
+import ServersContainer from "../ServersContainer/ServersContainer";
 
 
 export default function MoviePlayer() {
@@ -22,6 +23,7 @@ export default function MoviePlayer() {
   const [productionCountries, setProductionCountries] = useState([]);
   const [trailerKey, setTrailerKey] = useState("")
   const [movieLoaded, setMovieLoaded] = useState(false)
+  const [movieIframe, setMovieIframe] = useState(`https://vidsrc.xyz/embed/movie/${movieId}`)
   const movieLoadedRef = useRef(movieLoaded);
 
 
@@ -102,10 +104,12 @@ export default function MoviePlayer() {
   <iframe
     ref={IframeElement}
     className="movie_player"
-    src={`https://vidsrc.xyz/embed/movie/${movieId}`} /* .to before */
+    src={movieIframe} /* .to before */
     allowFullScreen
     onLoad={handleIframeLoad}
   ></iframe>
+
+  <ServersContainer movieId={movieId} movieIframe={movieIframe} setMovieIframe={setMovieIframe}/>
 
       </MoviePlayerContainer>
       {/^\d+$/.test(params.id) && <MovieDetails trailerKey={trailerKey} movieData={movieData} movieDataLoading={movieDataLoading} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />}

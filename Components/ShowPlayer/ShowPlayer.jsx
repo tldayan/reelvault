@@ -123,11 +123,11 @@ useEffect(() => {
       
       
       <div className="movie_player_container">
-      <p className="watching_show_notice">Watching: {showData.original_name ? showData.original_name : "..."}</p>
-          
-      <div ref={showLoadContainer} className="movie_player_skeleton">
-      <LoadingAnimation />
-      </div>  
+        <p className="watching_show_notice">Watching: {showData.original_name ? showData.original_name : "..."}</p>
+            
+        <div ref={showLoadContainer} className="movie_player_skeleton">
+        <LoadingAnimation />
+        </div>  
           <iframe
           ref={IframeShowElement}
             className="show_player"
