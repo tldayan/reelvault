@@ -132,7 +132,7 @@ export const ShowDetailsContainer = styled.div`
 /* border: 1px solid #333; */
 background-color: #0b0b0b;
   width: 95%;
-  margin: 20px auto;
+  margin: 0px auto 20px auto;
   padding: 25px;
   display: flex;
   align-items: center;

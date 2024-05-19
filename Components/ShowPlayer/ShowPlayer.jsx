@@ -6,6 +6,7 @@ import { fetchEpisodeNames, getShowDetails, getShowTrailer } from "../APIs/Api";
 import { useDispatch, useSelector } from "react-redux";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
+import ServersContainer from "../ServersContainer/ServersContainer";
 
 export default function ShowPlayer() {
   const params = useParams();
@@ -29,7 +30,6 @@ export default function ShowPlayer() {
   const [showLoaded, setShowLoaded] = useState(false)
   const [showTrailerKey, setShowTrailerKey] = useState("")
   const [recentlyWatched, setRecentlyWatched] = useState(false)
-  const [existingShow] = useState({})
   const [seasonEpisodeNames,setSeasonEpisodeNames] = useState([])
 
   const showLoadedValue = useRef(showLoaded)
@@ -79,8 +79,8 @@ export default function ShowPlayer() {
 
     
     fetchShowData();
-      setSelectedEpisode(1); /* USE SEASON AND EPISODE IN PARAMS */
-      setSelectedSeason(1);
+  /*   setSelectedEpisode(1);
+    setSelectedSeason(1); */
   
   }, [showId]);
 
@@ -100,8 +100,6 @@ useEffect(() => {
 },[selectedSeason,showId])
 
 
-
-
   function handleIframeLoad() {
 
     setShowLoaded(true)
@@ -114,36 +112,6 @@ useEffect(() => {
     showLoadedValue.current = showLoaded
   },[showLoaded])
 
-  useEffect(() => {
-
-    refreshPageNotice.current.classList.remove("active")
-
-    const timeout1 = setTimeout(() => {
-      if(showLoadedValue.current === false) {
-        refreshPageNotice.current.classList.add("active")
-      }
-    },5500)
-
-    const timeout2 = setTimeout(() => {
-      refreshPageNotice.current.classList.remove("active")
-    },8000)
-
-    return () => {
-      clearTimeout(timeout1)
-      clearTimeout(timeout2)
-    }
-
-  },[showId])
-
-
-
-  useEffect(() => {
-      if(recentlyWatched) {
-        document.body.style.overflow = "hidden"
-      } else {
-        document.body.style.overflow = "visible"
-      }
-  },[recentlyWatched])
 
   return (
     <>
@@ -171,6 +139,9 @@ useEffect(() => {
             onLoad={handleIframeLoad}
           ></iframe>
       </div>
+
+      <ServersContainer selectedEpisode={selectedEpisode} selectedSeason={selectedSeason} showId={showId}/>
+
       <ShowDetails showId={showId} showDataLoading={showDataLoading} showTrailerKey={showTrailerKey} seasonEpisodeNames={seasonEpisodeNames} showReleasedDate={showReleasedDate} showData={showData} setSelectedSeason={setSelectedSeason} setSelectedEpisode={setSelectedEpisode} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={selectedSeason} selectedEpisode={selectedEpisode} seasonList={seasonList} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />
       <ScrollRestoration top={true} />
     </>
