@@ -51,9 +51,7 @@ export default function Recommended({movieId,showId}) {
           dispatch(MovieNameActions.setMovieName(entityName))  
         } else {
           dispatch(ShowNameActions.setShowName(entityName))
-          
         }
-        
     }
 
 

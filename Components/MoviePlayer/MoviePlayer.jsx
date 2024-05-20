@@ -26,7 +26,7 @@ export default function MoviePlayer() {
   const [movieIframe, setMovieIframe] = useState(`https://vidsrc.xyz/embed/movie/${movieId}`)
   const movieLoadedRef = useRef(movieLoaded);
 
-
+  
   useEffect(() => {
 
     const userVisit = () => {
@@ -71,6 +71,7 @@ export default function MoviePlayer() {
   }
 
   fetchMovieDetails()
+  setMovieIframe(`https://vidsrc.xyz/embed/movie/${movieId}`)
     
   }, [movieId]);
 
@@ -97,7 +98,7 @@ export default function MoviePlayer() {
       
       <MoviePlayerContainer>
       <p className="watching_movie_notice">Watching: {movieData.original_title ? movieData.original_title : "..."}</p>
-  <div ref={movieLoadContainer} className="movie_player_skeleton">
+      <div ref={movieLoadContainer} className="movie_player_skeleton">
     <LoadingAnimation />
   </div>
   
