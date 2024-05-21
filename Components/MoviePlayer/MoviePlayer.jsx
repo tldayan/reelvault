@@ -108,6 +108,7 @@ export default function MoviePlayer() {
     src={movieIframe} /* .to before */
     allowFullScreen
     onLoad={handleIframeLoad}
+    playsInline
   ></iframe>
 
   <ServersContainer movieId={movieId} movieIframe={movieIframe} setMovieIframe={setMovieIframe}/>

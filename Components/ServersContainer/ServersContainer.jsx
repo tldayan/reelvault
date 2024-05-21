@@ -27,11 +27,9 @@ export default function ServersContainer({selectedEpisode,selectedSeason,showId,
     } else {
       setMovieIframe(iframeLink)
     }
-    
   }
 
  
-
 
   return (
     <StyledServersContainer>
