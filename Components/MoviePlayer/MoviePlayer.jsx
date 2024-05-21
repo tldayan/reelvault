@@ -6,6 +6,7 @@ import { MoviePlayerContainer } from "./MoviePlayer.styles";
 import { fetchMovieData, getTrailer } from "../APIs/Api";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import ServersContainer from "../ServersContainer/ServersContainer";
+import SearchBar from "../SearchBar/SearchBar";
 
 
 export default function MoviePlayer() {
@@ -90,9 +91,10 @@ export default function MoviePlayer() {
 
   return (
     <>
-      <div className="back_button_container">
+    
+    <div className="back_button_container">
       <Link to="/" className="back_button">
-        &#10094; Back to Home
+        &#10094; Home
       </Link>
     </div>
       

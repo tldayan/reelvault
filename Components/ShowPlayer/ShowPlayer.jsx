@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import ServersContainer from "../ServersContainer/ServersContainer";
+import SearchBar from "../SearchBar/SearchBar";
 
 export default function ShowPlayer() {
   const params = useParams();
@@ -114,10 +115,10 @@ useEffect(() => {
 
   return (
     <>
-    
+
     <div className="back_button_container">
       <Link to="/" className="back_button">
-        &#10094; Back to Home
+        &#10094; Home
       </Link>
     </div>
       

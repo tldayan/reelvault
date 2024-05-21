@@ -735,9 +735,9 @@ footer {
 }
 
 .back_button_container {
-     width: 95%;
-     display: flex;
-     margin: 0 auto;
+  width: 95%;
+  display: flex;
+  margin: 25px auto 0 auto;
 }
 
 .back_button {
@@ -750,18 +750,17 @@ footer {
   position: relative;
   margin-top: 10px;
   font-weight: 500;
-  font-size: clamp(0.7rem, 3vw, 0.3rem);
+  font-size: clamp(0.7rem, 2vw, 1rem);
   transition: all ease 0.4s;
   border: 1px solid var(--background);
 }
 
 .back_button:hover {
-  border: 1px solid var(--primary);
+  text-decoration: underline;
   background-color : transparent;
   color : var(--primary);
   cursor: pointer;
   transition : ease 0.2s;
-  transition: all 0.5s
 }
 
 

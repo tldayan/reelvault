@@ -1,11 +1,13 @@
 
-import {NavLink,Link, Outlet} from "react-router-dom"
+import {NavLink,Link, Outlet, useNavigation, useLocation} from "react-router-dom"
 import {React, useEffect, useState} from 'react'
 import { StyledMainApp } from "./MainLayout.styles";
 import LoginSignupComponent from "../LoginSignup/LoginSignUpComponent";
 import { handleLogoutApi } from "../APIs/Authentication/logout";
 import userLogo from "../../assets/user.svg"
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import SearchBar from "../SearchBar/SearchBar";
+import MoviesSlider from "../MovieSlider/MoviesSlider";
 
 
 export default function MainLayout() {
@@ -19,6 +21,9 @@ export default function MainLayout() {
     const [username] = useState(storedUserInfo ? storedUserInfo.username : null);
     const [accessTokenRecieved,setAccessTokenRecieved] = useState(false)
     const [isDarkMode, setIsDarkMode] = useState(false);
+    const currentLocation = useLocation()
+
+    
 
     const toggleDarkMode = () => {
       setIsDarkMode(!isDarkMode);
@@ -182,6 +187,8 @@ useEffect(() => {
                 </div>
             </nav>
         </header>
+        {currentLocation.pathname === "/" && <MoviesSlider />}
+        <SearchBar />
         <main>
             <Outlet context={[accessTokenRecieved]}/>
         </main>
