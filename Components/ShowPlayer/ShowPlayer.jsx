@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import ServersContainer from "../ServersContainer/ServersContainer";
-import SearchBar from "../SearchBar/SearchBar";
 
 export default function ShowPlayer() {
   const params = useParams();
@@ -35,22 +34,6 @@ export default function ShowPlayer() {
 
   const showLoadedValue = useRef(showLoaded)
 
-
-
-  /* useEffect(() => {
-
-    const userVisit = () => {
-
-      try {
-        fetch("https://xdroid.net/api/message?k=k-ed234a11628f&t=Reelvault&c=Someone+opened+Reelvault&u=http%3A%2F%2Fgoogle.com")
-      } catch (err) {
-        return 
-      }
-    }
-
-    userVisit()
-
-  },[]) */
 
   useEffect(() => {
       dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${showId}/1/1`))
