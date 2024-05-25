@@ -5,7 +5,7 @@ import { MovieDetailsContainer } from "./Movie-ShowDetails.styles";
 import { moviesWatchlistAction } from "../store/moviesWatchlistSlice";
 import EntityDetailsSkeleton from "./EntityDetailsSkeleton";
 
-export default function MovieDetails({movieData,movieDataLoading,movieId,trailerKey,genres,productionCompanies,productionCountries}) {
+export default function MovieDetails({movieData,movieDataLoading,movieId,trailerKey}) {
   
   const dispatch = useDispatch()
   const watchlist = useSelector((state) => state.moviesWatchlist)
