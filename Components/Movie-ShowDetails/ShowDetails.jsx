@@ -11,7 +11,7 @@ import { getUserShowDetails } from "../APIs/mongo/UserShowDetail";
 import EntityDetailsSkeleton from "./EntityDetailsSkeleton";
 import { deleteUserShowDetails } from "../APIs/mongo/deleteUserShowDetails";
 
-export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,showReleasedDate,selectedEpisode,episodeList,selectedSeason,genres,productionCompanies,productionCountries,seasonList }) {
+export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,selectedEpisode,episodeList,selectedSeason,seasonList }) {
 
   const dispatch = useDispatch()
   const storedUserInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -176,15 +176,15 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
           <p className="movie_overview">{showData?.overview}</p>
           <div className="movie_stats_container">
             <div className="first_stats_container">
-            {genres.length > 0 && (
+            {showData?.genres?.length > 0 && (
                 <p className="entity_genre">
-                  Genre: <span className="entity_info">{genres.map((eachgenre) => eachgenre.name).join(", ")}</span>
+                  Genre: <span className="entity_info">{showData.genres.map((eachgenre) => eachgenre.name).join(", ")}</span>
                 </p>
               )}
-              {productionCompanies.length > 0 && (
+              {showData?.production_companies?.length > 0 && (
                 <p className="entity_production">
                   Production:{" "}
-                  <span className="entity_info">{productionCompanies[0].name}</span>
+                  <span className="entity_info">{showData.production_companies[0].name}</span>
                 </p>
               )}
               
@@ -195,11 +195,11 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
                 <span className="entity_info">{showData.original_language &&
                   showData.original_language.toUpperCase()}</span>
               </p>
-              {showReleasedDate && (
-                <p className="entity_released">Released: <span className="entity_info">{showReleasedDate}</span></p>
+              {showData?.first_air_date && (
+                <p className="entity_released">Released: <span className="entity_info">{showData.first_air_date}</span></p>
               )}
-              {productionCountries.length > 0 && (
-                <p className="entity_country">Country: <span className="entity_info">{productionCountries[0].name}</span></p>
+              {showData?.production_countries?.length > 0 && (
+                <p className="entity_country">Country: <span className="entity_info">{showData.production_countries[0].name}</span></p>
               )}
             
             </div>

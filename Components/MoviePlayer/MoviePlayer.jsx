@@ -18,9 +18,6 @@ export default function MoviePlayer() {
   
   const [movieData, setMovieData] = useState({});
   const [movieDataLoading,setMovieDataLoading] = useState(false)
-  const [genres, setGenres] = useState([]);
-  const [productionCompanies, setProductionCompanies] = useState([]);
-  const [productionCountries, setProductionCountries] = useState([]);
   const [trailerKey, setTrailerKey] = useState("")
   const [movieLoaded, setMovieLoaded] = useState(false)
   const [movieIframe, setMovieIframe] = useState(`https://vidsrc.xyz/embed/movie/${movieId}`)
@@ -39,9 +36,6 @@ export default function MoviePlayer() {
         setTrailerKey(`${movieTrailerKey}`)
         setMovieData(movieData);
         setMovieDataLoading(false)
-        setGenres(movieData.genres || []);
-        setProductionCompanies(movieData.production_companies || []);
-        setProductionCountries(movieData.production_countries || []);
 
     } catch (err) {
       console.log(err.message)
@@ -98,7 +92,7 @@ export default function MoviePlayer() {
   <ServersContainer movieId={movieId} movieIframe={movieIframe} setMovieIframe={setMovieIframe}/>
 
       </MoviePlayerContainer>
-      {/^\d+$/.test(params.id) && <MovieDetails trailerKey={trailerKey} movieData={movieData} movieDataLoading={movieDataLoading} movieId={movieId} genres={genres} productionCompanies={productionCompanies} productionCountries={productionCountries} />}
+      {/^\d+$/.test(params.id) && <MovieDetails trailerKey={trailerKey} movieData={movieData} movieDataLoading={movieDataLoading} movieId={movieId} />}
       <ScrollRestoration top={true} />
     </>
   );

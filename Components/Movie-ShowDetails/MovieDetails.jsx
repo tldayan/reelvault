@@ -56,21 +56,21 @@ export default function MovieDetails({movieData,movieDataLoading,movieId,trailer
                   movieData.original_language.toUpperCase()}</span>
               </p>
               <p className="entity_released">Released: <span className="entity_info">{movieData.release_date}</span></p>
-              {genres.length > 0 && (
+              {movieData?.genres?.length > 0 && (
                 <p className="entity_genre">
-                  Genre: <span className="entity_info">{genres.map((eachgenre) => eachgenre.name).join(", ")}</span>
+                  Genre: <span className="entity_info">{movieData.genres.map((eachgenre) => eachgenre.name).join(", ")}</span>
                 </p>
               )}
             </div>
             <div className="second_stats_container">
               <p className="entity_duration">Duration: <span className="entity_info">{movieData.runtime} min</span></p>
-              {productionCountries.length > 0 && (
-                <p className="entity_country">Country: <span className="entity_info">{productionCountries[0].name}</span></p>
+              {movieData?.production_countries?.length > 0 && (
+                <p className="entity_country">Country: <span className="entity_info">{movieData.production_countries[0].name}</span></p>
               )}
-              {productionCompanies.length > 0 && (
+              {movieData?.production_countries?.length > 0 && (
                 <p className="entity_production">
                   Production:{" "}
-                  <span className="entity_info"><span className="entity_info">{productionCompanies[0].name}</span></span>
+                  <span className="entity_info"><span className="entity_info">{movieData.production_countries[0].name}</span></span>
                 </p>
               )}
             </div>
