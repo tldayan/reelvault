@@ -81,7 +81,7 @@ export default function MovieDetails({movieData,movieDataLoading,movieId,trailer
             <button className={`watchlist_btn ${watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "active" : ""}`} onClick={handleWatchlist}>{watchlist.some(eachEntity => eachEntity.movieId == movieId) ? "In Watchlist" : "+ Watchlist"}</button>
           </div>
         </div>
-        { Object.keys(movieData).length !== 0  && trailerKey !== "null" && <iframe className="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} title="YouTube player" frameBorder="0" allow="encrypted-media; fullscreen"></iframe>}
+        { Object.keys(movieData)?.length !== 0  && trailerKey !== "null" && <iframe className="trailer" src={`https://www.youtube.com/embed/${trailerKey}`} title="YouTube player" frameBorder="0" allow="encrypted-media; fullscreen"></iframe>}
       </MovieDetailsContainer> : <EntityDetailsSkeleton /> }
       
       <Reviews movieId={movieId}/>

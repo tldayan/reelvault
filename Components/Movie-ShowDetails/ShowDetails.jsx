@@ -44,7 +44,7 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
   useEffect(() => { 
 
 
-    let isLastEpisodeOfLastSeason = seasonList[seasonList.length - 1]?.episode_count === selectedEpisode && seasonList.length === selectedSeason
+    let isLastEpisodeOfLastSeason = seasonList[seasonList?.length - 1]?.episode_count === selectedEpisode && seasonList?.length === selectedSeason
 
     if(isLastEpisodeOfLastSeason) {
 
