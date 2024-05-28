@@ -32,7 +32,7 @@ export default function ShowCard({ eachShow }) {
 
 
   return (
-    <StyledShowLink to={`tvshows/${eachShow.id}`} onClick={() => handleShowName(eachShow.name)} key={eachShow.id}>
+    <StyledShowLink to={`tvshows/${eachShow.id}/1/1`} onClick={() => handleShowName(eachShow.name)} key={eachShow.id}>
       <div className="movie_poster_container">
         {posterLoaded && <div className="movie_language">{eachShow.original_language.toUpperCase()}</div>}
         {posterLoaded && <div className="movie_date">{eachShow.first_air_date?.slice(0, 4)}</div>}

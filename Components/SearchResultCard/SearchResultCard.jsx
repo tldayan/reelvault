@@ -5,7 +5,7 @@ import defaultPoster from "../../assets/no_image.jpg"
 
 export default function SearchResultCard({eachResult,setSearch}) {
   return (
-    <Link onClick={() => setSearch("")} to={`${eachResult.original_name ? `../tvshows/${eachResult.id}` : `../movies/${eachResult.id}`}`} key={eachResult.id} className='result'>
+    <Link onClick={() => setSearch("")} to={`${eachResult.original_name ? `../tvshows/${eachResult.id}/1/1` : `../movies/${eachResult.id}`}`} key={eachResult.id} className='result'>
         <img className='search_results_movie_poster' src={eachResult.poster_path !== null ? `https://image.tmdb.org/t/p/w154${eachResult.poster_path}` : defaultPoster} alt="entity_poster" />
         <div className='movie_result_info_container'>
           <p className='search_results_movie_title'>{eachResult.original_title || eachResult.original_name}</p>

@@ -150,7 +150,7 @@ align-items :center;
   margin-bottom: 20px;
   font-weight: normal;
   font-family: 'Quicksand', sans-serif;
-  color: rgb(228, 228, 228);
+  color: var(--primary);
 }
 
 

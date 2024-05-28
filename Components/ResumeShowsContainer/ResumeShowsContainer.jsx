@@ -32,7 +32,7 @@ export default function ResumeShowsContainer() {
           <swiper-container slides-per-view="auto" mousewheel="false">
             {userShows.map(eachShow => (
               <swiper-slide key={eachShow?.showId}>
-                <Link className='show_link' to={`/tvshows/${eachShow.showId}`}>
+                <Link className='show_link' to={`/tvshows/${eachShow.showId}/${eachShow.showSeason}/${eachShow.showEpisode}`}>
                   {eachShow.poster_url ? (
                     <img className='show_poster' src={eachShow?.poster_url === null ? defaultPoster : `https://image.tmdb.org/t/p/w500${eachShow?.poster_url}`} alt="showPoster" />
                   ) : (

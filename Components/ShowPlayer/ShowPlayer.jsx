@@ -9,8 +9,9 @@ import { EpisodeLinkActions } from "../store/EpisodeLinkSlice";
 import ServersContainer from "../ServersContainer/ServersContainer";
 
 export default function ShowPlayer() {
-  const params = useParams();
-  const showId = params.id;
+  let {id, seasonNumber, episodeNumber} = useParams()
+  seasonNumber = Number(seasonNumber);
+  episodeNumber = Number(episodeNumber);
   const dispatch = useDispatch()
 
   const EpisodeLink = useSelector((state) => state.EpisodeLink.episodeLink);
@@ -20,8 +21,6 @@ export default function ShowPlayer() {
   const [showData, setShowData] = useState({});
   const [showDataLoading,setShowDataLoading] = useState(false)
   const [seasonList, setSeasonList] = useState([]);
-  const [selectedSeason, setSelectedSeason] = useState(1);
-  const [selectedEpisode, setSelectedEpisode] = useState(1);
   const [episodeList, setEpisodeList] = useState([]);
   const [showLoaded, setShowLoaded] = useState(false)
   const [showTrailerKey, setShowTrailerKey] = useState("")
@@ -32,12 +31,12 @@ export default function ShowPlayer() {
 
 
   useEffect(() => {
-      dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${showId}/1/1`))
-
+      dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${id}/${seasonNumber}/${episodeNumber}`))
+    
     const fetchShowData = async () => {
       setShowDataLoading(true)
-      const ShowData = await getShowDetails(showId);
-      const ShowTrailerId = await getShowTrailer(showId)
+      const ShowData = await getShowDetails(id);
+      const ShowTrailerId = await getShowTrailer(id)
     
 
       if (showData.message) {
@@ -54,17 +53,15 @@ export default function ShowPlayer() {
 
     
     fetchShowData();
-  /*   setSelectedEpisode(1);
-    setSelectedSeason(1); */
   
-  }, [showId]);
+  }, [id]);
 
 
 
 useEffect(() => {
 
   const getEpisodeNames = async () => {
-    const seasonEpisodeName = await fetchEpisodeNames(showId,selectedSeason)
+    const seasonEpisodeName = await fetchEpisodeNames(id,seasonNumber)
 
   setSeasonEpisodeNames(seasonEpisodeName)
   }
@@ -72,7 +69,7 @@ useEffect(() => {
   getEpisodeNames()
 
 
-},[selectedSeason,showId])
+},[seasonNumber,id])
 
 
   function handleIframeLoad() {
@@ -113,9 +110,9 @@ useEffect(() => {
           ></iframe>
       </div>
 
-      <ServersContainer selectedEpisode={selectedEpisode} selectedSeason={selectedSeason} showId={showId}/>
+      {<ServersContainer selectedEpisode={episodeNumber} selectedSeason={seasonNumber} showId={id}/>}
 
-      <ShowDetails showId={showId} showDataLoading={showDataLoading} showTrailerKey={showTrailerKey} seasonEpisodeNames={seasonEpisodeNames} showData={showData} setSelectedSeason={setSelectedSeason} setSelectedEpisode={setSelectedEpisode} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={selectedSeason} selectedEpisode={selectedEpisode} seasonList={seasonList} />
+      {<ShowDetails showId={id} showDataLoading={showDataLoading} showTrailerKey={showTrailerKey} seasonEpisodeNames={seasonEpisodeNames} showData={showData} setEpisodeList={setEpisodeList} episodeList={episodeList} selectedSeason={seasonNumber} selectedEpisode={episodeNumber} seasonList={seasonList} /> }
       <ScrollRestoration top={true} />
     </>
   );

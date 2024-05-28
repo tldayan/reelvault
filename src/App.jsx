@@ -48,7 +48,7 @@ function App() {
         <Route path="about" element={<About />} />
         <Route path="contactus" element={<ContactUs />} />
         <Route path="watchlist" element={<Watchlist />} />
-        <Route path="tvshows/:id" element={<ShowPlayer />} />
+        <Route path="tvshows/:id/:seasonNumber/:episodeNumber" element={<ShowPlayer />} />
         <Route path="movies/:id" element={<MoviePlayer />} />
         <Route path="error" element={<Error />} />
       </Route>

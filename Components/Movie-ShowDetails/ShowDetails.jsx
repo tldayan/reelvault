@@ -10,6 +10,7 @@ import { UpdateUserShowDetails } from "../APIs/mongo/UpdateUserShowDetails";
 import { getUserShowDetails } from "../APIs/mongo/UserShowDetail";
 import EntityDetailsSkeleton from "./EntityDetailsSkeleton";
 import { deleteUserShowDetails } from "../APIs/mongo/deleteUserShowDetails";
+import { useNavigate } from "react-router-dom";
 
 export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,showData,showTrailerKey,setEpisodeList,setSelectedEpisode,setSelectedSeason,selectedEpisode,episodeList,selectedSeason,seasonList }) {
 
@@ -18,8 +19,8 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
   const [username] = useState(storedUserInfo ? storedUserInfo.username : null);
   const seasonsContainer = useRef(null);
   let episodeButton = useRef(null)
-  let episodeListContainer = useRef(null)
-  
+  let episodeListContainer = useRef(null) 
+  const navigate = useNavigate()
 
   useEffect(() => {
     const newEpisodeList = [];
@@ -35,8 +36,7 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
 
 
   const handleSeasonSelect = (index) => {
-    setSelectedSeason(index + 1);
-    setSelectedEpisode(1)
+    navigate(`../tvshows/${showId}/${index}/1`)
     seasonsContainer.current.classList.add("hide")
   };
 
@@ -46,7 +46,7 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
 
     let isLastEpisodeOfLastSeason = seasonList[seasonList?.length - 1]?.episode_count === selectedEpisode && seasonList?.length === selectedSeason
 
-    if(isLastEpisodeOfLastSeason) {
+    if(username && isLastEpisodeOfLastSeason) {
 
         const deleteUserShowDetailsReq = async() => {
           await deleteUserShowDetails(username,showId)
@@ -78,8 +78,7 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
             if(showExists) {
               const currentShow = fetchUserShowDetailsReq.find((eachObj) => eachObj.showId === showId)
   
-              setSelectedSeason(currentShow.showSeason)
-              setSelectedEpisode(currentShow.showEpisode)
+              navigate(`../tvshows/${showId}/${currentShow.showSeason}/${currentShow.showEpisode}`)
               handleEpisodeSelect(currentShow.showSeason,currentShow.showEpisode)
             }
           }
@@ -97,6 +96,7 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
         `https://vidsrc.xyz/embed/tv/${showId}/${seasonNumber}/${episodeNumber}`
       )
     );
+    navigate(`../tvshows/${showId}/${seasonNumber}/${episodeNumber}`)
     setSelectedEpisode(episodeNumber);
     seasonsContainer.current.classList.add("hide")
   };
@@ -121,19 +121,24 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
 
 
   useEffect(() => {
+
     window.scrollTo(0, 0);
   
     if (episodeListContainer.current) {
+
       const activeEpisodeButton = episodeListContainer.current.querySelector(".episode_buttons.active");
   
       if (activeEpisodeButton) {
-        episodeListContainer.current.scroll({
-          top: activeEpisodeButton.offsetTop - episodeListContainer.current.offsetTop,
-          behavior: "smooth"
-        });
+        setTimeout(() => {
+          episodeListContainer.current.scroll({
+            top: activeEpisodeButton.offsetTop - episodeListContainer.current.offsetTop,
+            behavior: "smooth"
+          });
+        }, 500); 
       }
     }
   }, [selectedEpisode, selectedSeason, showData]);
+  
   
 
   const watchlist = useSelector((state) => state.showsWatchlist)
@@ -168,7 +173,7 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
       {!showDataLoading ? <ShowDetailsContainer media={900}>
         <img
           className="movie_details_poster"
-          src={`https://image.tmdb.org/t/p/original${showData.poster_path}`}
+          src={`https://image.tmdb.org/t/p/original${showData?.poster_path}`}
           alt="poster"
         />
         <div className="show_info_container">
@@ -178,7 +183,7 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
             <div className="first_stats_container">
             {showData?.genres?.length > 0 && (
                 <p className="entity_genre">
-                  Genre: <span className="entity_info">{showData.genres.map((eachgenre) => eachgenre.name).join(", ")}</span>
+                  Genre: <span className="entity_info">{showData?.genres.map((eachgenre) => eachgenre?.name).join(", ")}</span>
                 </p>
               )}
               {showData?.production_companies?.length > 0 && (
@@ -196,10 +201,10 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
                   showData.original_language.toUpperCase()}</span>
               </p>
               {showData?.first_air_date && (
-                <p className="entity_released">Released: <span className="entity_info">{showData.first_air_date}</span></p>
+                <p className="entity_released">Released: <span className="entity_info">{showData?.first_air_date}</span></p>
               )}
               {showData?.production_countries?.length > 0 && (
-                <p className="entity_country">Country: <span className="entity_info">{showData.production_countries[0].name}</span></p>
+                <p className="entity_country">Country: <span className="entity_info">{showData?.production_countries[0]?.name}</span></p>
               )}
             
             </div>
@@ -218,11 +223,11 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
               Season {selectedSeason}&nbsp;&#9660;
             </button>
             <ul ref={seasonsContainer} className="season_list_container hide">
-              {seasonList.map((eachSeason, index) => {
+              {seasonList?.map((eachSeason, index) => {
                 return (
                   <li key={eachSeason.id}>
                     <button
-                      onClick={() => handleSeasonSelect(index)}
+                      onClick={() => handleSeasonSelect(index + 1)}
                       className={`season_button ${selectedSeason === index + 1 && `active`}`}
                     >
                       Season {index + 1}
@@ -234,7 +239,7 @@ export default function ShowDetails({ showId,showDataLoading,seasonEpisodeNames,
           </div>
           <div ref={episodeListContainer} className="main_episode_list_container">
             <ul className="episode_list_container">
-              {episodeList.map((index) => {
+              {episodeList?.map((index) => {
                 return (
                   <li key={index + 1}>
                     <button

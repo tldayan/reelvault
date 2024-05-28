@@ -5,7 +5,7 @@ import defaultPoster from "../../assets/no_image.jpg"
 
 export default function WatchlistCard({eachEntity}) {   
   return (
-    <Link to={`${eachEntity.showId ? `../tvshows/${eachEntity.showId}` : `../${eachEntity.movieId}`}`} key={eachEntity.id} className='watchlistCard'>
+    <Link to={`${eachEntity.showId ? `../tvshows/${eachEntity.showId}/1/1` : `../${eachEntity.movieId}`}`} key={eachEntity.id} className='watchlistCard'>
       <img className='watchlist_poster' src={eachEntity.entityPoster !== null ? `https://image.tmdb.org/t/p/original${eachEntity.entityPoster}` : defaultPoster} alt="" />
       <div className='watchlist_metrics'>
         <p className='watchlist_entity_title'>{eachEntity.entityName}</p>
