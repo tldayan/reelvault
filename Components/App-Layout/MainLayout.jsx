@@ -10,6 +10,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import MoviesSlider from "../MovieSlider/MoviesSlider";
 
 
+const validSearchBarPaths = ["/popular","/","/rated","/upcoming","/filter","/filter/romance","/filter/action","/filter/adventure","/filter/horror","/filter/comedy"]
+
 export default function MainLayout() {
 
     const [showChevron, setShowChevron] = useState(false);
@@ -188,7 +190,7 @@ useEffect(() => {
             </nav>
         </header>
         {currentLocation.pathname === "/" && <MoviesSlider />}
-        {(currentLocation.pathname === "/popular" || currentLocation.pathname === "/rated" || currentLocation.pathname === "/upcoming" || currentLocation.pathname === "/" || currentLocation.pathname === "/filter") && <SearchBar />}
+        {validSearchBarPaths.includes(currentLocation.pathname) && <SearchBar />}
         <main>
             <Outlet context={[accessTokenRecieved]}/>
         </main>
