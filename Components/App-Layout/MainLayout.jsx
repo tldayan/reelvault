@@ -188,7 +188,7 @@ useEffect(() => {
             </nav>
         </header>
         {currentLocation.pathname === "/" && <MoviesSlider />}
-        {currentLocation.pathname === "/" && <SearchBar />}
+        {(currentLocation.pathname === "/popular" || currentLocation.pathname === "/rated" || currentLocation.pathname === "/upcoming" || currentLocation.pathname === "/" || currentLocation.pathname === "/filter") && <SearchBar />}
         <main>
             <Outlet context={[accessTokenRecieved]}/>
         </main>
