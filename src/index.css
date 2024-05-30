@@ -533,7 +533,6 @@ svg text {
   padding: 4px;
   width: 90px;
   height: 30px;
-/*   margin: 5px 0; */
   white-space: nowrap;
   outline: none;
   border-radius: 3px;
@@ -833,6 +832,7 @@ footer {
   opacity: 0.7;
   color: white;
   font-family: Inter,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,Helvetica,Arial,sans-serif;
+  text-align: center;
 }
 .return_home_btn {
   border: 1px solid var(--primary);
@@ -850,6 +850,16 @@ footer {
 
 }
 
+.reel_logo {
+  padding: 0px 5px;
+  margin: 0 auto;
+  border: 2px solid rgb(255, 255, 255);
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  margin-right: auto;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.4rem, 4vw, 1.5rem);
+}
 
 @media (max-width:900px) {
 
@@ -898,7 +908,6 @@ footer {
       font-size: 2.5rem;
       padding: 5px 20px;
     }
-    
-
+  
 }
 

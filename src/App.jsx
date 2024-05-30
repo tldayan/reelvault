@@ -51,6 +51,7 @@ function App() {
         <Route path="tvshows/:id/:seasonNumber/:episodeNumber" element={<ShowPlayer />} />
         <Route path="movies/:id" element={<MoviePlayer />} />
         <Route path="error" element={<Error />} />
+        <Route path="*" element={<Error />} />
       </Route>
     )
   );

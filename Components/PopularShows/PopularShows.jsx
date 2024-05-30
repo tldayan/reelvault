@@ -18,8 +18,8 @@ export default function PopularShows() {
 
 
   useEffect(() => {
-    if (localStorage.getItem("popularShows")) {
-      setPopularShowsData(JSON.parse(localStorage.getItem("popularShows")));
+    if (sessionStorage.getItem("popularShows")) {
+      setPopularShowsData(JSON.parse(sessionStorage.getItem("popularShows")));
       setIsLoading(false)
     } else {
       const fetchPopularShows = async () => {
@@ -40,7 +40,7 @@ export default function PopularShows() {
         } else {
           setPopularShowsData([...data1, ...data2, ...data3, ...data4,...data5,...data6,...data7,...data8,...data9]);
 
-          localStorage.setItem(
+          sessionStorage.setItem(
             "popularShows",
             JSON.stringify([...data1, ...data2, ...data3, ...data4,...data5,...data6,...data7,...data8,...data9])
           );

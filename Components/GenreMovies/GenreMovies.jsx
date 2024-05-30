@@ -17,8 +17,8 @@ export default function GenreMovies() {
   const {genre} = useParams()
 
   useEffect(() => {
-    if (localStorage.getItem(genre)) {
-      setGenreMovies(JSON.parse(localStorage.getItem(genre)));
+    if (sessionStorage.getItem(genre)) {
+      setGenreMovies(JSON.parse(sessionStorage.getItem(genre)));
     } else {
       const fetchGenreMovies = async () => {
         const [data1, data2] = await Promise.all([
@@ -30,7 +30,7 @@ export default function GenreMovies() {
           console.log(data1.message);
         } else {
           setGenreMovies([...data1, ...data2]);
-          localStorage.setItem(
+          sessionStorage.setItem(
             genre,
             JSON.stringify([...data1, ...data2])
           );

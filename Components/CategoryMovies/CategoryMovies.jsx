@@ -28,8 +28,8 @@ export default function CategoryMovies() {
 
 
   useEffect(() => {
-    if (localStorage.getItem(category)) {
-      setCategoryMovies(JSON.parse(localStorage.getItem(category)));
+    if (sessionStorage.getItem(category)) {
+      setCategoryMovies(JSON.parse(sessionStorage.getItem(category)));
       setIsLoading(false)
     } else {
       let allMovies = undefined
@@ -51,7 +51,7 @@ export default function CategoryMovies() {
 
           setCategoryMovies(allMovies);
         }
-        localStorage.setItem(category,JSON.stringify(allMovies));
+        sessionStorage.setItem(category,JSON.stringify(allMovies));
         
         setIsLoading(false)
       };
@@ -137,13 +137,9 @@ export default function CategoryMovies() {
         </div>
       </h2>
       <div className="movielist_container">
-      {isLoading ? (
-          <div className="load_animation"></div>
-        ) : (
-          currentMovies.map((eachMovie) => (
-            <MovieCard key={eachMovie.id} eachMovie={eachMovie} />
-          ))
-        )}
+      {currentMovies.map((eachMovie) => (
+        <MovieCard key={eachMovie.id} eachMovie={eachMovie} />
+      ))}
       </div>
 
       {!isLoading && <ul className="pagination">
