@@ -31,7 +31,7 @@ export default function ShowPlayer() {
 
 
   useEffect(() => {
-      dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${id}/${seasonNumber}/${episodeNumber}`))
+     
     
     const fetchShowData = async () => {
       setShowDataLoading(true)
@@ -56,6 +56,9 @@ export default function ShowPlayer() {
   
   }, [id]);
 
+  useEffect(() => {
+    dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${id}/${seasonNumber}/${episodeNumber}`))
+  },[id,seasonNumber,episodeNumber])
 
 
 useEffect(() => {
@@ -102,6 +105,7 @@ useEffect(() => {
         <LoadingAnimation />
         </div>  
           <iframe
+            key={`${id}-${seasonNumber}-${episodeNumber}`}
             ref={IframeShowElement}
             className="show_player"
             src={EpisodeLink}
