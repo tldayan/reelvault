@@ -18,16 +18,6 @@ Welcome to Reelvault, your one-stop destination for streaming and watching movie
 
 - **User-friendly Interface**: With a clean and modern user interface, Reelvault ensures that users can access their favorite movies with ease and simplicity.
 
-## Installation
-
-To run Reelvault locally, follow these simple steps:
-
-1. Clone the repository: `git clone https://github.com/tldayan/reelvault.git`
-2. Navigate to the project directory: `cd reelvault`
-3. Install dependencies: `npm install`
-4. Start the development server: `npm start`
-5. Open your web browser and visit: `http://localhost:3000`
-
 ## Usage
 
 Upon launching Reelvault, you will be greeted with a vast selection of movie posters. Swipe left or right to explore different movies. When you find a movie you want to watch, click on its poster to view more details, and then click the "Watch Now" button to start streaming the movie.
