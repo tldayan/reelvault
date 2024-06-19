@@ -462,13 +462,6 @@ svg text {
 }
 
 
-.movie_player {
-/*   border: 1px solid red; */
-  border: none;
-  margin: 0 auto;
-  height: 0%;
-  width: 100%;
-}
 .show_player {
 /*   border: 1px solid red; */
   border: none;
@@ -479,7 +472,7 @@ svg text {
 }
 
 .movie_player_skeleton {
- /*  border: 1px solid red; */
+/*   border: 1px solid red; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -499,9 +492,7 @@ svg text {
 
 .watchlist_btn,.share_btn {
   padding: 4px 20px;
-/*   width: 120px; */
   height: 30px;
-/*   margin: 5px 0; */
   white-space: nowrap;
   outline: none;
   border-radius: 3px;
@@ -513,7 +504,6 @@ svg text {
 }
 
 .share_btn {
-/*   margin-left: auto; */
   margin-right: 5px;
 }
 
@@ -767,14 +757,7 @@ footer {
   display: none;
 }
 
-.watching_show_notice {
-  color: var(--primary);
-  font-size: clamp(0.5rem, 4vw, 1.4rem);
-  align-self: flex-start;
-  font-family: 'Quicksand', sans-serif;
-  font-weight: bold;
-}
-.watching_movie_notice {
+.watching_show_notice,watching_movie_notice {
   color: var(--primary);
   font-size: clamp(0.5rem, 4vw, 1.4rem);
   align-self: flex-start;

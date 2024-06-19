@@ -24,7 +24,7 @@ export default function ShowPlayer() {
   const [episodeList, setEpisodeList] = useState([]);
   const [showLoaded, setShowLoaded] = useState(false)
   const [showTrailerKey, setShowTrailerKey] = useState("")
-  const [recentlyWatched, setRecentlyWatched] = useState(false)
+  /* const [recentlyWatched, setRecentlyWatched] = useState(false) */
   const [seasonEpisodeNames,setSeasonEpisodeNames] = useState([])
 
   const showLoadedValue = useRef(showLoaded)
@@ -57,6 +57,8 @@ export default function ShowPlayer() {
   }, [id]);
 
   useEffect(() => {
+    showLoadContainer.current.style.display = "flex"
+    IframeShowElement.current.style.height = "0%"
     dispatch(EpisodeLinkActions.setEpisodeLink(`https://vidsrc.xyz/embed/tv/${id}/${seasonNumber}/${episodeNumber}`))
   },[id,seasonNumber,episodeNumber])
 
@@ -104,6 +106,7 @@ useEffect(() => {
         <div ref={showLoadContainer} className="movie_player_skeleton">
         <LoadingAnimation />
         </div>  
+
           <iframe
             key={`${id}-${seasonNumber}-${episodeNumber}`}
             ref={IframeShowElement}
